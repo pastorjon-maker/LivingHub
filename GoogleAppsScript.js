@@ -99,8 +99,10 @@ function doPost(e) {
 
 /**
  * Asana proxy. Runs server-side (UrlFetchApp) so the browser never needs the
- * token and never hits Asana's CORS wall. Tasks created from the hub are tagged
- * in their notes with [LH:<spokeId>] so each category can list only its own.
+ * token and never hits Asana's CORS wall. Each hub category maps to a same-named
+ * SECTION in the project: tasks added from a category are placed in its section,
+ * and listing reads only that section. Sections are matched by name (case-
+ * insensitive) and created on demand if missing.
  */
 function handleAsana(body) {
   if (!ASANA_PAT) {
@@ -109,34 +111,46 @@ function handleAsana(body) {
   var base = 'https://app.asana.com/api/1.0';
   var headers = { Authorization: 'Bearer ' + ASANA_PAT };
   var project = (body.project || ASANA_DEFAULT_PROJECT || '').toString();
-  var marker = body.spokeId ? '[LH:' + body.spokeId + ']' : '';
+  var title = (body.spokeTitle || '').toString();
 
   try {
     if (body.action === 'asanaList') {
       if (!project) return _json({ ok: false, error: 'No Asana project GID configured.' });
-      var listUrl = base + '/tasks?project=' + encodeURIComponent(project) +
-                    '&opt_fields=name,completed,notes&limit=100';
-      var lr = UrlFetchApp.fetch(listUrl, { headers: headers, muteHttpExceptions: true });
+      var sgid = _asanaSection(base, headers, project, title, false);
+      if (!sgid) return _json({ ok: true, tasks: [] }); // section not created yet
+      var lr = UrlFetchApp.fetch(
+        base + '/sections/' + sgid + '/tasks?opt_fields=name,completed&limit=100',
+        { headers: headers, muteHttpExceptions: true });
       var ld = JSON.parse(lr.getContentText());
       if (!ld.data) return _json({ ok: false, error: _asanaErr(ld, 'list failed') });
-      var tasks = ld.data.filter(function (t) {
-        if (t.completed) return false;
-        return marker ? (t.notes || '').indexOf(marker) !== -1 : true;
-      }).map(function (t) { return { gid: t.gid, name: t.name }; });
+      var tasks = ld.data.filter(function (t) { return !t.completed; })
+                         .map(function (t) { return { gid: t.gid, name: t.name }; });
       return _json({ ok: true, tasks: tasks });
     }
 
     if (body.action === 'asanaAdd') {
       if (!project) return _json({ ok: false, error: 'No Asana project GID configured.' });
-      var notes = (body.spokeTitle ? 'Living Hub · ' + body.spokeTitle + '\n' : '') + marker;
+      var sg = _asanaSection(base, headers, project, title, true); // create if missing
       var addRes = UrlFetchApp.fetch(base + '/tasks', {
         method: 'post', contentType: 'application/json', headers: headers,
         muteHttpExceptions: true,
-        payload: JSON.stringify({ data: { name: (body.name || '').toString(), notes: notes, projects: [project] } })
+        payload: JSON.stringify({ data: {
+          name: (body.name || '').toString(),
+          notes: title ? 'Living Hub · ' + title : 'Living Hub',
+          projects: [project]
+        } })
       });
       var ad = JSON.parse(addRes.getContentText());
-      if (ad.data && ad.data.gid) return _json({ ok: true, gid: ad.data.gid });
-      return _json({ ok: false, error: _asanaErr(ad, 'add failed') });
+      if (!ad.data || !ad.data.gid) return _json({ ok: false, error: _asanaErr(ad, 'add failed') });
+      if (sg) {
+        // Move the new task into its category's section.
+        UrlFetchApp.fetch(base + '/sections/' + sg + '/addTask', {
+          method: 'post', contentType: 'application/json', headers: headers,
+          muteHttpExceptions: true,
+          payload: JSON.stringify({ data: { task: ad.data.gid } })
+        });
+      }
+      return _json({ ok: true, gid: ad.data.gid });
     }
 
     if (body.action === 'asanaComplete') {
@@ -156,6 +170,32 @@ function handleAsana(body) {
   } catch (err) {
     return _json({ ok: false, error: err.toString() });
   }
+}
+
+/**
+ * Find a project section by name (case-insensitive, trimmed). Optionally create
+ * it if it doesn't exist. Returns the section GID, or '' if none/!create.
+ */
+function _asanaSection(base, headers, project, name, createIfMissing) {
+  if (!name) return '';
+  var sr = UrlFetchApp.fetch(
+    base + '/projects/' + project + '/sections?opt_fields=name&limit=100',
+    { headers: headers, muteHttpExceptions: true });
+  var sd = JSON.parse(sr.getContentText());
+  var want = name.trim().toLowerCase();
+  if (sd.data) {
+    for (var i = 0; i < sd.data.length; i++) {
+      if ((sd.data[i].name || '').trim().toLowerCase() === want) return sd.data[i].gid;
+    }
+  }
+  if (!createIfMissing) return '';
+  var cr = UrlFetchApp.fetch(base + '/projects/' + project + '/sections', {
+    method: 'post', contentType: 'application/json', headers: headers,
+    muteHttpExceptions: true,
+    payload: JSON.stringify({ data: { name: name } })
+  });
+  var cd = JSON.parse(cr.getContentText());
+  return (cd.data && cd.data.gid) || '';
 }
 
 function _asanaErr(data, fallback) {

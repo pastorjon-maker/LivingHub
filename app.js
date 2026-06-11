@@ -461,7 +461,7 @@
     }
     listEl.innerHTML = asanaHint("Loading tasks…");
     try {
-      const json = await proxyAsana({ action: "asanaList", spokeId: spoke.id, project });
+      const json = await proxyAsana({ action: "asanaList", spokeId: spoke.id, spokeTitle: spoke.title, project });
       if (!json.ok) { listEl.innerHTML = asanaHint("Asana: " + (json.error || "error")); return; }
       renderAsanaTasks(spoke, json.tasks || []);
     } catch (err) {
