@@ -870,8 +870,8 @@ body.kraft-cover {
 
 .asana-submit-btn {
   color: #fff;
-  background: #f06a6a;
-  border: 1px solid #d04f4f;
+  background: var(--moss);
+  border: 1px solid #6f7d4f;
 }
 .asana-submit-btn:hover { filter: brightness(1.07); }
 
@@ -938,8 +938,8 @@ body.kraft-cover {
 
 .doc-append-btn {
   color: #fff;
-  background: #1a73e8;
-  border: 1px solid #1558b0;
+  background: var(--aqua);
+  border: 1px solid #5f7d8a;
 }
 .doc-append-btn:hover { filter: brightness(1.07); }
 
