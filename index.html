@@ -44,13 +44,49 @@
     <!-- Main Notebook spread -->
     <main class="notebook-spread">
 
-      <!-- LEFT PAGE: INSIDE COVER & TABLE OF CONTENTS -->
+      <!-- LEFT PAGE: WHEEL-OF-LIFE OSCILLOSCOPE & TABLE OF CONTENTS -->
       <section class="left-page-cover">
 
-        <h2>MEMORANDA</h2>
+        <!-- ── 1940s OSCILLOSCOPE: WHEEL OF LIFE RADAR ── -->
+        <div class="scope-unit">
+          <div class="scope-stencil-top">FIELD-O-SCOPE · WHEEL OF LIFE</div>
+          <div class="scope-bezel">
+            <div class="scope-screen">
+              <svg id="wheel" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wheel of life radar">
+                <title>Wheel of Life — signal strength across ten spokes</title>
+                <g id="grid-rings"></g>
+                <g id="spokes"></g>
+                <line id="scope-sweep" x1="160" y1="160" x2="160" y2="52"></line>
+                <polygon id="scope-shape"></polygon>
+                <g id="dots"></g>
+                <g id="labels"></g>
+              </svg>
+              <div class="scope-scanlines" aria-hidden="true"></div>
+              <div class="scope-glass" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="scope-controls">
+            <div class="scope-readout">
+              <span class="scope-readout-lbl">OVERALL BALANCE</span>
+              <span class="scope-readout-val" id="wheel-avg">—</span>
+            </div>
+            <div class="scope-dials" aria-hidden="true">
+              <span class="scope-knob"></span>
+              <span class="scope-knob"></span>
+              <span class="scope-lamp"></span>
+            </div>
+          </div>
+        </div>
 
-        <!-- Inside-Cover Truth Anchors Banner -->
-        <div class="inside-cover-anchor" id="truth-anchor-card">
+        <h2 style="margin-top: 1.25rem;">TABLE OF CONTENTS</h2>
+
+        <!-- Spoke categories listed (TOC) -->
+        <div class="toc-list" id="toc-list">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- Inside-Cover Truth Anchor (relocated below the index) -->
+        <div class="inside-cover-anchor slim" id="truth-anchor-card">
           <div class="anchor-title-lbl">FOUNDATIONAL ANCHOR:</div>
           <div class="quote-body">
             <blockquote id="truth-quote">
@@ -60,13 +96,6 @@
           <div class="quote-cycle-footer">
             <button class="cycle-btn" id="next-quote">CYCLE ANCHOR</button>
           </div>
-        </div>
-
-        <h2 style="margin-top: 1.5rem;">TABLE OF CONTENTS</h2>
-
-        <!-- Spoke categories listed horizontally (TOC) -->
-        <div class="toc-list" id="toc-list">
-          <!-- Populated dynamically by app.js -->
         </div>
       </section>
 
@@ -138,6 +167,15 @@
                   <option value="SIFTING">🟡 SIFTING / STRUGGLING</option>
                   <option value="RESTING">🔵 INTENTIONAL RESTING</option>
                 </select>
+              </div>
+            </div>
+
+            <!-- Wheel signal strength (feeds the oscilloscope radar) -->
+            <div class="scope-rating-row">
+              <span class="metric-lbl">WHEEL SIGNAL (1–10) — SELF-ASSESSMENT</span>
+              <div class="rating-control">
+                <input type="range" min="1" max="10" step="1" id="rating-slider" class="rating-slider" />
+                <span class="rating-val" id="rating-val">5</span>
               </div>
             </div>
 

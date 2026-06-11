@@ -45,17 +45,29 @@
 
   // ── Data loading / persistence ───────────────────────────────────────
   async function loadData() {
-    // 1. locally-saved copy wins (user edits persist across reloads)
-    const local = localStorage.getItem(LS.data);
-    if (local) {
-      try { return JSON.parse(local); } catch (_) { /* fall through */ }
-    }
-    // 2. otherwise fetch the shipped data.json
+    // Fetch the shipped data.json (source of truth for schema/version).
+    let fileData = null;
     try {
       const res = await fetch("data.json", { cache: "no-store" });
-      if (res.ok) return await res.json();
+      if (res.ok) fileData = await res.json();
     } catch (_) { /* offline / file:// */ }
-    // 3. minimal fallback so the UI still renders
+
+    // A locally-saved copy preserves the user's edits across reloads —
+    // BUT if the shipped file is a newer schema version, it wins (so adding
+    // categories / bumping `version` overrides stale browser data).
+    const localRaw = localStorage.getItem(LS.data);
+    if (localRaw) {
+      try {
+        const local = JSON.parse(localRaw);
+        if (fileData && (fileData.version || 0) > (local.version || 0)) {
+          localStorage.removeItem(LS.data);
+          return fileData;
+        }
+        return local;
+      } catch (_) { /* corrupt local — fall through to file */ }
+    }
+
+    if (fileData) return fileData;
     return { user: "JONATHAN MARSHALL", truthAnchors: [], spokes: [] };
   }
 
@@ -129,6 +141,93 @@
     });
   }
 
+  // ── Oscilloscope Wheel of Life radar ────────────────────────────────
+  const WHEEL = { cx: 160, cy: 160, R: 106, ns: "http://www.w3.org/2000/svg" };
+
+  function clampRating(r) {
+    r = parseInt(r, 10);
+    if (isNaN(r)) r = 5;
+    return Math.max(1, Math.min(10, r));
+  }
+
+  function wheelPt(i, r, n) {
+    const ang = (-Math.PI / 2) + (i * 2 * Math.PI / n);
+    return [WHEEL.cx + r * Math.cos(ang), WHEEL.cy + r * Math.sin(ang)];
+  }
+
+  function renderWheel() {
+    const ringsG = $("grid-rings");
+    if (!ringsG) return; // wheel not in DOM
+    const spokesG = $("spokes"), labelsG = $("labels"),
+          dotsG = $("dots"), shape = $("scope-shape");
+    const spokes = state.data.spokes || [];
+    const n = spokes.length;
+    const NS = WHEEL.ns;
+
+    ringsG.innerHTML = ""; spokesG.innerHTML = "";
+    labelsG.innerHTML = ""; dotsG.innerHTML = "";
+    if (!n) { shape.setAttribute("points", ""); $("wheel-avg").textContent = "—"; return; }
+
+    // concentric grid rings (2,4,6,8,10)
+    [2, 4, 6, 8, 10].forEach((lvl) => {
+      const poly = document.createElementNS(NS, "polygon");
+      const pts = [];
+      for (let i = 0; i < n; i++) {
+        const p = wheelPt(i, WHEEL.R * lvl / 10, n);
+        pts.push(p[0].toFixed(1) + "," + p[1].toFixed(1));
+      }
+      poly.setAttribute("points", pts.join(" "));
+      ringsG.appendChild(poly);
+    });
+
+    const shapePts = [];
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+      const sp = spokes[i];
+      const isActive = sp.id === state.activeSpokeId;
+      const rating = clampRating(sp.rating);
+      sum += rating;
+
+      // radial spoke line
+      const edge = wheelPt(i, WHEEL.R, n);
+      const line = document.createElementNS(NS, "line");
+      line.setAttribute("x1", WHEEL.cx); line.setAttribute("y1", WHEEL.cy);
+      line.setAttribute("x2", edge[0].toFixed(1)); line.setAttribute("y2", edge[1].toFixed(1));
+      spokesG.appendChild(line);
+
+      // label (channel name)
+      const lp = wheelPt(i, WHEEL.R + 17, n);
+      const tx = document.createElementNS(NS, "text");
+      tx.setAttribute("x", lp[0].toFixed(1));
+      tx.setAttribute("y", lp[1].toFixed(1));
+      tx.setAttribute("font-size", "7.5");
+      tx.setAttribute("text-anchor",
+        lp[0] < WHEEL.cx - 5 ? "end" : (lp[0] > WHEEL.cx + 5 ? "start" : "middle"));
+      tx.setAttribute("dominant-baseline", "middle");
+      tx.textContent = sp.short || sp.num;
+      if (isActive) tx.classList.add("active");
+      tx.addEventListener("click", () => selectSpoke(sp.id));
+      labelsG.appendChild(tx);
+
+      // data dot at the rating radius
+      const dp = wheelPt(i, WHEEL.R * rating / 10, n);
+      shapePts.push(dp[0].toFixed(1) + "," + dp[1].toFixed(1));
+      const dot = document.createElementNS(NS, "circle");
+      dot.setAttribute("cx", dp[0].toFixed(1));
+      dot.setAttribute("cy", dp[1].toFixed(1));
+      dot.setAttribute("r", isActive ? "4.2" : "3");
+      if (isActive) dot.classList.add("active");
+      const title = document.createElementNS(NS, "title");
+      title.textContent = sp.title + " — " + rating + "/10";
+      dot.appendChild(title);
+      dot.addEventListener("click", () => selectSpoke(sp.id));
+      dotsG.appendChild(dot);
+    }
+
+    shape.setAttribute("points", shapePts.join(" "));
+    $("wheel-avg").textContent = (sum / n).toFixed(1);
+  }
+
   // ── Days-since-touched metric ────────────────────────────────────────
   function daysSince(dateStr) {
     if (!dateStr) return null;
@@ -164,6 +263,10 @@
     $("metric-days-touched").textContent = touchedLabel(spoke);
     $("state-rating-select").value = spoke.state || "ABIDING";
 
+    const rating = clampRating(spoke.rating);
+    $("rating-slider").value = rating;
+    $("rating-val").textContent = rating;
+
     const thread = spoke.thread || {};
     $("thread-timestamp").textContent = thread.timestamp || "—";
     $("thread-title").textContent = thread.title || "—";
@@ -178,6 +281,7 @@
       el.classList.toggle("active", el.getAttribute("data-spoke") === spokeId);
     });
 
+    renderWheel(); // refresh the radar's active-spoke highlight
     refreshIcons();
   }
 
@@ -258,6 +362,18 @@
     spoke.lastTouched = new Date().toISOString().slice(0, 10);
     $("metric-days-touched").textContent = touchedLabel(spoke);
     renderTOC();
+    persist();
+  }
+
+  function onRatingChange(e) {
+    const spoke = activeSpoke();
+    if (!spoke) return;
+    const v = clampRating(e.target.value);
+    spoke.rating = v;
+    $("rating-val").textContent = v;
+    spoke.lastTouched = new Date().toISOString().slice(0, 10);
+    $("metric-days-touched").textContent = touchedLabel(spoke);
+    renderWheel();
     persist();
   }
 
@@ -497,6 +613,7 @@
         maybeResetChecklists();
         renderTOC();
         renderAnchor();
+        renderWheel();
         if (state.activeSpokeId) selectSpoke(state.activeSpokeId);
         updatePendingBadge(json.data.pendingFeeds || 0, json.data.pendingFeedNames || []);
         label.textContent = "✓ SYNCED";
@@ -558,6 +675,7 @@
       maybeResetChecklists();
       renderTOC();
       renderAnchor();
+      renderWheel();
       state.activeSpokeId = parsed.spokes[0] ? parsed.spokes[0].id : null;
       if (state.activeSpokeId) selectSpoke(state.activeSpokeId);
       $("import-json-area").value = "";
@@ -578,6 +696,7 @@
   function bindEvents() {
     $("next-quote").addEventListener("click", cycleAnchor);
     $("state-rating-select").addEventListener("change", onStateChange);
+    $("rating-slider").addEventListener("input", onRatingChange);
     $("doc-append-btn").addEventListener("click", appendToDoc);
     $("feed-to-claude-btn").addEventListener("click", feedToClaude);
     $("asana-submit-btn").addEventListener("click", pushAsanaTask);
@@ -601,6 +720,7 @@
 
     renderAnchor();
     renderTOC();
+    renderWheel();
     loadConfigInputs();
     bindEvents();
 

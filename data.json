@@ -1,6 +1,6 @@
 {
   "user": "JONATHAN MARSHALL",
-  "version": 5,
+  "version": 6,
   "lastRefreshed": "2026-06-11",
   "pendingFeeds": 0,
   "pendingFeedNames": [],
@@ -17,10 +17,12 @@
       "id": "walk-with-god",
       "num": "01",
       "title": "WALK WITH GOD",
-      "subtitle": "Devotional life, abiding, inward work of the Spirit",
+      "short": "WALK",
+      "subtitle": "Devotional life, abiding, the inward work of the Spirit",
       "source": "CLAUDE",
       "lastTouched": "2026-06-10",
       "state": "ABIDING",
+      "rating": 7,
       "thread": {
         "timestamp": "TODAY, 0730 HRS",
         "title": "DEVOTIONS: PRACTICING HIS PRESENCE",
@@ -37,151 +39,26 @@
       "extraFeed": [],
       "checklists": {
         "weekly": [
-          {
-            "id": "w1",
-            "task": "Daily morning quiet time (5/7 days)",
-            "completed": false
-          },
-          {
-            "id": "w2",
-            "task": "Sabbath rest — phone in drawer",
-            "completed": false
-          },
-          {
-            "id": "w3",
-            "task": "Scripture memory review",
-            "completed": false
-          }
+          { "id": "w1", "task": "Daily morning quiet time (5/7 days)", "completed": false },
+          { "id": "w2", "task": "Sabbath rest — phone in drawer", "completed": false },
+          { "id": "w3", "task": "Scripture memory review", "completed": false }
         ],
         "monthly": [
-          {
-            "id": "m1",
-            "task": "Read one spiritual classic",
-            "completed": false
-          },
-          {
-            "id": "m2",
-            "task": "Personal silent retreat (half day)",
-            "completed": false
-          }
+          { "id": "m1", "task": "Read one spiritual classic", "completed": false },
+          { "id": "m2", "task": "Personal silent retreat (half day)", "completed": false }
         ]
       }
     },
     {
-      "id": "marriage-family",
+      "id": "preaching-study",
       "num": "02",
-      "title": "MARRIAGE & FAMILY",
-      "subtitle": "Covenant love, presence at home, fathering well",
-      "source": "OTTER",
-      "lastTouched": "2026-06-08",
-      "state": "ABIDING",
-      "thread": {
-        "timestamp": "MON, 2000 HRS",
-        "title": "WEEKLY MARRIAGE CHECK-IN",
-        "summary": "Recap of the evening walk conversation — calendar alignment and one ask each."
-      },
-      "bulletList": {
-        "title": "OPEN RESEARCH ITEMS",
-        "items": [
-          "Plan summer rhythm with the kids",
-          "Book the anniversary getaway"
-        ]
-      },
-      "extraFeed": [],
-      "checklists": {
-        "weekly": [
-          {
-            "id": "w1",
-            "task": "Date night / intentional time",
-            "completed": false
-          },
-          {
-            "id": "w2",
-            "task": "One-on-one with each kid",
-            "completed": false
-          },
-          {
-            "id": "w3",
-            "task": "Family dinner without screens (4x)",
-            "completed": false
-          }
-        ],
-        "monthly": [
-          {
-            "id": "m1",
-            "task": "Budget & calendar sync with spouse",
-            "completed": false
-          },
-          {
-            "id": "m2",
-            "task": "Family outing / adventure",
-            "completed": false
-          }
-        ]
-      }
-    },
-    {
-      "id": "shepherding",
-      "num": "03",
-      "title": "SHEPHERDING",
-      "subtitle": "Care of the flock, counseling, pastoral visits",
-      "source": "OTTER",
-      "lastTouched": "2026-06-11",
-      "state": "SIFTING",
-      "thread": {
-        "timestamp": "TUE, 1400 HRS",
-        "title": "PASTORAL CARE LOG",
-        "summary": "Follow-ups from Sunday — two hospital visits and a grief follow-up call."
-      },
-      "bulletList": {
-        "title": "OPEN CARE ITEMS",
-        "items": [
-          "Hospital visit — the Hendersons",
-          "Grief follow-up call",
-          "New member coffee"
-        ]
-      },
-      "extraFeed": [
-        {
-          "label": "OTTER TRANSCRIPT",
-          "text": "Counseling session notes auto-imported from the drops folder."
-        }
-      ],
-      "checklists": {
-        "weekly": [
-          {
-            "id": "w1",
-            "task": "Three intentional care contacts",
-            "completed": false
-          },
-          {
-            "id": "w2",
-            "task": "Follow up on prayer requests",
-            "completed": false
-          }
-        ],
-        "monthly": [
-          {
-            "id": "m1",
-            "task": "Visit homebound members",
-            "completed": false
-          },
-          {
-            "id": "m2",
-            "task": "Leadership / elder check-in",
-            "completed": false
-          }
-        ]
-      }
-    },
-    {
-      "id": "preaching-teaching",
-      "num": "04",
-      "title": "PREACHING & TEACHING",
-      "subtitle": "Sermon prep, exposition, the craft of the word",
+      "title": "PREACHING & STUDY",
+      "short": "PREACH",
+      "subtitle": "Sermon series, word studies, theological research",
       "source": "CLAUDE",
       "lastTouched": "2026-06-11",
       "state": "ABIDING",
+      "rating": 8,
       "thread": {
         "timestamp": "TODAY, 0930 HRS",
         "title": "SERMON SERIES: THE SECRET PLACE",
@@ -198,120 +75,289 @@
       "extraFeed": [],
       "checklists": {
         "weekly": [
-          {
-            "id": "w1",
-            "task": "Sermon draft complete by Thursday",
-            "completed": false
-          },
-          {
-            "id": "w2",
-            "task": "Manuscript review & cut",
-            "completed": false
-          },
-          {
-            "id": "w3",
-            "task": "Pray through the text",
-            "completed": false
-          }
+          { "id": "w1", "task": "Sermon draft complete by Thursday", "completed": false },
+          { "id": "w2", "task": "Manuscript review & cut", "completed": false },
+          { "id": "w3", "task": "Pray through the text", "completed": false }
         ],
         "monthly": [
-          {
-            "id": "m1",
-            "task": "Plan next sermon series arc",
-            "completed": false
-          }
+          { "id": "m1", "task": "Plan next sermon series arc", "completed": false }
         ]
       }
     },
     {
-      "id": "health-body",
+      "id": "the-work",
+      "num": "03",
+      "title": "THE WORK",
+      "short": "WORK",
+      "subtitle": "Shepherding — leading the church and staff",
+      "source": "OTTER",
+      "lastTouched": "2026-06-09",
+      "state": "SIFTING",
+      "rating": 6,
+      "thread": {
+        "timestamp": "TUE, 1400 HRS",
+        "title": "STAFF & PASTORAL CARE LOG",
+        "summary": "Follow-ups from Sunday — staff one-on-ones, two hospital visits, a grief call."
+      },
+      "bulletList": {
+        "title": "OPEN LEADERSHIP ITEMS",
+        "items": [
+          "Hospital visit — the Hendersons",
+          "Staff one-on-ones",
+          "Elder agenda for the quarter"
+        ]
+      },
+      "extraFeed": [
+        { "label": "OTTER TRANSCRIPT", "text": "Staff meeting notes auto-imported from the drops folder." }
+      ],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "Three intentional care contacts", "completed": false },
+          { "id": "w2", "task": "Staff check-ins", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "Visit homebound members", "completed": false },
+          { "id": "m2", "task": "Elder / leadership review", "completed": false }
+        ]
+      }
+    },
+    {
+      "id": "jess",
+      "num": "04",
+      "title": "JESS",
+      "short": "JESS",
+      "subtitle": "Marriage — covenant love, presence, her own spoke",
+      "source": "MANUAL",
+      "lastTouched": "2026-06-08",
+      "state": "ABIDING",
+      "rating": 7,
+      "thread": {
+        "timestamp": "MON, 2000 HRS",
+        "title": "WEEKLY MARRIAGE CHECK-IN",
+        "summary": "Evening walk conversation — calendar alignment and one ask each."
+      },
+      "bulletList": {
+        "title": "OPEN ITEMS",
+        "items": [
+          "Book the anniversary getaway",
+          "Plan a no-agenda date this week"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "Date night / intentional time", "completed": false },
+          { "id": "w2", "task": "Pray together (3x)", "completed": false },
+          { "id": "w3", "task": "One thoughtful gesture", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "Budget & calendar sync together", "completed": false },
+          { "id": "m2", "task": "Overnight away / extended time", "completed": false }
+        ]
+      }
+    },
+    {
+      "id": "family",
       "num": "05",
-      "title": "HEALTH & BODY",
-      "subtitle": "Stewardship of the body, rest, movement, energy",
+      "title": "FAMILY",
+      "short": "FAMILY",
+      "subtitle": "Kids, grandkids, parents, in-laws",
+      "source": "MANUAL",
+      "lastTouched": "2026-06-07",
+      "state": "ABIDING",
+      "rating": 8,
+      "thread": {
+        "timestamp": "SUN, 1700 HRS",
+        "title": "FAMILY RHYTHM LOG",
+        "summary": "Sunday dinner with the kids; call list for parents and in-laws this week."
+      },
+      "bulletList": {
+        "title": "OPEN ITEMS",
+        "items": [
+          "Plan summer rhythm with the kids",
+          "Call Mom & Dad",
+          "Grandkids day on the calendar"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "One-on-one with each kid", "completed": false },
+          { "id": "w2", "task": "Family dinner without screens (4x)", "completed": false },
+          { "id": "w3", "task": "Call parents / in-laws", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "Family outing / adventure", "completed": false }
+        ]
+      }
+    },
+    {
+      "id": "health-fitness",
+      "num": "06",
+      "title": "HEALTH & FITNESS",
+      "short": "HEALTH",
+      "subtitle": "Exercise, sleep, the mental battle",
       "source": "MANUAL",
       "lastTouched": "2026-06-05",
-      "state": "RESTING",
+      "state": "SIFTING",
+      "rating": 4,
       "thread": {
         "timestamp": "THU, 0600 HRS",
         "title": "MOVEMENT & SLEEP LOG",
-        "summary": "Tracking sleep window and three strength sessions this week."
+        "summary": "Tracking sleep window, three strength sessions, and the daily mental battle."
       },
       "bulletList": {
         "title": "OPEN ITEMS",
         "items": [
           "Schedule annual physical",
-          "Reset evening wind-down routine"
+          "Reset evening wind-down routine",
+          "Name the recurring anxious thought"
         ]
       },
       "extraFeed": [],
       "checklists": {
         "weekly": [
-          {
-            "id": "w1",
-            "task": "Three movement sessions",
-            "completed": false
-          },
-          {
-            "id": "w2",
-            "task": "Lights out by 10:30 (5x)",
-            "completed": false
-          },
-          {
-            "id": "w3",
-            "task": "Water + whole-food meals",
-            "completed": false
-          }
+          { "id": "w1", "task": "Three movement sessions", "completed": false },
+          { "id": "w2", "task": "Lights out by 10:30 (5x)", "completed": false },
+          { "id": "w3", "task": "Water + whole-food meals", "completed": false }
         ],
         "monthly": [
-          {
-            "id": "m1",
-            "task": "Review labs / vitals",
-            "completed": false
-          }
+          { "id": "m1", "task": "Review labs / vitals", "completed": false }
         ]
       }
     },
     {
-      "id": "craft-creativity",
-      "num": "06",
-      "title": "CRAFT & CREATIVITY",
-      "subtitle": "Writing, building, the maker's workshop",
-      "source": "CLAUDE",
-      "lastTouched": "2026-06-07",
-      "state": "ABIDING",
+      "id": "finances",
+      "num": "07",
+      "title": "FINANCES",
+      "short": "FINANCE",
+      "subtitle": "Stewardship, debt freedom, retirement",
+      "source": "MANUAL",
+      "lastTouched": "2026-06-03",
+      "state": "SIFTING",
+      "rating": 5,
       "thread": {
-        "timestamp": "SAT, 1100 HRS",
-        "title": "LIVING HUB BUILD LOG",
-        "summary": "Shipping the v5 integrations build — checklists, Asana, Google Doc, Claude loop."
+        "timestamp": "TUE, 2100 HRS",
+        "title": "STEWARDSHIP REVIEW",
+        "summary": "Monthly budget reconcile; debt snowball progress and retirement contributions."
       },
       "bulletList": {
-        "title": "OPEN BUILD ITEMS",
+        "title": "OPEN ITEMS",
         "items": [
-          "Ship recurring checklists",
-          "Wire Asana task push",
-          "Document the Apps Script deploy"
+          "Reconcile the budget",
+          "Extra payment on the debt snowball",
+          "Review retirement allocation"
         ]
       },
       "extraFeed": [],
       "checklists": {
         "weekly": [
-          {
-            "id": "w1",
-            "task": "Two focused maker blocks",
-            "completed": false
-          },
-          {
-            "id": "w2",
-            "task": "Ship one small thing",
-            "completed": false
-          }
+          { "id": "w1", "task": "Check the budget / spending", "completed": false }
         ],
         "monthly": [
-          {
-            "id": "m1",
-            "task": "Publish / share a finished piece",
-            "completed": false
-          }
+          { "id": "m1", "task": "Reconcile accounts", "completed": false },
+          { "id": "m2", "task": "Give first — generosity check", "completed": false },
+          { "id": "m3", "task": "Net-worth & debt review", "completed": false }
+        ]
+      }
+    },
+    {
+      "id": "reading-mind",
+      "num": "08",
+      "title": "READING & MIND",
+      "short": "READ",
+      "subtitle": "Books and intellectual growth beyond sermon prep",
+      "source": "CLAUDE",
+      "lastTouched": "2026-06-06",
+      "state": "RESTING",
+      "rating": 6,
+      "thread": {
+        "timestamp": "FRI, 2130 HRS",
+        "title": "CURRENT READING STACK",
+        "summary": "Reading widely outside sermon prep — history, biography, one novel."
+      },
+      "bulletList": {
+        "title": "OPEN ITEMS",
+        "items": [
+          "Finish the current biography",
+          "Note three quotes worth keeping"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "Read 30 min/day (non-sermon)", "completed": false },
+          { "id": "w2", "task": "Capture notes in the commonplace book", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "Finish one book", "completed": false }
+        ]
+      }
+    },
+    {
+      "id": "hobbies-craft",
+      "num": "09",
+      "title": "HOBBIES & CRAFT",
+      "short": "CRAFT",
+      "subtitle": "The woodshop, building things of value",
+      "source": "MANUAL",
+      "lastTouched": "2026-06-07",
+      "state": "ABIDING",
+      "rating": 5,
+      "thread": {
+        "timestamp": "SAT, 1100 HRS",
+        "title": "WOODSHOP BUILD LOG",
+        "summary": "Current bench project; sharpening day and shop cleanup."
+      },
+      "bulletList": {
+        "title": "OPEN BUILD ITEMS",
+        "items": [
+          "Glue-up the tabletop",
+          "Sharpen the chisels",
+          "Source hardwood for the next piece"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "One focused shop block", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "Finish / give away one piece", "completed": false }
+        ]
+      }
+    },
+    {
+      "id": "friendships",
+      "num": "10",
+      "title": "FRIENDSHIPS",
+      "short": "FRIENDS",
+      "subtitle": "The men who tell you the truth",
+      "source": "MANUAL",
+      "lastTouched": "2026-06-02",
+      "state": "SIFTING",
+      "rating": 4,
+      "thread": {
+        "timestamp": "MON, 0700 HRS",
+        "title": "BROTHERHOOD CHECK-IN",
+        "summary": "The handful of men who get the unfiltered truth — keeping the rhythm alive."
+      },
+      "bulletList": {
+        "title": "OPEN ITEMS",
+        "items": [
+          "Set the next breakfast",
+          "Call the friend I've been meaning to",
+          "Confess the thing I'm hiding"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "Reach out to one brother", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "In-person time with a close friend", "completed": false },
+          { "id": "m2", "task": "Be honest with my accountability man", "completed": false }
         ]
       }
     }
