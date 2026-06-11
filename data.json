@@ -1,0 +1,319 @@
+{
+  "user": "JONATHAN MARSHALL",
+  "version": 5,
+  "lastRefreshed": "2026-06-11",
+  "pendingFeeds": 0,
+  "pendingFeedNames": [],
+  "truthAnchors": [
+    "DELIGHT IN THE LORD, AND HE WILL GIVE YOU THE DESIRES OF YOUR HEART.",
+    "BE STILL, AND KNOW THAT I AM GOD.",
+    "MY GRACE IS SUFFICIENT FOR YOU, FOR MY POWER IS MADE PERFECT IN WEAKNESS.",
+    "CAST ALL YOUR ANXIETY ON HIM BECAUSE HE CARES FOR YOU.",
+    "ABIDE IN ME, AND I IN YOU. APART FROM ME YOU CAN DO NOTHING.",
+    "THE STEADFAST LOVE OF THE LORD NEVER CEASES; HIS MERCIES ARE NEW EVERY MORNING."
+  ],
+  "spokes": [
+    {
+      "id": "walk-with-god",
+      "num": "01",
+      "title": "WALK WITH GOD",
+      "subtitle": "Devotional life, abiding, inward work of the Spirit",
+      "source": "CLAUDE",
+      "lastTouched": "2026-06-10",
+      "state": "ABIDING",
+      "thread": {
+        "timestamp": "TODAY, 0730 HRS",
+        "title": "DEVOTIONS: PRACTICING HIS PRESENCE",
+        "summary": "Quiet time reflections on practicing His presence in the midst of idea-pressure."
+      },
+      "bulletList": {
+        "title": "OPEN RESEARCH ITEMS",
+        "items": [
+          "Study Brother Lawrence on continual prayer",
+          "Map the rhythm of Sabbath into the work week",
+          "Memorize Psalm 27 over the month"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          {
+            "id": "w1",
+            "task": "Daily morning quiet time (5/7 days)",
+            "completed": false
+          },
+          {
+            "id": "w2",
+            "task": "Sabbath rest — phone in drawer",
+            "completed": false
+          },
+          {
+            "id": "w3",
+            "task": "Scripture memory review",
+            "completed": false
+          }
+        ],
+        "monthly": [
+          {
+            "id": "m1",
+            "task": "Read one spiritual classic",
+            "completed": false
+          },
+          {
+            "id": "m2",
+            "task": "Personal silent retreat (half day)",
+            "completed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "marriage-family",
+      "num": "02",
+      "title": "MARRIAGE & FAMILY",
+      "subtitle": "Covenant love, presence at home, fathering well",
+      "source": "OTTER",
+      "lastTouched": "2026-06-08",
+      "state": "ABIDING",
+      "thread": {
+        "timestamp": "MON, 2000 HRS",
+        "title": "WEEKLY MARRIAGE CHECK-IN",
+        "summary": "Recap of the evening walk conversation — calendar alignment and one ask each."
+      },
+      "bulletList": {
+        "title": "OPEN RESEARCH ITEMS",
+        "items": [
+          "Plan summer rhythm with the kids",
+          "Book the anniversary getaway"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          {
+            "id": "w1",
+            "task": "Date night / intentional time",
+            "completed": false
+          },
+          {
+            "id": "w2",
+            "task": "One-on-one with each kid",
+            "completed": false
+          },
+          {
+            "id": "w3",
+            "task": "Family dinner without screens (4x)",
+            "completed": false
+          }
+        ],
+        "monthly": [
+          {
+            "id": "m1",
+            "task": "Budget & calendar sync with spouse",
+            "completed": false
+          },
+          {
+            "id": "m2",
+            "task": "Family outing / adventure",
+            "completed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "shepherding",
+      "num": "03",
+      "title": "SHEPHERDING",
+      "subtitle": "Care of the flock, counseling, pastoral visits",
+      "source": "OTTER",
+      "lastTouched": "2026-06-11",
+      "state": "SIFTING",
+      "thread": {
+        "timestamp": "TUE, 1400 HRS",
+        "title": "PASTORAL CARE LOG",
+        "summary": "Follow-ups from Sunday — two hospital visits and a grief follow-up call."
+      },
+      "bulletList": {
+        "title": "OPEN CARE ITEMS",
+        "items": [
+          "Hospital visit — the Hendersons",
+          "Grief follow-up call",
+          "New member coffee"
+        ]
+      },
+      "extraFeed": [
+        {
+          "label": "OTTER TRANSCRIPT",
+          "text": "Counseling session notes auto-imported from the drops folder."
+        }
+      ],
+      "checklists": {
+        "weekly": [
+          {
+            "id": "w1",
+            "task": "Three intentional care contacts",
+            "completed": false
+          },
+          {
+            "id": "w2",
+            "task": "Follow up on prayer requests",
+            "completed": false
+          }
+        ],
+        "monthly": [
+          {
+            "id": "m1",
+            "task": "Visit homebound members",
+            "completed": false
+          },
+          {
+            "id": "m2",
+            "task": "Leadership / elder check-in",
+            "completed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "preaching-teaching",
+      "num": "04",
+      "title": "PREACHING & TEACHING",
+      "subtitle": "Sermon prep, exposition, the craft of the word",
+      "source": "CLAUDE",
+      "lastTouched": "2026-06-11",
+      "state": "ABIDING",
+      "thread": {
+        "timestamp": "TODAY, 0930 HRS",
+        "title": "SERMON SERIES: THE SECRET PLACE",
+        "summary": "Outline research for the next series on hidden prayer and the inner life."
+      },
+      "bulletList": {
+        "title": "OPEN RESEARCH ITEMS",
+        "items": [
+          "Exegete Matthew 6:5-15",
+          "Pull two illustrations on hiddenness",
+          "Draft series graphic brief"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          {
+            "id": "w1",
+            "task": "Sermon draft complete by Thursday",
+            "completed": false
+          },
+          {
+            "id": "w2",
+            "task": "Manuscript review & cut",
+            "completed": false
+          },
+          {
+            "id": "w3",
+            "task": "Pray through the text",
+            "completed": false
+          }
+        ],
+        "monthly": [
+          {
+            "id": "m1",
+            "task": "Plan next sermon series arc",
+            "completed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "health-body",
+      "num": "05",
+      "title": "HEALTH & BODY",
+      "subtitle": "Stewardship of the body, rest, movement, energy",
+      "source": "MANUAL",
+      "lastTouched": "2026-06-05",
+      "state": "RESTING",
+      "thread": {
+        "timestamp": "THU, 0600 HRS",
+        "title": "MOVEMENT & SLEEP LOG",
+        "summary": "Tracking sleep window and three strength sessions this week."
+      },
+      "bulletList": {
+        "title": "OPEN ITEMS",
+        "items": [
+          "Schedule annual physical",
+          "Reset evening wind-down routine"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          {
+            "id": "w1",
+            "task": "Three movement sessions",
+            "completed": false
+          },
+          {
+            "id": "w2",
+            "task": "Lights out by 10:30 (5x)",
+            "completed": false
+          },
+          {
+            "id": "w3",
+            "task": "Water + whole-food meals",
+            "completed": false
+          }
+        ],
+        "monthly": [
+          {
+            "id": "m1",
+            "task": "Review labs / vitals",
+            "completed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "craft-creativity",
+      "num": "06",
+      "title": "CRAFT & CREATIVITY",
+      "subtitle": "Writing, building, the maker's workshop",
+      "source": "CLAUDE",
+      "lastTouched": "2026-06-07",
+      "state": "ABIDING",
+      "thread": {
+        "timestamp": "SAT, 1100 HRS",
+        "title": "LIVING HUB BUILD LOG",
+        "summary": "Shipping the v5 integrations build — checklists, Asana, Google Doc, Claude loop."
+      },
+      "bulletList": {
+        "title": "OPEN BUILD ITEMS",
+        "items": [
+          "Ship recurring checklists",
+          "Wire Asana task push",
+          "Document the Apps Script deploy"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          {
+            "id": "w1",
+            "task": "Two focused maker blocks",
+            "completed": false
+          },
+          {
+            "id": "w2",
+            "task": "Ship one small thing",
+            "completed": false
+          }
+        ],
+        "monthly": [
+          {
+            "id": "m1",
+            "task": "Publish / share a finished piece",
+            "completed": false
+          }
+        ]
+      }
+    }
+  ]
+}

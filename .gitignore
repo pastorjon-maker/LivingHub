@@ -1,0 +1,18 @@
+# Processed feed archive (runtime artifacts)
+sync-drops/_processed/*
+!sync-drops/_processed/.gitkeep
+
+# Dropped feed files (keep the folders, ignore the contents)
+sync-drops/otter-transcripts/*
+!sync-drops/otter-transcripts/.gitkeep
+sync-drops/claude-research/*
+!sync-drops/claude-research/.gitkeep
+sync-drops/misc/*
+!sync-drops/misc/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store

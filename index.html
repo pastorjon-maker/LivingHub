@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIELD NOTES: JONATHAN MARSHALL'S LIVING HUB</title>
+  <meta name="description" content="Jonathan Marshall's personal Living Hub — a tactile, organized field notes dashboard for life, ministry, and craft.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="kraft-cover">
+  <div class="hub-container">
+
+    <!-- Tactile Memo Header -->
+    <header class="hub-header">
+      <div class="brand">
+        <div class="memo-badge">FIELD NOTES ARCHIVE</div>
+        <h1>LIVING HUB</h1>
+        <p class="subtitle">TACTILE PERSONAL OUTLINER — GRACE, NOT GUILT.</p>
+      </div>
+      <div class="header-right-cluster">
+        <!-- Otter / Feeds pending warning badge -->
+        <div class="pending-badge hidden" id="pending-badge">
+          <i data-lucide="alert-triangle"></i>
+          <span id="pending-badge-text">0 UNPROCESSED FEEDS</span>
+        </div>
+        <!-- Sync button -->
+        <button class="sync-now-btn" id="sync-now-btn" title="Sync drop folders now">
+          <i data-lucide="refresh-cw"></i>
+          <span id="sync-btn-label">SYNC FEEDS</span>
+        </button>
+        <div class="sync-ledger-badge">
+          <span class="dot-indicator green-dot"></span>
+          <span class="badge-text" id="sync-status">FEEDS: SYNCED</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Notebook spread -->
+    <main class="notebook-spread">
+
+      <!-- LEFT PAGE: INSIDE COVER & TABLE OF CONTENTS -->
+      <section class="left-page-cover">
+
+        <h2>MEMORANDA</h2>
+
+        <!-- Inside-Cover Truth Anchors Banner -->
+        <div class="inside-cover-anchor" id="truth-anchor-card">
+          <div class="anchor-title-lbl">FOUNDATIONAL ANCHOR:</div>
+          <div class="quote-body">
+            <blockquote id="truth-quote">
+              DELIGHT IN THE LORD, AND HE WILL GIVE YOU THE DESIRES OF YOUR HEART.
+            </blockquote>
+          </div>
+          <div class="quote-cycle-footer">
+            <button class="cycle-btn" id="next-quote">CYCLE ANCHOR</button>
+          </div>
+        </div>
+
+        <h2 style="margin-top: 1.5rem;">TABLE OF CONTENTS</h2>
+
+        <!-- Spoke categories listed horizontally (TOC) -->
+        <div class="toc-list" id="toc-list">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </section>
+
+      <!-- CENTER: STEEL COIL SPIRAL BINDING GUTTER -->
+      <div class="spiral-gutter" id="spiral-gutter">
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+        <div class="spiral-loop"></div>
+      </div>
+
+      <!-- RIGHT PAGE: THE RULED PAPER LEDGER -->
+      <section class="right-page-paper">
+
+        <div class="ledger-header-rule">
+          <span>FIELD RECORDS LEDGER</span>
+          <span id="active-spoke-num">RECORD: 00</span>
+        </div>
+        <div class="detail-card-glass" id="detail-panel">
+
+          <!-- Empty State (slim — auto-hidden when first spoke loads) -->
+          <div class="empty-state" id="panel-empty-state">
+            <div class="ledger-warning-stamp" style="margin-top:3rem;">
+              SELECT A CATEGORY ON THE LEFT TO OPEN ITS RECORD.
+            </div>
+          </div>
+
+          <!-- Lined Paper details content -->
+          <div class="detail-content hidden" id="panel-content">
+
+            <!-- Spoke header -->
+            <div class="detail-header">
+              <div class="spoke-indicator-wrap">
+                <span class="spoke-num-stamp" id="spoke-num-badge">01</span>
+                <div>
+                  <h2 id="spoke-title">WALK WITH GOD</h2>
+                  <p id="spoke-subtitle" class="text-muted">Devotional life, abiding, inward work of the Spirit</p>
+                </div>
+              </div>
+              <div class="source-tag" id="thread-source-badge">
+                <span id="thread-source-name">SOURCE: CLAUDE</span>
+              </div>
+            </div>
+
+            <!-- Utilitarian Metrics -->
+            <div class="ledger-metrics-grid">
+              <div class="metric-item">
+                <span class="metric-lbl">METRIC: DAYS SINCE TOUCHED</span>
+                <span class="metric-val" id="metric-days-touched">🟢 CHECKED IN (1 DAY AGO)</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-lbl">FIELD STATE: CURRENT STANDING</span>
+                <select id="state-rating-select" class="metric-select">
+                  <option value="ABIDING">🟢 ABIDING / FLOURISHING</option>
+                  <option value="SIFTING">🟡 SIFTING / STRUGGLING</option>
+                  <option value="RESTING">🔵 INTENTIONAL RESTING</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Thread info card -->
+            <div class="thread-info-card">
+              <div class="thread-meta">
+                <span>INDEXED RECORD:</span>
+                <span id="thread-timestamp">TODAY, 0730 HRS</span>
+              </div>
+              <h3 id="thread-title">DEVOTIONS: PRACTICING HIS PRESENCE</h3>
+              <p id="thread-summary" class="thread-summary-text">
+                Quiet time reflections on practicing His presence in the midst of idea-pressure.
+              </p>
+            </div>
+
+            <!-- Lined sub-checklist studies -->
+            <div class="bullet-list-section hidden" id="bullet-list-wrap">
+              <h4 id="bullet-list-title">OPEN RESEARCH ITEMS</h4>
+              <ul class="bullet-list" id="bullet-list-content">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+
+            <!-- Shepherding logs -->
+            <div class="extra-feed-section hidden" id="extra-feed-wrap">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- ─────────────────────────────────────── -->
+            <!-- RECURRING CHECKLISTS SECTION            -->
+            <!-- ─────────────────────────────────────── -->
+            <div class="recurring-checklists-section" id="recurring-checklists-wrap">
+
+              <!-- Weekly -->
+              <div class="checklist-column">
+                <div class="checklist-period-label">
+                  <i data-lucide="calendar"></i>
+                  <span>THIS WEEK</span>
+                </div>
+                <ul class="check-list" id="weekly-checklist">
+                  <!-- populated by app.js -->
+                </ul>
+              </div>
+
+              <!-- Monthly -->
+              <div class="checklist-column">
+                <div class="checklist-period-label">
+                  <i data-lucide="calendar-range"></i>
+                  <span>THIS MONTH</span>
+                </div>
+                <ul class="check-list" id="monthly-checklist">
+                  <!-- populated by app.js -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- ─────────────────────────────────────── -->
+            <!-- ASANA QUICK TASK ADDITION               -->
+            <!-- ─────────────────────────────────────── -->
+            <div class="asana-task-section" id="asana-task-wrap">
+              <div class="section-label-row">
+                <i data-lucide="check-square"></i>
+                <span>ADD TO ASANA</span>
+              </div>
+              <div class="asana-input-row">
+                <input type="text" id="asana-task-input" class="asana-input" placeholder="New task for this category..." maxlength="200" />
+                <button class="asana-submit-btn" id="asana-submit-btn">
+                  <i data-lucide="send"></i>
+                  <span>PUSH TASK</span>
+                </button>
+              </div>
+              <div class="asana-feedback hidden" id="asana-feedback"></div>
+            </div>
+
+            <!-- ─────────────────────────────────────── -->
+            <!-- RULED NOTEBOOK JOURNAL                  -->
+            <!-- ─────────────────────────────────────── -->
+            <div class="ruled-journal-card">
+              <div class="journal-header-stamp">
+                <i data-lucide="pen-tool"></i>
+                <span>POUR OUT & ASK (JOURNAL NOTE)</span>
+              </div>
+
+              <textarea class="ruled-textarea" id="journal-input" placeholder="Pour out immediate thoughts, active theological questions, or hurdles here..."></textarea>
+
+              <div class="journal-footer">
+                <p class="journal-hint">Journal to Google Doc or copy as a Claude prompt context block.</p>
+                <div class="journal-action-row">
+                  <button class="doc-append-btn" id="doc-append-btn">
+                    <i data-lucide="file-text"></i>
+                    <span>APPEND TO DOC</span>
+                  </button>
+                  <button class="rubber-stamp-btn" id="feed-to-claude-btn">
+                    <span>FEED TO CLAUDE</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ─────────────────────────────────────── -->
+            <!-- CLAUDE RESEARCH PASTE-BACK PARSER       -->
+            <!-- ─────────────────────────────────────── -->
+            <div class="claude-paste-section" id="claude-paste-wrap">
+              <div class="section-label-row">
+                <i data-lucide="clipboard-paste"></i>
+                <span>PASTE CLAUDE RESPONSE</span>
+              </div>
+              <p class="section-hint">Paste Claude's reply below. The hub will extract the summary and next step automatically.</p>
+              <textarea class="paste-textarea" id="claude-paste-input" placeholder="### CLAUDE RESEARCH: [TOPIC]&#10;SUMMARY: ...&#10;NEXT STEP: ..."></textarea>
+              <button class="parse-btn" id="claude-parse-btn">
+                <i data-lucide="cpu"></i>
+                <span>PARSE & UPDATE SPOKE</span>
+              </button>
+              <div class="parse-feedback hidden" id="parse-feedback"></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Schema sync drawer bottom -->
+    <footer class="hub-settings-bar">
+      <div class="settings-trigger" id="settings-toggle">
+        <i data-lucide="settings"></i>
+        <span>SCHEMA SYSTEM INDEX (LOCAL SYNC & DATA CONTROLS)</span>
+      </div>
+      <div class="settings-drawer hidden" id="settings-drawer">
+        <div class="drawer-header">
+          <h3>SYSTEM INTERFACE</h3>
+          <p>Configure integrations, import/export data, and check sync logs.</p>
+        </div>
+
+        <!-- Integrations Status Grid -->
+        <div class="integrations-grid">
+          <div class="integration-item">
+            <div class="int-name">CLAUDE.AI</div>
+            <div class="int-status green">SYNC ACTIVE</div>
+          </div>
+          <div class="integration-item">
+            <div class="int-name">OTTER.AI</div>
+            <div class="int-status green">SYNC ACTIVE</div>
+          </div>
+          <div class="integration-item">
+            <div class="int-name">GOOGLE DRIVE</div>
+            <div class="int-status green">SYNC ACTIVE</div>
+          </div>
+          <div class="integration-item">
+            <div class="int-name">ASANA TASKS</div>
+            <div class="int-status green">SYNC ACTIVE</div>
+          </div>
+        </div>
+
+        <!-- Asana Configuration -->
+        <div class="config-section">
+          <h4>ASANA CONFIGURATION</h4>
+          <p>Store your Personal Access Token and default Project ID securely in your local browser.</p>
+          <div class="config-row">
+            <label for="asana-pat-input">PERSONAL ACCESS TOKEN</label>
+            <input type="password" id="asana-pat-input" placeholder="1/xxxxxxxxxxxxxxxxx..." />
+          </div>
+          <div class="config-row">
+            <label for="asana-project-input">DEFAULT PROJECT GID</label>
+            <input type="text" id="asana-project-input" placeholder="1234567890123456" />
+          </div>
+          <button class="sync-btn btn-primary" id="save-asana-config-btn">
+            <i data-lucide="save"></i> SAVE TO BROWSER
+          </button>
+        </div>
+
+        <!-- Google Doc Configuration -->
+        <div class="config-section">
+          <h4>GOOGLE DOC JOURNAL ENDPOINT</h4>
+          <p>Deploy <code>GoogleAppsScript.js</code> as a Web App at script.google.com and paste its URL here.</p>
+          <div class="config-row">
+            <label for="gdoc-url-input">APPS SCRIPT WEB APP URL</label>
+            <input type="text" id="gdoc-url-input" placeholder="https://script.google.com/macros/s/.../exec" />
+          </div>
+          <button class="sync-btn btn-primary" id="save-gdoc-config-btn">
+            <i data-lucide="save"></i> SAVE TO BROWSER
+          </button>
+        </div>
+
+        <!-- Data actions -->
+        <div class="sync-actions-panel">
+          <div class="sync-action">
+            <h4>EXPORT DATA SCHEMATIC</h4>
+            <p>Save current coordinates to <code>living_hub_data.json</code> local config.</p>
+            <button class="sync-btn" id="export-btn"><i data-lucide="download"></i> SAVE DATA.JSON</button>
+          </div>
+          <div class="sync-action">
+            <h4>IMPORT DATA SCHEMATIC</h4>
+            <p>Paste updated JSON string to reconstruct coordinates and index records.</p>
+            <textarea id="import-json-area" placeholder='{"user": "JONATHAN MARSHALL", ...}'></textarea>
+            <button class="sync-btn btn-primary" id="import-btn"><i data-lucide="upload"></i> OVERWRITE SCHEMA</button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- app.js -->
+  <script src="app.js"></script>
+</body>
+</html>
