@@ -32,13 +32,23 @@
 
 // ====== CONFIG ======
 var JOURNAL_DOC_ID = 'PASTE_YOUR_GOOGLE_DOC_ID_HERE';
+
+// Asana — paste your Personal Access Token here. Keeping it in the Apps Script
+// (server side) means it never lives in the browser. Create one at:
+//   Asana -> Settings -> Apps -> Developer Console -> Personal Access Tokens
+var ASANA_PAT = '';
+// Optional default Asana project GID (the long number in a project's URL).
+// Can also be supplied per-request from the Living Hub settings drawer.
+var ASANA_DEFAULT_PROJECT = '';
+
 // Optional shared secret. If set (non-empty), the request must include the same
 // value in the "token" field of the JSON body, or it will be rejected.
 var SECRET_TOKEN = '';
 // ====================
 
 /**
- * Handle the POST from the Living Hub journal.
+ * Handle every POST from the Living Hub UI. If the body carries an "action"
+ * field it is an Asana proxy call; otherwise it is a journal append.
  */
 function doPost(e) {
   try {
@@ -49,6 +59,11 @@ function doPost(e) {
 
     if (SECRET_TOKEN && body.token !== SECRET_TOKEN) {
       return _json({ ok: false, error: 'Unauthorized' });
+    }
+
+    // ── Asana proxy actions ──────────────────────────────────────────────
+    if (body.action) {
+      return handleAsana(body);
     }
 
     var text = (body.text || '').toString().trim();
@@ -83,10 +98,75 @@ function doPost(e) {
 }
 
 /**
+ * Asana proxy. Runs server-side (UrlFetchApp) so the browser never needs the
+ * token and never hits Asana's CORS wall. Tasks created from the hub are tagged
+ * in their notes with [LH:<spokeId>] so each category can list only its own.
+ */
+function handleAsana(body) {
+  if (!ASANA_PAT) {
+    return _json({ ok: false, error: 'ASANA_PAT is not set in the Apps Script.' });
+  }
+  var base = 'https://app.asana.com/api/1.0';
+  var headers = { Authorization: 'Bearer ' + ASANA_PAT };
+  var project = (body.project || ASANA_DEFAULT_PROJECT || '').toString();
+  var marker = body.spokeId ? '[LH:' + body.spokeId + ']' : '';
+
+  try {
+    if (body.action === 'asanaList') {
+      if (!project) return _json({ ok: false, error: 'No Asana project GID configured.' });
+      var listUrl = base + '/tasks?project=' + encodeURIComponent(project) +
+                    '&opt_fields=name,completed,notes&limit=100';
+      var lr = UrlFetchApp.fetch(listUrl, { headers: headers, muteHttpExceptions: true });
+      var ld = JSON.parse(lr.getContentText());
+      if (!ld.data) return _json({ ok: false, error: _asanaErr(ld, 'list failed') });
+      var tasks = ld.data.filter(function (t) {
+        if (t.completed) return false;
+        return marker ? (t.notes || '').indexOf(marker) !== -1 : true;
+      }).map(function (t) { return { gid: t.gid, name: t.name }; });
+      return _json({ ok: true, tasks: tasks });
+    }
+
+    if (body.action === 'asanaAdd') {
+      if (!project) return _json({ ok: false, error: 'No Asana project GID configured.' });
+      var notes = (body.spokeTitle ? 'Living Hub · ' + body.spokeTitle + '\n' : '') + marker;
+      var addRes = UrlFetchApp.fetch(base + '/tasks', {
+        method: 'post', contentType: 'application/json', headers: headers,
+        muteHttpExceptions: true,
+        payload: JSON.stringify({ data: { name: (body.name || '').toString(), notes: notes, projects: [project] } })
+      });
+      var ad = JSON.parse(addRes.getContentText());
+      if (ad.data && ad.data.gid) return _json({ ok: true, gid: ad.data.gid });
+      return _json({ ok: false, error: _asanaErr(ad, 'add failed') });
+    }
+
+    if (body.action === 'asanaComplete') {
+      var gid = (body.taskGid || '').toString();
+      if (!gid) return _json({ ok: false, error: 'No taskGid.' });
+      var cRes = UrlFetchApp.fetch(base + '/tasks/' + gid, {
+        method: 'put', contentType: 'application/json', headers: headers,
+        muteHttpExceptions: true,
+        payload: JSON.stringify({ data: { completed: true } })
+      });
+      var cd = JSON.parse(cRes.getContentText());
+      if (cd.data) return _json({ ok: true });
+      return _json({ ok: false, error: _asanaErr(cd, 'complete failed') });
+    }
+
+    return _json({ ok: false, error: 'Unknown action: ' + body.action });
+  } catch (err) {
+    return _json({ ok: false, error: err.toString() });
+  }
+}
+
+function _asanaErr(data, fallback) {
+  return (data && data.errors && data.errors[0] && data.errors[0].message) || fallback;
+}
+
+/**
  * Simple health check so you can verify the deployment in a browser.
  */
 function doGet() {
-  return _json({ ok: true, service: 'Living Hub Journal Endpoint', alive: true });
+  return _json({ ok: true, service: 'Living Hub Endpoint (journal + Asana)', alive: true });
 }
 
 function _json(obj) {

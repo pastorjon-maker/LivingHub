@@ -149,30 +149,21 @@
                   <p id="spoke-subtitle" class="text-muted">Devotional life, abiding, inward work of the Spirit</p>
                 </div>
               </div>
-              <div class="source-tag" id="thread-source-badge">
-                <span id="thread-source-name">SOURCE: CLAUDE</span>
-              </div>
             </div>
 
-            <!-- Utilitarian Metrics -->
-            <div class="ledger-metrics-grid">
-              <div class="metric-item">
-                <span class="metric-lbl">METRIC: DAYS SINCE TOUCHED</span>
-                <span class="metric-val" id="metric-days-touched">🟢 CHECKED IN (1 DAY AGO)</span>
+            <!-- Compact status strip: standing pills + quiet last-touched -->
+            <div class="status-strip">
+              <div class="state-pills" id="state-pills" role="group" aria-label="Current standing">
+                <button type="button" class="state-pill" data-state="ABIDING">ABIDING</button>
+                <button type="button" class="state-pill" data-state="SIFTING">SIFTING</button>
+                <button type="button" class="state-pill" data-state="RESTING">RESTING</button>
               </div>
-              <div class="metric-item">
-                <span class="metric-lbl">FIELD STATE: CURRENT STANDING</span>
-                <select id="state-rating-select" class="metric-select">
-                  <option value="ABIDING">🟢 ABIDING / FLOURISHING</option>
-                  <option value="SIFTING">🟡 SIFTING / STRUGGLING</option>
-                  <option value="RESTING">🔵 INTENTIONAL RESTING</option>
-                </select>
-              </div>
+              <span class="touched-note" id="touched-note">Touched today</span>
             </div>
 
             <!-- Wheel signal strength (feeds the oscilloscope radar) -->
             <div class="scope-rating-row">
-              <span class="metric-lbl">WHEEL SIGNAL (1–10) — SELF-ASSESSMENT</span>
+              <span class="metric-lbl">WHEEL SIGNAL (1–10)</span>
               <div class="rating-control">
                 <input type="range" min="1" max="10" step="1" id="rating-slider" class="rating-slider" />
                 <span class="rating-val" id="rating-val">5</span>
@@ -191,63 +182,29 @@
               </p>
             </div>
 
-            <!-- Lined sub-checklist studies -->
-            <div class="bullet-list-section hidden" id="bullet-list-wrap">
-              <h4 id="bullet-list-title">OPEN RESEARCH ITEMS</h4>
-              <ul class="bullet-list" id="bullet-list-content">
-                <!-- Dynamically populated -->
-              </ul>
-            </div>
-
             <!-- Shepherding logs -->
             <div class="extra-feed-section hidden" id="extra-feed-wrap">
               <!-- Dynamically populated -->
             </div>
 
             <!-- ─────────────────────────────────────── -->
-            <!-- RECURRING CHECKLISTS SECTION            -->
+            <!-- UNIFIED FIELD CHECKLIST                 -->
+            <!-- (open items + weekly + monthly in one)  -->
             <!-- ─────────────────────────────────────── -->
-            <div class="recurring-checklists-section" id="recurring-checklists-wrap">
-
-              <!-- Weekly -->
-              <div class="checklist-column">
-                <div class="checklist-period-label">
-                  <i data-lucide="calendar"></i>
-                  <span>THIS WEEK</span>
-                </div>
-                <ul class="check-list" id="weekly-checklist">
-                  <!-- populated by app.js -->
-                </ul>
-              </div>
-
-              <!-- Monthly -->
-              <div class="checklist-column">
-                <div class="checklist-period-label">
-                  <i data-lucide="calendar-range"></i>
-                  <span>THIS MONTH</span>
-                </div>
-                <ul class="check-list" id="monthly-checklist">
-                  <!-- populated by app.js -->
-                </ul>
-              </div>
-            </div>
-
-            <!-- ─────────────────────────────────────── -->
-            <!-- ASANA QUICK TASK ADDITION               -->
-            <!-- ─────────────────────────────────────── -->
-            <div class="asana-task-section" id="asana-task-wrap">
+            <div class="checklist-card" id="checklist-wrap">
               <div class="section-label-row">
-                <i data-lucide="check-square"></i>
-                <span>ADD TO ASANA</span>
+                <i data-lucide="list-checks"></i>
+                <span>FIELD CHECKLIST</span>
               </div>
-              <div class="asana-input-row">
-                <input type="text" id="asana-task-input" class="asana-input" placeholder="New task for this category..." maxlength="200" />
-                <button class="asana-submit-btn" id="asana-submit-btn">
-                  <i data-lucide="send"></i>
-                  <span>PUSH TASK</span>
+              <ul class="unified-check-list" id="unified-checklist">
+                <!-- populated by app.js -->
+              </ul>
+              <div class="add-item-row">
+                <input type="text" id="add-item-input" class="asana-input" placeholder="Add a checklist item…" maxlength="200" />
+                <button type="button" class="add-item-btn" id="add-item-btn">
+                  <i data-lucide="plus"></i><span>ADD</span>
                 </button>
               </div>
-              <div class="asana-feedback hidden" id="asana-feedback"></div>
             </div>
 
             <!-- ─────────────────────────────────────── -->
@@ -273,6 +230,27 @@
                   </button>
                 </div>
               </div>
+            </div>
+
+            <!-- ─────────────────────────────────────── -->
+            <!-- ASANA — SEE & ADD TASKS (below journal) -->
+            <!-- ─────────────────────────────────────── -->
+            <div class="asana-task-section" id="asana-task-wrap">
+              <div class="section-label-row">
+                <i data-lucide="check-square"></i>
+                <span>ASANA — TASKS FOR THIS CATEGORY</span>
+              </div>
+              <ul class="asana-task-list" id="asana-task-list">
+                <!-- populated by app.js -->
+              </ul>
+              <div class="asana-input-row">
+                <input type="text" id="asana-task-input" class="asana-input" placeholder="New Asana task…" maxlength="200" />
+                <button type="button" class="asana-submit-btn" id="asana-submit-btn">
+                  <i data-lucide="send"></i>
+                  <span>PUSH TASK</span>
+                </button>
+              </div>
+              <div class="asana-feedback hidden" id="asana-feedback"></div>
             </div>
 
             <!-- ─────────────────────────────────────── -->
@@ -329,32 +307,32 @@
           </div>
         </div>
 
-        <!-- Asana Configuration -->
+        <!-- Apps Script endpoint (journal + Asana proxy) -->
         <div class="config-section">
-          <h4>ASANA CONFIGURATION</h4>
-          <p>Store your Personal Access Token and default Project ID securely in your local browser.</p>
-          <div class="config-row">
-            <label for="asana-pat-input">PERSONAL ACCESS TOKEN</label>
-            <input type="password" id="asana-pat-input" placeholder="1/xxxxxxxxxxxxxxxxx..." />
-          </div>
-          <div class="config-row">
-            <label for="asana-project-input">DEFAULT PROJECT GID</label>
-            <input type="text" id="asana-project-input" placeholder="1234567890123456" />
-          </div>
-          <button class="sync-btn btn-primary" id="save-asana-config-btn">
-            <i data-lucide="save"></i> SAVE TO BROWSER
-          </button>
-        </div>
-
-        <!-- Google Doc Configuration -->
-        <div class="config-section">
-          <h4>GOOGLE DOC JOURNAL ENDPOINT</h4>
-          <p>Deploy <code>GoogleAppsScript.js</code> as a Web App at script.google.com and paste its URL here.</p>
+          <h4>APPS SCRIPT ENDPOINT (JOURNAL + ASANA)</h4>
+          <p>Deploy <code>GoogleAppsScript.js</code> as a Web App at script.google.com — it powers
+             both the journal <em>and</em> Asana. Your Asana token lives inside that script
+             (<code>ASANA_PAT</code>), never in the browser. Paste the <code>/exec</code> URL here.</p>
           <div class="config-row">
             <label for="gdoc-url-input">APPS SCRIPT WEB APP URL</label>
             <input type="text" id="gdoc-url-input" placeholder="https://script.google.com/macros/s/.../exec" />
           </div>
           <button class="sync-btn btn-primary" id="save-gdoc-config-btn">
+            <i data-lucide="save"></i> SAVE TO BROWSER
+          </button>
+        </div>
+
+        <!-- Asana project -->
+        <div class="config-section">
+          <h4>ASANA PROJECT</h4>
+          <p>The project new tasks land in (and where this category's tasks are read from).
+             It's the long number in a project's URL. Not a secret.</p>
+          <div class="config-row">
+            <label for="asana-project-input">PROJECT GID</label>
+            <input type="text" id="asana-project-input" placeholder="1234567890123456" />
+          </div>
+          <input type="hidden" id="asana-pat-input" />
+          <button class="sync-btn btn-primary" id="save-asana-config-btn">
             <i data-lucide="save"></i> SAVE TO BROWSER
           </button>
         </div>

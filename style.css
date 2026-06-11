@@ -633,6 +633,114 @@ body.kraft-cover {
 }
 .detail-header .text-muted { font-size: 0.78rem; }
 
+/* ── Compact status strip: standing pills + quiet last-touched ──────── */
+.status-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+.state-pills { display: flex; gap: 0.4rem; }
+.state-pill {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: transparent;
+  border: 1.5px solid var(--paper-line);
+  border-radius: 2px;
+  padding: 0.32rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.state-pill:hover { border-color: var(--ink-faint); color: var(--ink); }
+.state-pill.active { color: #fff; border-color: transparent; }
+.state-pill.pill-ABIDING.active { background: var(--moss); }
+.state-pill.pill-SIFTING.active { background: var(--amber); }
+.state-pill.pill-RESTING.active { background: var(--aqua); }
+.touched-note {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* ── Unified field checklist (open + weekly + monthly) ─────────────── */
+.checklist-card {
+  background: #fffdf6;
+  border: 1px solid var(--paper-line);
+  border-radius: 3px;
+  padding: 0.85rem 1rem 0.95rem;
+  margin-bottom: 1.1rem;
+}
+.unified-check-list { list-style: none; margin: 0.4rem 0 0.7rem; padding: 0; }
+.unified-check-list .check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.32rem 0.1rem;
+  border-bottom: 1px dotted var(--paper-line);
+  cursor: pointer;
+  font-size: 0.86rem;
+}
+.unified-check-list .check-item:last-child { border-bottom: none; }
+.unified-check-list .check-item input[type="checkbox"] { accent-color: var(--moss); cursor: pointer; }
+.unified-check-list .check-label { flex: 1; color: var(--ink); }
+.unified-check-list .check-item.done .check-label {
+  text-decoration: line-through;
+  color: var(--ink-faint);
+}
+.period-chip {
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fff;
+  border-radius: 2px;
+  padding: 0.12rem 0.32rem;
+}
+.period-chip.chip-weekly { background: var(--aqua); }
+.period-chip.chip-monthly { background: var(--amber); }
+.check-list-empty { list-style: none; font-size: 0.8rem; font-style: italic; color: var(--ink-faint); padding: 0.3rem 0.1rem; }
+
+.add-item-row { display: flex; gap: 0.5rem; }
+.add-item-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: var(--kraft-dark);
+  border: 1px solid var(--kraft-deep);
+  border-radius: 2px;
+  padding: 0 0.7rem;
+  cursor: pointer;
+}
+.add-item-btn:hover { filter: brightness(1.06); }
+.add-item-btn i { width: 13px; height: 13px; }
+
+/* ── Asana task list (below the journal) ───────────────────────────── */
+.asana-task-list { list-style: none; margin: 0.4rem 0 0.7rem; padding: 0; }
+.asana-task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.32rem 0.1rem;
+  border-bottom: 1px dotted var(--paper-line);
+  font-size: 0.86rem;
+}
+.asana-task-item:last-child { border-bottom: none; }
+.asana-task-item input[type="checkbox"] { accent-color: var(--moss); cursor: pointer; }
+.asana-task-label { flex: 1; color: var(--ink); }
+.asana-task-item.completing .asana-task-label { text-decoration: line-through; color: var(--ink-faint); }
+.asana-hint { list-style: none; font-size: 0.78rem; font-style: italic; color: var(--ink-faint); padding: 0.3rem 0.1rem; }
+
 .source-tag {
   font-size: 0.6rem;
   font-weight: 700;

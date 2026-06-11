@@ -61,14 +61,31 @@
         const local = JSON.parse(localRaw);
         if (fileData && (fileData.version || 0) > (local.version || 0)) {
           localStorage.removeItem(LS.data);
-          return fileData;
+          return normalizeData(fileData);
         }
-        return local;
+        return normalizeData(local);
       } catch (_) { /* corrupt local — fall through to file */ }
     }
 
-    if (fileData) return fileData;
+    if (fileData) return normalizeData(fileData);
     return { user: "JONATHAN MARSHALL", truthAnchors: [], spokes: [] };
+  }
+
+  // Bring any data (shipped, saved, or imported) up to the current shape:
+  // unify the old "open research items" strings into checkable task objects.
+  function normalizeData(data) {
+    (data.spokes || []).forEach((s, si) => {
+      s.bulletList = s.bulletList || { title: "OPEN ITEMS", items: [] };
+      s.bulletList.items = (s.bulletList.items || []).map((it, idx) =>
+        typeof it === "string"
+          ? { id: "i" + si + "_" + idx, task: it, completed: false }
+          : it
+      );
+      s.checklists = s.checklists || { weekly: [], monthly: [] };
+      s.checklists.weekly = s.checklists.weekly || [];
+      s.checklists.monthly = s.checklists.monthly || [];
+    });
+    return data;
   }
 
   function persist() {
@@ -236,13 +253,18 @@
     return Math.floor((Date.now() - then) / 86400000);
   }
 
-  function touchedLabel(spoke) {
+  function touchedNote(spoke) {
     const d = daysSince(spoke.lastTouched);
-    if (d === null) return "— NO RECORD —";
-    if (d <= 1) return `🟢 CHECKED IN (${d === 0 ? "TODAY" : "1 DAY AGO"})`;
-    if (d <= 7) return `🟢 ${d} DAYS AGO`;
-    if (d <= 21) return `🟡 ${d} DAYS AGO — GETTING DUSTY`;
-    return `🔴 ${d} DAYS AGO — NEEDS A VISIT`;
+    if (d === null) return "No record yet";
+    if (d === 0) return "Touched today";
+    if (d === 1) return "Touched yesterday";
+    if (d <= 30) return `Touched ${d} days ago`;
+    return `Last touched ${d} days ago`;
+  }
+
+  function markTouched(spoke) {
+    spoke.lastTouched = new Date().toISOString().slice(0, 10);
+    $("touched-note").textContent = touchedNote(spoke);
   }
 
   // ── Render the active spoke record ───────────────────────────────────
@@ -258,10 +280,9 @@
     $("spoke-num-badge").textContent = spoke.num;
     $("spoke-title").textContent = spoke.title;
     $("spoke-subtitle").textContent = spoke.subtitle || "";
-    $("thread-source-name").textContent = "SOURCE: " + (spoke.source || "MANUAL");
 
-    $("metric-days-touched").textContent = touchedLabel(spoke);
-    $("state-rating-select").value = spoke.state || "ABIDING";
+    renderStatusPills(spoke);
+    $("touched-note").textContent = touchedNote(spoke);
 
     const rating = clampRating(spoke.rating);
     $("rating-slider").value = rating;
@@ -272,9 +293,8 @@
     $("thread-title").textContent = thread.title || "—";
     $("thread-summary").textContent = thread.summary || "";
 
-    renderBulletList(spoke);
     renderExtraFeed(spoke);
-    renderChecklists(spoke);
+    renderChecklist(spoke);
 
     // refresh active TOC highlight
     document.querySelectorAll(".toc-item").forEach((el) => {
@@ -283,20 +303,15 @@
 
     renderWheel(); // refresh the radar's active-spoke highlight
     refreshIcons();
+    loadAsanaTasks(spoke); // pull live Asana tasks for this category
   }
 
-  function renderBulletList(spoke) {
-    const wrap = $("bullet-list-wrap");
-    const bl = spoke.bulletList;
-    if (!bl || !(bl.items || []).length) { wrap.classList.add("hidden"); return; }
-    wrap.classList.remove("hidden");
-    $("bullet-list-title").textContent = bl.title || "OPEN ITEMS";
-    const ul = $("bullet-list-content");
-    ul.innerHTML = "";
-    bl.items.forEach((txt) => {
-      const li = document.createElement("li");
-      li.textContent = txt;
-      ul.appendChild(li);
+  function renderStatusPills(spoke) {
+    const cur = spoke.state || "ABIDING";
+    document.querySelectorAll("#state-pills .state-pill").forEach((btn) => {
+      const s = btn.getAttribute("data-state");
+      btn.classList.add("pill-" + s);
+      btn.classList.toggle("active", s === cur);
     });
   }
 
@@ -316,22 +331,28 @@
     });
   }
 
-  function renderChecklists(spoke) {
-    const lists = spoke.checklists || { weekly: [], monthly: [] };
-    renderCheckColumn($("weekly-checklist"), lists.weekly || [], spoke, "weekly");
-    renderCheckColumn($("monthly-checklist"), lists.monthly || [], spoke, "monthly");
-  }
-
-  function renderCheckColumn(ul, items, spoke, period) {
+  // ── Unified field checklist (open items + weekly + monthly, one list) ─
+  function renderChecklist(spoke) {
+    const ul = $("unified-checklist");
     ul.innerHTML = "";
-    if (!items.length) {
+    const bl = spoke.bulletList || { items: [] };
+    const lists = spoke.checklists || { weekly: [], monthly: [] };
+
+    const rows = [];
+    (bl.items || []).forEach((it) => rows.push({ item: it, bucket: "open", chip: "" }));
+    (lists.weekly || []).forEach((it) => rows.push({ item: it, bucket: "weekly", chip: "WK" }));
+    (lists.monthly || []).forEach((it) => rows.push({ item: it, bucket: "monthly", chip: "MO" }));
+
+    if (!rows.length) {
       const li = document.createElement("li");
       li.className = "check-list-empty";
-      li.textContent = "No recurring items.";
+      li.textContent = "No items yet — add one below.";
       ul.appendChild(li);
       return;
     }
-    items.forEach((item) => {
+
+    rows.forEach((row) => {
+      const item = row.item;
       const li = document.createElement("li");
       li.className = "check-item" + (item.completed ? " done" : "");
       const cb = document.createElement("input");
@@ -341,12 +362,17 @@
       label.className = "check-label";
       label.textContent = item.task;
       li.append(cb, label);
+      if (row.chip) {
+        const chip = document.createElement("span");
+        chip.className = "period-chip chip-" + row.bucket;
+        chip.textContent = row.chip;
+        li.appendChild(chip);
+      }
       const toggle = (e) => {
         if (e.target !== cb) cb.checked = !cb.checked;
         item.completed = cb.checked;
         li.classList.toggle("done", item.completed);
-        spoke.lastTouched = new Date().toISOString().slice(0, 10);
-        $("metric-days-touched").textContent = touchedLabel(spoke);
+        markTouched(spoke);
         persist();
       };
       li.addEventListener("click", toggle);
@@ -354,13 +380,30 @@
     });
   }
 
-  // ── State rating select ──────────────────────────────────────────────
-  function onStateChange(e) {
+  function addChecklistItem() {
+    const spoke = activeSpoke();
+    const input = $("add-item-input");
+    if (!spoke) return;
+    const text = input.value.trim();
+    if (!text) return;
+    spoke.bulletList = spoke.bulletList || { title: "OPEN ITEMS", items: [] };
+    spoke.bulletList.items = spoke.bulletList.items || [];
+    spoke.bulletList.items.push({ id: "i" + Date.now(), task: text, completed: false });
+    input.value = "";
+    markTouched(spoke);
+    persist();
+    renderChecklist(spoke);
+  }
+
+  // ── State pills (replaces the clunky dropdown) ───────────────────────
+  function onStatePillClick(e) {
+    const btn = e.target.closest(".state-pill");
+    if (!btn) return;
     const spoke = activeSpoke();
     if (!spoke) return;
-    spoke.state = e.target.value;
-    spoke.lastTouched = new Date().toISOString().slice(0, 10);
-    $("metric-days-touched").textContent = touchedLabel(spoke);
+    spoke.state = btn.getAttribute("data-state");
+    markTouched(spoke);
+    renderStatusPills(spoke);
     renderTOC();
     persist();
   }
@@ -371,8 +414,7 @@
     const v = clampRating(e.target.value);
     spoke.rating = v;
     $("rating-val").textContent = v;
-    spoke.lastTouched = new Date().toISOString().slice(0, 10);
-    $("metric-days-touched").textContent = touchedLabel(spoke);
+    markTouched(spoke);
     renderWheel();
     persist();
   }
@@ -452,67 +494,102 @@
     }
   }
 
-  // ── Asana task push (direct browser → Asana API) ─────────────────────
+  // ── Asana (via the Google Apps Script proxy) ─────────────────────────
+  // Asana's REST API can't be called directly from a browser (no CORS),
+  // so we route through the same Apps Script web app used for journaling.
+  // The PAT lives server-side in that script — never in the browser.
+  function asanaProxyUrl() { return localStorage.getItem(LS.gdocUrl) || ""; }
+
+  async function proxyAsana(payload) {
+    const url = asanaProxyUrl();
+    if (!url) throw new Error("no-proxy");
+    const res = await fetch(url, {
+      method: "POST",
+      // text/plain keeps this a "simple" request so the browser skips the
+      // CORS preflight that Apps Script web apps can't answer.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  }
+
+  function asanaHint(msg) { return `<li class="asana-hint">${escapeHtml(msg)}</li>`; }
+
+  async function loadAsanaTasks(spoke) {
+    const listEl = $("asana-task-list");
+    if (!listEl) return;
+    const url = asanaProxyUrl();
+    const project = localStorage.getItem(LS.asanaProj) || "";
+    if (!url) {
+      listEl.innerHTML = asanaHint("Connect Asana in settings to see & add tasks.");
+      return;
+    }
+    listEl.innerHTML = asanaHint("Loading tasks…");
+    try {
+      const json = await proxyAsana({ action: "asanaList", spokeId: spoke.id, project });
+      if (!json.ok) { listEl.innerHTML = asanaHint("Asana: " + (json.error || "error")); return; }
+      renderAsanaTasks(spoke, json.tasks || []);
+    } catch (err) {
+      listEl.innerHTML = asanaHint("Couldn't reach the Asana proxy — check the URL in settings.");
+    }
+  }
+
+  function renderAsanaTasks(spoke, tasks) {
+    const listEl = $("asana-task-list");
+    listEl.innerHTML = "";
+    if (!tasks.length) { listEl.innerHTML = asanaHint("No open tasks for this category."); return; }
+    tasks.forEach((t) => {
+      const li = document.createElement("li");
+      li.className = "asana-task-item";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      const label = document.createElement("span");
+      label.className = "asana-task-label";
+      label.textContent = t.name;
+      li.append(cb, label);
+      cb.addEventListener("change", async () => {
+        cb.disabled = true;
+        li.classList.add("completing");
+        try {
+          const json = await proxyAsana({ action: "asanaComplete", taskGid: t.gid });
+          if (json.ok) { li.remove(); if (!listEl.children.length) listEl.innerHTML = asanaHint("No open tasks for this category."); }
+          else { cb.disabled = false; li.classList.remove("completing"); }
+        } catch (_) { cb.disabled = false; li.classList.remove("completing"); }
+      });
+      listEl.appendChild(li);
+    });
+  }
+
   async function pushAsanaTask() {
     const input = $("asana-task-input");
     const fb = $("asana-feedback");
     const name = input.value.trim();
     const spoke = activeSpoke();
     if (!name) { showFeedback(fb, "Enter a task first.", "error"); return; }
-
-    const pat = localStorage.getItem(LS.asanaPat);
-    const project = localStorage.getItem(LS.asanaProj);
-    if (!pat || !project) {
-      showFeedback(fb, "Set your Asana PAT + Project GID in settings.", "error");
+    if (!asanaProxyUrl()) {
+      showFeedback(fb, "Connect Asana in settings first (deploy the Apps Script).", "error");
       openSettings();
       return;
     }
-
     showFeedback(fb, "Pushing to Asana…", "info");
-    const notes = spoke ? `Living Hub · ${spoke.title}` : "Living Hub";
+    const project = localStorage.getItem(LS.asanaProj) || "";
     try {
-      const res = await fetch("https://app.asana.com/api/1.0/tasks", {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + pat,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: { name, notes, projects: [project] } }),
+      const json = await proxyAsana({
+        action: "asanaAdd",
+        spokeId: spoke.id,
+        spokeTitle: spoke.title,
+        project,
+        name,
       });
-      if (res.ok) {
-        const json = await res.json();
-        const gid = json.data && json.data.gid;
-        showFeedback(fb, "✓ Task created" + (gid ? ` (#${gid})` : "") + ".", "ok");
-        input.value = "";
-      } else {
-        const err = await res.text();
-        // Likely CORS — fall back to the server-side proxy if available.
-        if (state.apiAvailable) return pushAsanaViaProxy(name, notes, pat, project, fb, input);
-        showFeedback(fb, "Asana rejected the task (" + res.status + ").", "error");
-      }
-    } catch (err) {
-      // Browser blocked by CORS — try the local proxy.
-      if (state.apiAvailable) return pushAsanaViaProxy(name, notes, pat, project, fb, input);
-      showFeedback(fb, "Network/CORS error. Run server.py to enable the proxy.", "error");
-    }
-  }
-
-  async function pushAsanaViaProxy(name, notes, pat, project, fb, input) {
-    try {
-      const res = await fetch("/api/asana", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, notes, pat, project }),
-      });
-      const json = await res.json();
       if (json.ok) {
-        showFeedback(fb, "✓ Task created via proxy.", "ok");
+        showFeedback(fb, "✓ Task created in Asana.", "ok");
         input.value = "";
+        loadAsanaTasks(spoke);
       } else {
-        showFeedback(fb, "Proxy error: " + (json.error || "unknown"), "error");
+        showFeedback(fb, "Asana: " + (json.error || "error"), "error");
       }
     } catch (err) {
-      showFeedback(fb, "Proxy unreachable.", "error");
+      showFeedback(fb, "Couldn't reach the Asana proxy.", "error");
     }
   }
 
@@ -550,7 +627,7 @@
     if (next) {
       spoke.bulletList = spoke.bulletList || { title: "OPEN RESEARCH ITEMS", items: [] };
       spoke.bulletList.items = spoke.bulletList.items || [];
-      spoke.bulletList.items.unshift(next);
+      spoke.bulletList.items.unshift({ id: "i" + Date.now(), task: next, completed: false });
     }
 
     persist();
@@ -670,7 +747,7 @@
     try {
       const parsed = JSON.parse(raw);
       if (!parsed.spokes) throw new Error("missing spokes");
-      state.data = parsed;
+      state.data = normalizeData(parsed);
       persist();
       maybeResetChecklists();
       renderTOC();
@@ -695,8 +772,12 @@
   // ── Wire up events ───────────────────────────────────────────────────
   function bindEvents() {
     $("next-quote").addEventListener("click", cycleAnchor);
-    $("state-rating-select").addEventListener("change", onStateChange);
+    $("state-pills").addEventListener("click", onStatePillClick);
     $("rating-slider").addEventListener("input", onRatingChange);
+    $("add-item-btn").addEventListener("click", addChecklistItem);
+    $("add-item-input").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addChecklistItem();
+    });
     $("doc-append-btn").addEventListener("click", appendToDoc);
     $("feed-to-claude-btn").addEventListener("click", feedToClaude);
     $("asana-submit-btn").addEventListener("click", pushAsanaTask);
