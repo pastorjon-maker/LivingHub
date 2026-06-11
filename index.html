@@ -188,23 +188,24 @@
             </div>
 
             <!-- ─────────────────────────────────────── -->
-            <!-- UNIFIED FIELD CHECKLIST                 -->
-            <!-- (open items + weekly + monthly in one)  -->
+            <!-- FIELD CHECKLIST (backed by Asana)       -->
             <!-- ─────────────────────────────────────── -->
             <div class="checklist-card" id="checklist-wrap">
               <div class="section-label-row">
                 <i data-lucide="list-checks"></i>
                 <span>FIELD CHECKLIST</span>
+                <span class="asana-badge">ASANA</span>
               </div>
-              <ul class="unified-check-list" id="unified-checklist">
-                <!-- populated by app.js -->
+              <ul class="asana-task-list" id="asana-task-list">
+                <!-- populated live from Asana by app.js -->
               </ul>
               <div class="add-item-row">
-                <input type="text" id="add-item-input" class="asana-input" placeholder="Add a checklist item…" maxlength="200" />
-                <button type="button" class="add-item-btn" id="add-item-btn">
+                <input type="text" id="asana-task-input" class="asana-input" placeholder="Add a task to Asana…" maxlength="200" />
+                <button type="button" class="add-item-btn" id="asana-submit-btn">
                   <i data-lucide="plus"></i><span>ADD</span>
                 </button>
               </div>
+              <div class="asana-feedback hidden" id="asana-feedback"></div>
             </div>
 
             <!-- ─────────────────────────────────────── -->
@@ -230,27 +231,6 @@
                   </button>
                 </div>
               </div>
-            </div>
-
-            <!-- ─────────────────────────────────────── -->
-            <!-- ASANA — SEE & ADD TASKS (below journal) -->
-            <!-- ─────────────────────────────────────── -->
-            <div class="asana-task-section" id="asana-task-wrap">
-              <div class="section-label-row">
-                <i data-lucide="check-square"></i>
-                <span>ASANA — TASKS FOR THIS CATEGORY</span>
-              </div>
-              <ul class="asana-task-list" id="asana-task-list">
-                <!-- populated by app.js -->
-              </ul>
-              <div class="asana-input-row">
-                <input type="text" id="asana-task-input" class="asana-input" placeholder="New Asana task…" maxlength="200" />
-                <button type="button" class="asana-submit-btn" id="asana-submit-btn">
-                  <i data-lucide="send"></i>
-                  <span>PUSH TASK</span>
-                </button>
-              </div>
-              <div class="asana-feedback hidden" id="asana-feedback"></div>
             </div>
 
             <!-- ─────────────────────────────────────── -->

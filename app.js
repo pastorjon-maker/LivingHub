@@ -294,7 +294,6 @@
     $("thread-summary").textContent = thread.summary || "";
 
     renderExtraFeed(spoke);
-    renderChecklist(spoke);
 
     // refresh active TOC highlight
     document.querySelectorAll(".toc-item").forEach((el) => {
@@ -329,70 +328,6 @@
         <span class="feed-text">${escapeHtml(entry.text || "")}</span>`;
       wrap.appendChild(div);
     });
-  }
-
-  // ── Unified field checklist (open items + weekly + monthly, one list) ─
-  function renderChecklist(spoke) {
-    const ul = $("unified-checklist");
-    ul.innerHTML = "";
-    const bl = spoke.bulletList || { items: [] };
-    const lists = spoke.checklists || { weekly: [], monthly: [] };
-
-    const rows = [];
-    (bl.items || []).forEach((it) => rows.push({ item: it, bucket: "open", chip: "" }));
-    (lists.weekly || []).forEach((it) => rows.push({ item: it, bucket: "weekly", chip: "WK" }));
-    (lists.monthly || []).forEach((it) => rows.push({ item: it, bucket: "monthly", chip: "MO" }));
-
-    if (!rows.length) {
-      const li = document.createElement("li");
-      li.className = "check-list-empty";
-      li.textContent = "No items yet — add one below.";
-      ul.appendChild(li);
-      return;
-    }
-
-    rows.forEach((row) => {
-      const item = row.item;
-      const li = document.createElement("li");
-      li.className = "check-item" + (item.completed ? " done" : "");
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = !!item.completed;
-      const label = document.createElement("span");
-      label.className = "check-label";
-      label.textContent = item.task;
-      li.append(cb, label);
-      if (row.chip) {
-        const chip = document.createElement("span");
-        chip.className = "period-chip chip-" + row.bucket;
-        chip.textContent = row.chip;
-        li.appendChild(chip);
-      }
-      const toggle = (e) => {
-        if (e.target !== cb) cb.checked = !cb.checked;
-        item.completed = cb.checked;
-        li.classList.toggle("done", item.completed);
-        markTouched(spoke);
-        persist();
-      };
-      li.addEventListener("click", toggle);
-      ul.appendChild(li);
-    });
-  }
-
-  function addChecklistItem() {
-    const spoke = activeSpoke();
-    const input = $("add-item-input");
-    if (!spoke) return;
-    const text = input.value.trim();
-    if (!text) return;
-    spoke.bulletList = spoke.bulletList || { title: "OPEN ITEMS", items: [] };
-    spoke.bulletList.items = spoke.bulletList.items || [];
-    spoke.bulletList.items.push({ id: "i" + Date.now(), task: text, completed: false });
-    input.value = "";
-    markTouched(spoke);
-    persist();
-    renderChecklist(spoke);
   }
 
   // ── State pills (replaces the clunky dropdown) ───────────────────────
@@ -521,7 +456,7 @@
     const url = asanaProxyUrl();
     const project = localStorage.getItem(LS.asanaProj) || "";
     if (!url) {
-      listEl.innerHTML = asanaHint("Connect Asana in settings to see & add tasks.");
+      listEl.innerHTML = asanaHint("Connect Asana in settings to see & add your tasks here.");
       return;
     }
     listEl.innerHTML = asanaHint("Loading tasks…");
@@ -774,10 +709,6 @@
     $("next-quote").addEventListener("click", cycleAnchor);
     $("state-pills").addEventListener("click", onStatePillClick);
     $("rating-slider").addEventListener("input", onRatingChange);
-    $("add-item-btn").addEventListener("click", addChecklistItem);
-    $("add-item-input").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addChecklistItem();
-    });
     $("doc-append-btn").addEventListener("click", appendToDoc);
     $("feed-to-claude-btn").addEventListener("click", feedToClaude);
     $("asana-submit-btn").addEventListener("click", pushAsanaTask);
