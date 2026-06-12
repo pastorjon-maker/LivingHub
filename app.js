@@ -146,10 +146,12 @@
     list.innerHTML = "";
     (state.data.spokes || []).forEach((spoke) => {
       const item = document.createElement("button");
-      item.className = "toc-item" + (spoke.id === state.activeSpokeId ? " active" : "");
+      item.className = "toc-item" + (spoke.inbox ? " inbox" : "")
+        + (spoke.id === state.activeSpokeId ? " active" : "");
       item.setAttribute("data-spoke", spoke.id);
+      const numLabel = spoke.inbox ? "▣" : spoke.num;
       item.innerHTML = `
-        <span class="toc-num">${spoke.num}</span>
+        <span class="toc-num">${numLabel}</span>
         <span class="toc-text"><span class="toc-title">${escapeHtml(spoke.title)}</span></span>`;
       item.addEventListener("click", () => selectSpoke(spoke.id));
       list.appendChild(item);
@@ -175,13 +177,14 @@
     if (!ringsG) return; // wheel not in DOM
     const spokesG = $("spokes"), labelsG = $("labels"),
           dotsG = $("dots"), shape = $("scope-shape");
-    const spokes = state.data.spokes || [];
+    const spokes = (state.data.spokes || []).filter((s) => !s.inbox);
     const n = spokes.length;
     const NS = WHEEL.ns;
 
     ringsG.innerHTML = ""; spokesG.innerHTML = "";
     labelsG.innerHTML = ""; dotsG.innerHTML = "";
     if (!n) { shape.setAttribute("points", ""); $("wheel-avg").textContent = "—"; return; }
+    // (spokes already excludes the INBOX capture lane — see filter above)
 
     // concentric grid rings (2,4,6,8,10)
     [2, 4, 6, 8, 10].forEach((lvl) => {
@@ -318,10 +321,18 @@
     $("panel-empty-state").classList.add("hidden");
     $("panel-content").classList.remove("hidden");
 
-    $("active-spoke-num").textContent = "RECORD: " + spoke.num;
+    $("active-spoke-num").textContent = spoke.inbox ? "CAPTURE" : "RECORD: " + spoke.num;
     $("spoke-num-badge").textContent = spoke.num;
     $("spoke-title").textContent = spoke.title;
     $("spoke-subtitle").textContent = spoke.subtitle || "";
+
+    // INBOX is a bare capture lane — hide the category-only cards.
+    const inbox = !!spoke.inbox;
+    const ratingRow = document.querySelector(".scope-rating-row");
+    const journalCard = document.querySelector(".ruled-journal-card");
+    if (ratingRow) ratingRow.classList.toggle("hidden", inbox);
+    if (journalCard) journalCard.classList.toggle("hidden", inbox);
+    $("claude-paste-wrap").classList.toggle("hidden", inbox);
 
     // "Touched" = last time you opened or did anything with this category.
     // Show how long it had been neglected, THEN reset the clock now that
@@ -523,7 +534,15 @@
   function renderAsanaTasks(spoke, tasks) {
     const listEl = $("asana-task-list");
     listEl.innerHTML = "";
-    if (!tasks.length) { listEl.innerHTML = asanaHint("No open tasks for this category."); return; }
+    const emptyMsg = spoke.inbox
+      ? "Inbox is empty — capture something below."
+      : "No open tasks for this category.";
+    if (!tasks.length) { listEl.innerHTML = asanaHint(emptyMsg); return; }
+
+    const project = localStorage.getItem(LS.asanaProj) || "";
+    // Destinations = every category (and the inbox) except this one.
+    const dests = (state.data.spokes || []).filter((s) => s.title !== spoke.title);
+
     tasks.forEach((t) => {
       const li = document.createElement("li");
       li.className = "asana-task-item";
@@ -532,16 +551,37 @@
       const label = document.createElement("span");
       label.className = "asana-task-label";
       label.textContent = t.name;
-      li.append(cb, label);
+
+      const move = document.createElement("select");
+      move.className = "task-move";
+      move.title = "Move to another category";
+      move.innerHTML = '<option value="">Move →</option>'
+        + dests.map((s) => `<option value="${escapeHtml(s.title)}">${escapeHtml(s.title)}</option>`).join("");
+
+      li.append(cb, label, move);
+
       cb.addEventListener("change", async () => {
         cb.disabled = true;
         li.classList.add("completing");
         try {
           const json = await proxyAsana({ action: "asanaComplete", taskGid: t.gid });
-          if (json.ok) { li.remove(); if (!listEl.children.length) listEl.innerHTML = asanaHint("No open tasks for this category."); refreshSignalsFromAsana(); }
+          if (json.ok) { li.remove(); if (!listEl.children.length) listEl.innerHTML = asanaHint(emptyMsg); refreshSignalsFromAsana(); }
           else { cb.disabled = false; li.classList.remove("completing"); }
         } catch (_) { cb.disabled = false; li.classList.remove("completing"); }
       });
+
+      move.addEventListener("change", async () => {
+        const to = move.value;
+        if (!to) return;
+        move.disabled = true;
+        li.classList.add("completing");
+        try {
+          const json = await proxyAsana({ action: "asanaMove", taskGid: t.gid, toTitle: to, project });
+          if (json.ok) { li.remove(); if (!listEl.children.length) listEl.innerHTML = asanaHint(emptyMsg); refreshSignalsFromAsana(); }
+          else { move.disabled = false; move.value = ""; li.classList.remove("completing"); }
+        } catch (_) { move.disabled = false; move.value = ""; li.classList.remove("completing"); }
+      });
+
       listEl.appendChild(li);
     });
   }
@@ -716,10 +756,10 @@
     loadConfigInputs();
     bindEvents();
 
-    // open the first spoke by default
-    if (state.data.spokes && state.data.spokes.length) {
-      selectSpoke(state.data.spokes[0].id);
-    }
+    // open the first real category by default (skip the INBOX capture lane)
+    const firstReal = (state.data.spokes || []).find((s) => !s.inbox)
+      || (state.data.spokes || [])[0];
+    if (firstReal) selectSpoke(firstReal.id);
 
     refreshIcons();
     refreshSignalsFromAsana(); // pull live completion stats → auto wheel signal

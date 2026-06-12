@@ -1,6 +1,6 @@
 {
   "user": "JONATHAN MARSHALL",
-  "version": 7,
+  "version": 8,
   "lastRefreshed": "2026-06-12",
   "pendingFeeds": 0,
   "pendingFeedNames": [],
@@ -13,6 +13,19 @@
     "THE STEADFAST LOVE OF THE LORD NEVER CEASES; HIS MERCIES ARE NEW EVERY MORNING."
   ],
   "spokes": [
+    {
+      "id": "inbox",
+      "num": "00",
+      "title": "INBOX",
+      "short": "INBOX",
+      "subtitle": "Capture — drop things here, sort them into a category later",
+      "source": "ASANA",
+      "inbox": true,
+      "lastTouched": "2026-06-12",
+      "bulletList": { "title": "OPEN ITEMS", "items": [] },
+      "extraFeed": [],
+      "checklists": { "weekly": [], "monthly": [] }
+    },
     {
       "id": "walk-with-god",
       "num": "01",

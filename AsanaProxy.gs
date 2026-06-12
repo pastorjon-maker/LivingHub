@@ -87,6 +87,26 @@ function handleAsana(body) {
       return _json({ ok: false, error: _asanaErr(cd, 'complete failed') });
     }
 
+    // Move an existing task to another category's section (within the
+    // project). Destination section is created on demand if missing.
+    if (body.action === 'asanaMove') {
+      if (!project) return _json({ ok: false, error: 'No Asana project GID configured.' });
+      var mgid = (body.taskGid || '').toString();
+      var dest = (body.toTitle || '').toString();
+      if (!mgid || !dest) return _json({ ok: false, error: 'Need taskGid and toTitle.' });
+      var dsg = _asanaSection(base, headers, project, dest, true);
+      if (!dsg) return _json({ ok: false, error: 'Destination section not found.' });
+      var mr = UrlFetchApp.fetch(base + '/sections/' + dsg + '/addTask', {
+        method: 'post', contentType: 'application/json', headers: headers,
+        muteHttpExceptions: true,
+        payload: JSON.stringify({ data: { task: mgid } })
+      });
+      var mcode = mr.getResponseCode();
+      if (mcode >= 200 && mcode < 300) return _json({ ok: true });
+      var md = {}; try { md = JSON.parse(mr.getContentText()); } catch (e) {}
+      return _json({ ok: false, error: _asanaErr(md, 'move failed') });
+    }
+
     // Per-section task stats for the whole project in one call. Returns a map
     // of lowercased section name -> { open, done } where "done" counts tasks
     // completed in the last 30 days. Powers the auto wheel-signal.
