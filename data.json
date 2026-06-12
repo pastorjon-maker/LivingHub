@@ -358,6 +358,33 @@
           { "id": "m2", "task": "Be honest with my accountability man", "completed": false }
         ]
       }
+    },
+    {
+      "id": "maintenance",
+      "num": "11",
+      "title": "MAINTENANCE",
+      "short": "MAINT",
+      "subtitle": "Quarters & motor pool — house upkeep and the vehicles",
+      "source": "ASANA",
+      "lastTouched": "2026-06-12",
+      "rating": 5,
+      "bulletList": {
+        "title": "OPEN ITEMS",
+        "items": [
+          "Seasonal home walkthrough",
+          "Vehicle fluids & tire check"
+        ]
+      },
+      "extraFeed": [],
+      "checklists": {
+        "weekly": [
+          { "id": "w1", "task": "Walkthrough — note anything broken", "completed": false }
+        ],
+        "monthly": [
+          { "id": "m1", "task": "HVAC filter / furnace check", "completed": false },
+          { "id": "m2", "task": "Vehicle fluids, tires, wash", "completed": false }
+        ]
+      }
     }
   ]
 }
