@@ -339,11 +339,11 @@ body.kraft-cover {
   white-space: nowrap;
 }
 .header-verse .vk {
-  background: rgba(240, 193, 75, 0.9);
+  background: rgba(240, 193, 75, 0.82);
   color: #2c2208;
-  font-weight: 700;
-  padding: 0.04em 0.22em;
-  border-radius: 2px;
+  font-weight: 600;
+  padding: 0.02em 0.1em;
+  border-radius: 1px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
