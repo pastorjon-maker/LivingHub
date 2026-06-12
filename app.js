@@ -323,7 +323,12 @@
     $("spoke-title").textContent = spoke.title;
     $("spoke-subtitle").textContent = spoke.subtitle || "";
 
+    // "Touched" = last time you opened or did anything with this category.
+    // Show how long it had been neglected, THEN reset the clock now that
+    // you're looking at it.
     $("touched-note").textContent = touchedNote(spoke);
+    spoke.lastTouched = new Date().toISOString().slice(0, 10);
+    persist();
 
     reflectRating(spoke);
 
