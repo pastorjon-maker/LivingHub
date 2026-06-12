@@ -321,13 +321,14 @@ body.kraft-cover {
 .header-verse {
   flex-basis: 100%;
   width: 100%;
-  margin-top: 0.85rem;
-  padding-top: 0.7rem;
+  max-width: 70ch;
+  margin: 0.85rem auto 0;
+  padding-top: 0.75rem;
   border-top: 1px solid var(--kraft-deep);
-  font-size: 0.64rem;
-  line-height: 1.55;
-  letter-spacing: 0.03em;
-  color: #cdb98f;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: #f3e7c8;
   text-align: center;
 }
 .header-verse .verse-ref {
@@ -446,8 +447,8 @@ body.kraft-cover {
 /* ──────────────────────── NOTEBOOK SPREAD ──────────────────────────── */
 .notebook-spread {
   display: grid;
-  grid-template-columns: 0.9fr auto 1.4fr;
-  gap: 0;
+  grid-template-columns: 0.9fr 1.4fr;
+  gap: 0.6rem;
   align-items: stretch;
   border-radius: var(--radius);
   box-shadow: 0 3px 12px var(--cover-shadow);
