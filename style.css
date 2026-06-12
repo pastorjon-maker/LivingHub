@@ -339,8 +339,13 @@ body.kraft-cover {
   white-space: nowrap;
 }
 .header-verse .vk {
-  color: #f0c14b;
+  background: rgba(240, 193, 75, 0.9);
+  color: #2c2208;
   font-weight: 700;
+  padding: 0.04em 0.22em;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .brand h1 {
@@ -447,7 +452,7 @@ body.kraft-cover {
 /* ──────────────────────── NOTEBOOK SPREAD ──────────────────────────── */
 .notebook-spread {
   display: grid;
-  grid-template-columns: 0.9fr 1.4fr;
+  grid-template-columns: 1.15fr 1.3fr;
   gap: 0.6rem;
   align-items: stretch;
   border-radius: var(--radius);
