@@ -318,6 +318,30 @@ body.kraft-cover {
   border: 1px solid var(--kraft-deep);
 }
 
+.header-verse {
+  flex-basis: 100%;
+  width: 100%;
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--kraft-deep);
+  font-size: 0.64rem;
+  line-height: 1.55;
+  letter-spacing: 0.03em;
+  color: #cdb98f;
+  text-align: center;
+}
+.header-verse .verse-ref {
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #e7d6b3;
+  margin-right: 0.55rem;
+  white-space: nowrap;
+}
+.header-verse .vk {
+  color: #f0c14b;
+  font-weight: 700;
+}
+
 .brand h1 {
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 700;
