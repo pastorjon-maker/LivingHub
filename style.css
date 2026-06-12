@@ -840,6 +840,8 @@ body.kraft-cover {
 .feed-action-btn.fa-delegate:hover { background: var(--kraft); }
 .feed-action-btn.fa-delete:hover   { background: #9b3a2e; }
 
+.rating-slider:disabled { opacity: 0.85; cursor: default; }
+
 .rating-auto {
   display: block;
   width: 100%;

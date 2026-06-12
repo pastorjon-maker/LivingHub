@@ -261,11 +261,11 @@
     $("rating-val").textContent = r;
     const note = $("rating-auto");
     if (!note) return;
+    note.classList.remove("hidden");
     if (spoke.autoSignal) {
       note.textContent = "AUTO · " + spoke.autoSignal.done + " done/30d · " + spoke.autoSignal.open + " open";
-      note.classList.remove("hidden");
     } else {
-      note.classList.add("hidden");
+      note.textContent = "NO ASANA TASKS YET — add some for a live signal";
     }
   }
 
@@ -399,19 +399,6 @@
     persist();
     renderExtraFeed(spoke);
     if (act === "defer" || act === "delegate") loadAsanaTasks(spoke);
-  }
-
-  function onRatingChange(e) {
-    const spoke = activeSpoke();
-    if (!spoke) return;
-    const v = clampRating(e.target.value);
-    spoke.rating = v;
-    delete spoke.autoSignal;            // a manual drag overrides the auto signal
-    $("rating-val").textContent = v;
-    $("rating-auto").classList.add("hidden");
-    markTouched(spoke);
-    renderWheel();
-    persist();
   }
 
   function activeSpoke() {
@@ -767,7 +754,6 @@
   // ── Wire up events ───────────────────────────────────────────────────
   function bindEvents() {
     $("next-quote").addEventListener("click", cycleAnchor);
-    $("rating-slider").addEventListener("input", onRatingChange);
     $("extra-feed-wrap").addEventListener("click", onFeedAction);
     $("doc-append-btn").addEventListener("click", appendToDoc);
     $("feed-to-claude-btn").addEventListener("click", feedToClaude);
