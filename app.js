@@ -303,15 +303,60 @@
     const feed = spoke.extraFeed || [];
     if (!feed.length) { wrap.classList.add("hidden"); wrap.innerHTML = ""; return; }
     wrap.classList.remove("hidden");
-    wrap.innerHTML = '<h4>RECENT — FROM MEETINGS</h4>';
-    feed.forEach((entry) => {
+    wrap.innerHTML = '<h4>RECENT — TRIAGE</h4>';
+    feed.forEach((entry, idx) => {
       const div = document.createElement("div");
       div.className = "extra-feed-item";
       div.innerHTML = `
         <span class="feed-label">${escapeHtml(entry.label || "FEED")}</span>
-        <span class="feed-text">${escapeHtml(entry.text || "")}</span>`;
+        <span class="feed-text">${escapeHtml(entry.text || "")}</span>
+        <div class="feed-actions">
+          <button class="feed-action-btn fa-do"       data-act="do"       data-idx="${idx}" title="Handled — clear it"><span>DO</span></button>
+          <button class="feed-action-btn fa-defer"    data-act="defer"    data-idx="${idx}" title="Make an Asana task for later"><span>DEFER</span></button>
+          <button class="feed-action-btn fa-delegate" data-act="delegate" data-idx="${idx}" title="Make an Asana task to hand off"><span>DELEGATE</span></button>
+          <button class="feed-action-btn fa-delete"   data-act="delete"   data-idx="${idx}" title="Not needed — clear it"><span>DELETE</span></button>
+        </div>`;
       wrap.appendChild(div);
     });
+  }
+
+  // ── Recent-feed triage: Do / Defer / Delegate / Delete ───────────────
+  // Defer & Delegate push a real task into this category's Asana section
+  // (the durable, shared side); Do & Delete just clear the card locally.
+  async function onFeedAction(e) {
+    const btn = e.target.closest(".feed-action-btn");
+    if (!btn) return;
+    const spoke = activeSpoke();
+    if (!spoke || !Array.isArray(spoke.extraFeed)) return;
+    const idx = parseInt(btn.getAttribute("data-idx"), 10);
+    const entry = spoke.extraFeed[idx];
+    if (!entry) return;
+    const act = btn.getAttribute("data-act");
+
+    if (act === "defer" || act === "delegate") {
+      const url = asanaProxyUrl();
+      const project = localStorage.getItem(LS.asanaProj) || "";
+      if (!url || !project) { flashBtn(btn, "CONNECT ASANA"); return; }
+      const prefix = act === "defer" ? "Follow up — " : "Delegate — ";
+      flashBtn(btn, "…");
+      try {
+        const json = await proxyAsana({
+          action: "asanaAdd",
+          spokeId: spoke.id,
+          spokeTitle: spoke.title,
+          name: prefix + (entry.label || entry.text || "Recent item"),
+          project,
+        });
+        if (!json.ok) { flashBtn(btn, "FAILED"); return; }
+      } catch (_) { flashBtn(btn, "NO PROXY"); return; }
+    }
+
+    // Do / Delete — and a successful Defer/Delegate — clear the card.
+    spoke.extraFeed.splice(idx, 1);
+    markTouched(spoke);
+    persist();
+    renderExtraFeed(spoke);
+    if (act === "defer" || act === "delegate") loadAsanaTasks(spoke);
   }
 
   function onRatingChange(e) {
@@ -679,6 +724,7 @@
   function bindEvents() {
     $("next-quote").addEventListener("click", cycleAnchor);
     $("rating-slider").addEventListener("input", onRatingChange);
+    $("extra-feed-wrap").addEventListener("click", onFeedAction);
     $("doc-append-btn").addEventListener("click", appendToDoc);
     $("feed-to-claude-btn").addEventListener("click", feedToClaude);
     $("asana-submit-btn").addEventListener("click", pushAsanaTask);

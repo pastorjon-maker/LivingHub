@@ -812,6 +812,34 @@ body.kraft-cover {
 }
 .extra-feed-item .feed-text { font-size: 0.8rem; color: var(--ink-soft); }
 
+/* recent-feed triage buttons: Do / Defer / Delegate / Delete */
+.feed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.55rem;
+}
+.feed-action-btn {
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: #fffdf6;
+  border: 1.5px solid var(--paper-line);
+  border-radius: 2px;
+  padding: 0.28rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.feed-action-btn span { pointer-events: none; }
+.feed-action-btn:hover { color: #fff; border-color: transparent; }
+.feed-action-btn.fa-do:hover       { background: var(--moss); }
+.feed-action-btn.fa-defer:hover    { background: var(--stamp-blue); }
+.feed-action-btn.fa-delegate:hover { background: var(--kraft); }
+.feed-action-btn.fa-delete:hover   { background: #9b3a2e; }
+
 /* ───────────────── RECURRING CHECKLISTS ───────────────── */
 .recurring-checklists-section {
   display: grid;
