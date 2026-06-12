@@ -244,6 +244,50 @@
     $("wheel-avg").textContent = (sum / n).toFixed(1);
   }
 
+  // ── Auto wheel-signal from real Asana completions ────────────────────
+  // The signal climbs with tasks completed in the last 30 days; about
+  // WHEEL_TARGET completions in a category reads as a full 10. Categories
+  // with no Asana tasks keep their manual rating untouched.
+  const WHEEL_TARGET = 6;
+
+  function signalFromStats(s) {
+    if (!s || (s.open === 0 && s.done === 0)) return null; // no data → keep manual
+    return clampRating(Math.round(10 * s.done / WHEEL_TARGET));
+  }
+
+  function reflectRating(spoke) {
+    const r = clampRating(spoke.rating);
+    $("rating-slider").value = r;
+    $("rating-val").textContent = r;
+    const note = $("rating-auto");
+    if (!note) return;
+    if (spoke.autoSignal) {
+      note.textContent = "AUTO · " + spoke.autoSignal.done + " done/30d · " + spoke.autoSignal.open + " open";
+      note.classList.remove("hidden");
+    } else {
+      note.classList.add("hidden");
+    }
+  }
+
+  async function refreshSignalsFromAsana() {
+    const url = asanaProxyUrl();
+    const project = localStorage.getItem(LS.asanaProj) || "";
+    if (!url || !project) return;
+    let json;
+    try { json = await proxyAsana({ action: "asanaStatsAll", project }); }
+    catch (_) { return; }                          // proxy unreachable
+    if (!json || !json.ok || !json.stats) return;  // older proxy without stats support
+    (state.data.spokes || []).forEach((sp) => {
+      const s = json.stats[(sp.title || "").trim().toLowerCase()];
+      const sig = signalFromStats(s);
+      if (sig != null) { sp.rating = sig; sp.autoSignal = s; }
+      else { delete sp.autoSignal; }
+    });
+    renderWheel();
+    const sp = activeSpoke();
+    if (sp) reflectRating(sp);
+  }
+
   // ── Days-since-touched metric ────────────────────────────────────────
   function daysSince(dateStr) {
     if (!dateStr) return null;
@@ -282,9 +326,7 @@
 
     $("touched-note").textContent = touchedNote(spoke);
 
-    const rating = clampRating(spoke.rating);
-    $("rating-slider").value = rating;
-    $("rating-val").textContent = rating;
+    reflectRating(spoke);
 
     renderExtraFeed(spoke);
 
@@ -364,7 +406,9 @@
     if (!spoke) return;
     const v = clampRating(e.target.value);
     spoke.rating = v;
+    delete spoke.autoSignal;            // a manual drag overrides the auto signal
     $("rating-val").textContent = v;
+    $("rating-auto").classList.add("hidden");
     markTouched(spoke);
     renderWheel();
     persist();
@@ -503,7 +547,7 @@
         li.classList.add("completing");
         try {
           const json = await proxyAsana({ action: "asanaComplete", taskGid: t.gid });
-          if (json.ok) { li.remove(); if (!listEl.children.length) listEl.innerHTML = asanaHint("No open tasks for this category."); }
+          if (json.ok) { li.remove(); if (!listEl.children.length) listEl.innerHTML = asanaHint("No open tasks for this category."); refreshSignalsFromAsana(); }
           else { cb.disabled = false; li.classList.remove("completing"); }
         } catch (_) { cb.disabled = false; li.classList.remove("completing"); }
       });
@@ -759,6 +803,7 @@
 
     refreshIcons();
     checkStatus();
+    refreshSignalsFromAsana(); // pull live completion stats → auto wheel signal
   }
 
   if (document.readyState === "loading") {

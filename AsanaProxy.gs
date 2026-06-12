@@ -87,6 +87,44 @@ function handleAsana(body) {
       return _json({ ok: false, error: _asanaErr(cd, 'complete failed') });
     }
 
+    // Per-section task stats for the whole project in one call. Returns a map
+    // of lowercased section name -> { open, done } where "done" counts tasks
+    // completed in the last 30 days. Powers the auto wheel-signal.
+    if (body.action === 'asanaStatsAll') {
+      if (!project) return _json({ ok: false, error: 'No Asana project GID configured.' });
+      var cutoff = new Date(Date.now() - 30 * 24 * 3600 * 1000);
+      var stats = {};
+      var offset = '';
+      do {
+        var u = base + '/projects/' + project +
+          '/tasks?opt_fields=completed,completed_at,memberships.section.name&limit=100' +
+          (offset ? '&offset=' + offset : '');
+        var r = UrlFetchApp.fetch(u, { headers: headers, muteHttpExceptions: true });
+        var d = JSON.parse(r.getContentText());
+        if (!d.data) return _json({ ok: false, error: _asanaErr(d, 'stats failed') });
+        for (var i = 0; i < d.data.length; i++) {
+          var t = d.data[i];
+          var secName = '';
+          if (t.memberships) {
+            for (var m = 0; m < t.memberships.length; m++) {
+              if (t.memberships[m].section && t.memberships[m].section.name) {
+                secName = t.memberships[m].section.name; break;
+              }
+            }
+          }
+          var key = secName.trim().toLowerCase();
+          if (!stats[key]) stats[key] = { open: 0, done: 0 };
+          if (t.completed) {
+            if (t.completed_at && new Date(t.completed_at) >= cutoff) stats[key].done++;
+          } else {
+            stats[key].open++;
+          }
+        }
+        offset = (d.next_page && d.next_page.offset) ? d.next_page.offset : '';
+      } while (offset);
+      return _json({ ok: true, stats: stats });
+    }
+
     return _json({ ok: false, error: 'Unknown action: ' + body.action });
   } catch (err) {
     return _json({ ok: false, error: err.toString() });
