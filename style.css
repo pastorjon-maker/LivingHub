@@ -531,14 +531,6 @@ body.kraft-cover {
   letter-spacing: 0.06em;
   color: var(--ink);
 }
-.toc-state-dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  flex-shrink: 0;
-}
-.state-ABIDING { background: var(--green); box-shadow: 0 0 5px var(--green); }
-.state-SIFTING { background: var(--amber); box-shadow: 0 0 5px var(--amber); }
-.state-RESTING { background: var(--blue);  box-shadow: 0 0 5px var(--blue); }
-
 /* ───────────────────── SPIRAL BINDING GUTTER ───────────────────────── */
 .spiral-gutter {
   display: flex;
@@ -642,26 +634,6 @@ body.kraft-cover {
   flex-wrap: wrap;
   margin-bottom: 1.1rem;
 }
-.state-pills { display: flex; gap: 0.4rem; }
-.state-pill {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  background: transparent;
-  border: 1.5px solid var(--paper-line);
-  border-radius: 2px;
-  padding: 0.32rem 0.6rem;
-  cursor: pointer;
-  transition: all 0.12s ease;
-}
-.state-pill:hover { border-color: var(--ink-faint); color: var(--ink); }
-.state-pill.active { color: #fff; border-color: transparent; }
-.state-pill.pill-ABIDING.active { background: var(--moss); }
-.state-pill.pill-SIFTING.active { background: var(--amber); }
-.state-pill.pill-RESTING.active { background: var(--aqua); }
 .touched-note {
   font-size: 0.72rem;
   font-style: italic;

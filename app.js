@@ -151,8 +151,7 @@
       item.setAttribute("data-spoke", spoke.id);
       item.innerHTML = `
         <span class="toc-num">${spoke.num}</span>
-        <span class="toc-text"><span class="toc-title">${escapeHtml(spoke.title)}</span></span>
-        <span class="toc-state-dot state-${spoke.state || "ABIDING"}"></span>`;
+        <span class="toc-text"><span class="toc-title">${escapeHtml(spoke.title)}</span></span>`;
       item.addEventListener("click", () => selectSpoke(spoke.id));
       list.appendChild(item);
     });
@@ -281,7 +280,6 @@
     $("spoke-title").textContent = spoke.title;
     $("spoke-subtitle").textContent = spoke.subtitle || "";
 
-    renderStatusPills(spoke);
     $("touched-note").textContent = touchedNote(spoke);
 
     const rating = clampRating(spoke.rating);
@@ -305,15 +303,6 @@
     loadAsanaTasks(spoke); // pull live Asana tasks for this category
   }
 
-  function renderStatusPills(spoke) {
-    const cur = spoke.state || "ABIDING";
-    document.querySelectorAll("#state-pills .state-pill").forEach((btn) => {
-      const s = btn.getAttribute("data-state");
-      btn.classList.add("pill-" + s);
-      btn.classList.toggle("active", s === cur);
-    });
-  }
-
   function renderExtraFeed(spoke) {
     const wrap = $("extra-feed-wrap");
     const feed = spoke.extraFeed || [];
@@ -328,19 +317,6 @@
         <span class="feed-text">${escapeHtml(entry.text || "")}</span>`;
       wrap.appendChild(div);
     });
-  }
-
-  // ── State pills (replaces the clunky dropdown) ───────────────────────
-  function onStatePillClick(e) {
-    const btn = e.target.closest(".state-pill");
-    if (!btn) return;
-    const spoke = activeSpoke();
-    if (!spoke) return;
-    spoke.state = btn.getAttribute("data-state");
-    markTouched(spoke);
-    renderStatusPills(spoke);
-    renderTOC();
-    persist();
   }
 
   function onRatingChange(e) {
@@ -707,7 +683,6 @@
   // ── Wire up events ───────────────────────────────────────────────────
   function bindEvents() {
     $("next-quote").addEventListener("click", cycleAnchor);
-    $("state-pills").addEventListener("click", onStatePillClick);
     $("rating-slider").addEventListener("input", onRatingChange);
     $("doc-append-btn").addEventListener("click", appendToDoc);
     $("feed-to-claude-btn").addEventListener("click", feedToClaude);
