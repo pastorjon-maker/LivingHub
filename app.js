@@ -28,7 +28,6 @@
     data: null,
     activeSpokeId: null,
     anchorIdx: 0,
-    apiAvailable: false,
   };
 
   // ── Tiny DOM helpers ─────────────────────────────────────────────────
@@ -618,75 +617,6 @@
     showFeedback(fb, "✓ Spoke updated from Claude's reply.", "ok");
   }
 
-  // ── 1-click feed sync (server.py) ────────────────────────────────────
-  async function checkStatus() {
-    try {
-      const res = await fetch("/api/status", { cache: "no-store" });
-      if (!res.ok) throw new Error("no api");
-      const json = await res.json();
-      state.apiAvailable = true;
-      updatePendingBadge(json.pendingFeeds || 0, json.pendingFeedNames || []);
-    } catch (_) {
-      // server.py not running — hide sync affordances gracefully
-      state.apiAvailable = false;
-      $("sync-status").textContent = "FEEDS: STATIC MODE";
-    }
-  }
-
-  function updatePendingBadge(count, names) {
-    const badge = $("pending-badge");
-    const status = $("sync-status");
-    const dot = document.querySelector(".sync-ledger-badge .dot-indicator");
-    if (count > 0) {
-      badge.classList.remove("hidden");
-      $("pending-badge-text").textContent =
-        `${count} UNPROCESSED FEED${count === 1 ? "" : "S"}`;
-      badge.title = names.join(", ");
-      status.textContent = "FEEDS: PENDING";
-      if (dot) dot.className = "dot-indicator amber-dot";
-    } else {
-      badge.classList.add("hidden");
-      status.textContent = "FEEDS: SYNCED";
-      if (dot) dot.className = "dot-indicator green-dot";
-    }
-    refreshIcons();
-  }
-
-  async function syncFeeds() {
-    if (!state.apiAvailable) {
-      $("sync-status").textContent = "FEEDS: RUN server.py";
-      return;
-    }
-    const btn = $("sync-now-btn");
-    const label = $("sync-btn-label");
-    btn.classList.add("spinning");
-    label.textContent = "SYNCING…";
-    try {
-      const res = await fetch("/api/sync", { method: "POST" });
-      const json = await res.json();
-      if (json.ok && json.data) {
-        // merge server data into state but keep any unsaved local checklist
-        // edits by re-reading from the freshly-synced server payload.
-        state.data = json.data;
-        localStorage.removeItem(LS.data); // server is now source of truth
-        maybeResetChecklists();
-        renderTOC();
-        renderAnchor();
-        renderWheel();
-        if (state.activeSpokeId) selectSpoke(state.activeSpokeId);
-        updatePendingBadge(json.data.pendingFeeds || 0, json.data.pendingFeedNames || []);
-        label.textContent = "✓ SYNCED";
-      } else {
-        label.textContent = "SYNC FAILED";
-      }
-    } catch (err) {
-      label.textContent = "SYNC ERROR";
-    } finally {
-      btn.classList.remove("spinning");
-      setTimeout(() => { label.textContent = "SYNC FEEDS"; }, 2200);
-    }
-  }
-
   // ── Settings drawer + config persistence ─────────────────────────────
   function openSettings() {
     $("settings-drawer").classList.remove("hidden");
@@ -762,7 +692,6 @@
       if (e.key === "Enter") pushAsanaTask();
     });
     $("claude-parse-btn").addEventListener("click", parseClaudeResponse);
-    $("sync-now-btn").addEventListener("click", syncFeeds);
     $("settings-toggle").addEventListener("click", toggleSettings);
     $("save-asana-config-btn").addEventListener("click", saveAsanaConfig);
     $("save-gdoc-config-btn").addEventListener("click", saveGdocConfig);
@@ -788,7 +717,6 @@
     }
 
     refreshIcons();
-    checkStatus();
     refreshSignalsFromAsana(); // pull live completion stats → auto wheel signal
   }
 
