@@ -286,11 +286,6 @@
     $("rating-slider").value = rating;
     $("rating-val").textContent = rating;
 
-    const thread = spoke.thread || {};
-    $("thread-timestamp").textContent = thread.timestamp || "—";
-    $("thread-title").textContent = thread.title || "—";
-    $("thread-summary").textContent = thread.summary || "";
-
     renderExtraFeed(spoke);
 
     // refresh active TOC highlight
