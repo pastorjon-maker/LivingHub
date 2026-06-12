@@ -319,7 +319,7 @@
     const feed = spoke.extraFeed || [];
     if (!feed.length) { wrap.classList.add("hidden"); wrap.innerHTML = ""; return; }
     wrap.classList.remove("hidden");
-    wrap.innerHTML = '<h4>SHEPHERDING / FEED LOG</h4>';
+    wrap.innerHTML = '<h4>RECENT — FROM MEETINGS</h4>';
     feed.forEach((entry) => {
       const div = document.createElement("div");
       div.className = "extra-feed-item";

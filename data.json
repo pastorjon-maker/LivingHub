@@ -1,7 +1,7 @@
 {
   "user": "JONATHAN MARSHALL",
   "version": 6,
-  "lastRefreshed": "2026-06-11",
+  "lastRefreshed": "2026-06-12",
   "pendingFeeds": 0,
   "pendingFeedNames": [],
   "truthAnchors": [
@@ -72,7 +72,15 @@
           "Draft series graphic brief"
         ]
       },
-      "extraFeed": [],
+      "extraFeed": [
+        { "label": "DISCIPLERS' MEETING · 5/31", "text": "With Joel Tillis. Three goals — consistency, change, connection — plus a fourth C: comprehension (disciples must be able to verbalize understanding). Aim ~50–60% dialogue, weave application questions through the lesson, and have disciples teach to prove retention." },
+        { "label": "SPIRITUAL GROWTH SEMINAR · 6/9", "text": "With Ben Stanton. Works of the flesh vs. fruit of the Spirit — the 'two dogs' picture, new nature as the lion. Yielding to the Spirit and the Word as the engine of growth; framework materials to be updated and shared with a women's group." },
+        { "label": "PREMARITAL COUNSELING · Jonas & Maliah (6/4, 6/11)", "text": "Two sessions: roles and reverence (Eph 5, 1 Tim 3), covering offenses and fighting well, in-law boundaries, daily/weekly spiritual rhythms, purity accountability, and a zero-based budget grounded in stewardship and contentment. Couple's homework due session 3." },
+        { "label": "APPOINTMENT · Matthew Reigle (6/4)", "text": "Career discernment anchored to values and spiritual growth: a bounded weekly planning slot, informational talks with experienced managers, a clear job-evaluation question set. Marriage: listen and enter his wife's frustrations before solving; build shared, playful family time." },
+        { "label": "ROMANS 2 · LESSON 17 (6/11)", "text": "What the Bible says about race: all humans in God's image (Gen 1:26-27), descended from Adam and Noah's sons; the law given to Jews, not Gentiles. Unity in Christ over racial division; evangelism over pride." },
+        { "label": "JOEL TILLIS · MINISTRY & SOCIAL MEDIA (5/31)", "text": "Danger of building a following vs. shepherding the local flock — pastors as ER doctors for acute spiritual needs, balancing deep doctrine with practical care." },
+        { "label": "KJV THOUGHTS (6/4)", "text": "An open musing on whether to modernize archaic language ('restoreth' → 'restores') for accessibility, and how much weight to give the original tongues. No action yet." }
+      ],
       "checklists": {
         "weekly": [
           { "id": "w1", "task": "Sermon draft complete by Thursday", "completed": false },
@@ -91,7 +99,7 @@
       "short": "WORK",
       "subtitle": "Shepherding — leading the church and staff",
       "source": "OTTER",
-      "lastTouched": "2026-06-09",
+      "lastTouched": "2026-06-11",
       "state": "SIFTING",
       "rating": 6,
       "thread": {
@@ -108,7 +116,14 @@
         ]
       },
       "extraFeed": [
-        { "label": "OTTER TRANSCRIPT", "text": "Staff meeting notes auto-imported from the drops folder." }
+        { "label": "RON RAINS · LEADERSHIP & MINISTRY EVAL (6/11)", "text": "Finances, accountability, and purchasing controls: end personal use of church cards, stand up an Amazon Business account (personal/business/benefits split), remove the church card from the personal account. Member-care reimbursement protocol needed; Canva/Prime Timer brand consistency; explore Ben building a member-care app." },
+        { "label": "CHURCH LEADERSHIP STRATEGY (5/31)", "text": "A brief pre-Sunday sync and prayer with connection-group leaders and deacons; high standards for younger men without inflating egos; exploring a bus ministry and better outreach lead-capture (automated email/text — consult Sammy, engage Ben)." },
+        { "label": "CHURCH EVENT PLANNING REVIEW (6/11)", "text": "With Jess. Decoration/budget confusion traced to a leader's lack of protocol, not malice. Need clear spending guidelines and accountability for member-care activity; Jess to review and approve decoration plans going forward." },
+        { "label": "CHURCH COMMUNICATION STRATEGY (6/8)", "text": "Jess to own church-wide communication and event triage: publish summer outreach dates in the bulletin, attend staff monthly, set a recurring calendar review with Amy, and align Brother John on outreach scheduling." },
+        { "label": "DOCUMENT CREATION PLANNING (6/11)", "text": "With Jess. Draft a counseling-scheduling protocol and suggested request language (submit ideas a couple months ahead); word it carefully to avoid sounding self-serving." },
+        { "label": "KIDS MUSIC CAMP REVIEW (6/4)", "text": "For next year: send songs and sheet music to kids ahead of time, standardize vocal-instruction cues with visuals (diction), and confirm each teacher's plan. Strong devotional moments on vowel sounds and worship." },
+        { "label": "IRONMEN: D-DAY (6/6)", "text": "Camaraderie and unity as a D-Day picture — personal relationship with Jesus, mutual support, timing and sacrifice, and the strength of small, consistent, group efforts." },
+        { "label": "STUDENT APPEAL STRATEGY (6/10)", "text": "With Jess. A student at 75 demerits, affecting her ability to pay for the semester. Verify the count and the written policy; encourage her to own her past, document her growth, and write an appeal." }
       ],
       "checklists": {
         "weekly": [
@@ -163,7 +178,7 @@
       "short": "FAMILY",
       "subtitle": "Kids, grandkids, parents, in-laws",
       "source": "MANUAL",
-      "lastTouched": "2026-06-07",
+      "lastTouched": "2026-06-11",
       "state": "ABIDING",
       "rating": 8,
       "thread": {
@@ -179,7 +194,10 @@
           "Grandkids day on the calendar"
         ]
       },
-      "extraFeed": [],
+      "extraFeed": [
+        { "label": "SCHOOL DISCIPLINARY REVIEW (6/10)", "text": "With Jess re: her daughter — suspended for crossing the 75-demerit threshold, which caused an over-absence; one absence already retracted by Mrs. Carter. Frame it positively for her, acknowledge the school's accommodations, and follow up with Mrs. Carter." },
+        { "label": "HISTORICAL INSIGHTS & FAMILY STORIES (6/6)", "text": "Family history and anecdotes — Mr. Greavy and his chickens, Wright Field and the Wright brothers, a father's disaster-preparedness work at Wright-Patterson, and the road to Landmark Baptist College." }
+      ],
       "checklists": {
         "weekly": [
           { "id": "w1", "task": "One-on-one with each kid", "completed": false },
