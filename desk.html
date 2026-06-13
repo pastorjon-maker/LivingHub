@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE STEWARD'S DESK — JONATHAN MARSHALL</title>
+  <meta name="description" content="The Steward's Desk — a faithfulness instrument. The Field-O-Scope shows what's running low; the docket points to who's next.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="desk.css?v=1">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="kraft-cover">
+  <div class="desk-container">
+
+    <!-- ─────────── THE MORNING WIRE (masthead) ─────────── -->
+    <header class="desk-masthead">
+      <div class="masthead-top">
+        <div class="brand">
+          <div class="memo-badge">THE MORNING WIRE</div>
+          <h1>THE STEWARD'S DESK</h1>
+        </div>
+        <p class="masthead-verse">
+          <span class="verse-ref" id="verse-ref">1 CORINTHIANS 4:2</span>
+          <span id="verse-text">Moreover it is required in stewards, that a man be found <span class="vk">faithful</span>.</span>
+        </p>
+      </div>
+
+      <div class="horizon-strip">
+        <span class="horizon-lbl">HORIZON</span>
+        <span class="horizon-text" id="horizon-text">Glorify Jesus Christ by multiplying disciples</span>
+      </div>
+
+      <!-- Abide — the source line -->
+      <div class="abide-strip" id="abide-strip">
+        <div class="abide-lead">
+          <span class="abide-lbl">ABIDE</span>
+          <span class="abide-prompt" id="abide-prompt">The one thing — sit with Him before the desk fills.</span>
+        </div>
+        <div class="abide-action">
+          <span class="abide-note" id="abide-note">—</span>
+          <button class="dispatch-btn abide-btn" id="abide-btn">
+            <i data-lucide="sun"></i><span>ABIDED TODAY</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─────────── THE DESK SPREAD ─────────── -->
+    <main class="desk-spread">
+
+      <!-- LEFT: the Field-O-Scope + Big Four -->
+      <section class="scope-column">
+        <div class="scope-unit">
+          <div class="scope-stencil-top">FIELD-O-SCOPE · WHAT'S RUNNING LOW</div>
+          <div class="scope-bezel">
+            <div class="scope-screen">
+              <svg id="wheel" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Running-low radar">
+                <title>Field-O-Scope — recency across the areas of life</title>
+                <g id="grid-rings"></g>
+                <g id="spokes"></g>
+                <line id="scope-sweep" x1="160" y1="160" x2="160" y2="52"></line>
+                <polygon id="scope-shape"></polygon>
+                <g id="dots"></g>
+                <g id="labels"></g>
+              </svg>
+              <div class="scope-scanlines" aria-hidden="true"></div>
+              <div class="scope-glass" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="scope-controls">
+            <div class="scope-readout">
+              <span class="scope-readout-lbl">RUNNING LOWEST</span>
+              <span class="scope-readout-val" id="lowest-area">—</span>
+            </div>
+            <div class="scope-dials" aria-hidden="true">
+              <span class="scope-knob"></span>
+              <span class="scope-knob"></span>
+              <span class="scope-lamp"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Big Four — headline needles -->
+        <div class="big-four" id="big-four">
+          <div class="big-four-title">THE BIG FOUR</div>
+          <div class="big-four-meters" id="big-four-meters"><!-- rendered --></div>
+        </div>
+
+        <!-- Section legend -->
+        <div class="section-legend" id="section-legend"><!-- rendered --></div>
+      </section>
+
+      <!-- RIGHT: the sections + the open record -->
+      <section class="desk-body">
+
+        <!-- The sections index -->
+        <div class="sections-index" id="sections-index"><!-- rendered --></div>
+
+        <!-- The open record (an area, or the Disciples docket) -->
+        <div class="record-panel" id="record-panel">
+          <div class="record-empty" id="record-empty">
+            <div class="ledger-warning-stamp">PICK AN AREA — OR OPEN THE DOCKET.</div>
+          </div>
+
+          <!-- Generic area record -->
+          <div class="record-area hidden" id="record-area">
+            <div class="record-head">
+              <h2 id="area-title">AREA</h2>
+              <p class="text-muted" id="area-subtitle"></p>
+            </div>
+            <div class="recency-line">
+              <span class="recency-dot" id="area-recency-dot"></span>
+              <span id="area-recency-note">—</span>
+            </div>
+            <div class="present-step-card">
+              <label class="present-lbl">PRESENT STEP — the one next move</label>
+              <textarea id="area-present-step" class="present-input" placeholder="What's the next faithful move here?"></textarea>
+            </div>
+            <div class="record-actions">
+              <button class="dispatch-btn" id="area-showup-btn">
+                <i data-lucide="check-circle"></i><span>SHOWED UP HERE</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- The Disciples docket -->
+          <div class="record-docket hidden" id="record-docket">
+            <div class="record-head">
+              <h2>THE DISCIPLES DOCKET</h2>
+              <p class="text-muted">Who's due a letter — pointed at multiplication. <span class="rcp-key">R reconciling · C conforming · P perfecting</span></p>
+            </div>
+            <ul class="docket-list" id="docket-list"><!-- rendered --></ul>
+            <div class="add-docket-row">
+              <input type="text" id="docket-name-input" class="present-input add-name" placeholder="Add a name to the docket…" maxlength="80" />
+              <button class="dispatch-btn" id="docket-add-btn"><i data-lucide="user-plus"></i><span>ADD</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="desk-footer">
+      <a class="cabinet-link" href="index.html">
+        <i data-lucide="archive"></i>
+        <span>OPEN THE FILING CABINET (the old Living Hub)</span>
+      </a>
+      <button class="cabinet-link reset-link" id="reset-btn">
+        <i data-lucide="rotate-ccw"></i><span>RESET SEED DATA</span>
+      </button>
+    </footer>
+  </div>
+
+  <script src="desk.js?v=1"></script>
+</body>
+</html>
