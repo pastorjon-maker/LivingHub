@@ -3,44 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FIELD NOTES: JONATHAN MARSHALL'S LIVING HUB</title>
-  <meta name="description" content="Jonathan Marshall's personal Living Hub — a tactile, organized field notes dashboard for life, ministry, and craft.">
+  <title>THE STEWARD'S DESK — JONATHAN MARSHALL</title>
+  <meta name="description" content="The Steward's Desk — a faithfulness instrument. The Field-O-Scope shows what's running low; the docket points to who's next.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="desk.css?v=1">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="kraft-cover">
-  <div class="hub-container">
+  <div class="desk-container">
 
-    <!-- Tactile Memo Header -->
-    <header class="hub-header">
-      <div class="brand">
-        <div class="memo-badge">FIELD NOTES ARCHIVE</div>
-        <h1>LIVING HUB</h1>
+    <!-- ─────────── THE MORNING WIRE (masthead) ─────────── -->
+    <header class="desk-masthead">
+      <div class="masthead-top">
+        <div class="brand">
+          <div class="memo-badge">THE MORNING WIRE</div>
+          <h1>THE STEWARD'S DESK</h1>
+        </div>
+        <p class="masthead-verse">
+          <span class="verse-ref" id="verse-ref">1 CORINTHIANS 4:2</span>
+          <span id="verse-text">Moreover it is required in stewards, that a man be found <span class="vk">faithful</span>.</span>
+        </p>
       </div>
-      <p class="header-verse">
-        <span class="verse-ref">2 TIMOTHY 3:16–17</span>
-        <span class="vk">All scripture is given by inspiration of God</span>, and is profitable for <span class="vk">doctrine, for reproof, for correction, for instruction in righteousness</span>: That the man of God may be perfect, <span class="vk">throughly furnished unto all good works</span>.
-      </p>
+
+      <div class="horizon-strip">
+        <span class="horizon-lbl">HORIZON</span>
+        <span class="horizon-text" id="horizon-text">Glorify Jesus Christ by multiplying disciples</span>
+      </div>
+
+      <!-- Abide — the source line -->
+      <div class="abide-strip" id="abide-strip">
+        <div class="abide-lead">
+          <span class="abide-lbl">ABIDE</span>
+          <span class="abide-prompt" id="abide-prompt">The one thing — sit with Him before the desk fills.</span>
+        </div>
+        <div class="abide-action">
+          <span class="abide-note" id="abide-note">—</span>
+          <button class="dispatch-btn abide-btn" id="abide-btn">
+            <i data-lucide="sun"></i><span>ABIDED TODAY</span>
+          </button>
+        </div>
+      </div>
     </header>
 
-    <!-- Main Notebook spread -->
-    <main class="notebook-spread">
+    <!-- ─────────── THE DESK SPREAD ─────────── -->
+    <main class="desk-spread">
 
-      <!-- LEFT PAGE: WHEEL-OF-LIFE OSCILLOSCOPE & TABLE OF CONTENTS -->
-      <section class="left-page-cover">
-
-        <!-- ── 1940s OSCILLOSCOPE: WHEEL OF LIFE RADAR ── -->
+      <!-- LEFT: the Field-O-Scope + Big Four -->
+      <section class="scope-column">
         <div class="scope-unit">
-          <div class="scope-stencil-top">FIELD-O-SCOPE · WHEEL OF LIFE</div>
+          <div class="scope-stencil-top">FIELD-O-SCOPE · WHAT'S RUNNING LOW</div>
           <div class="scope-bezel">
             <div class="scope-screen">
-              <svg id="wheel" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wheel of life radar">
-                <title>Wheel of Life — signal strength across ten spokes</title>
+              <svg id="wheel" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Running-low radar">
+                <title>Field-O-Scope — recency across the areas of life</title>
                 <g id="grid-rings"></g>
                 <g id="spokes"></g>
                 <line id="scope-sweep" x1="160" y1="160" x2="160" y2="52"></line>
@@ -54,8 +74,8 @@
           </div>
           <div class="scope-controls">
             <div class="scope-readout">
-              <span class="scope-readout-lbl">OVERALL BALANCE</span>
-              <span class="scope-readout-val" id="wheel-avg">—</span>
+              <span class="scope-readout-lbl">RUNNING LOWEST</span>
+              <span class="scope-readout-val" id="lowest-area">—</span>
             </div>
             <div class="scope-dials" aria-hidden="true">
               <span class="scope-knob"></span>
@@ -65,226 +85,77 @@
           </div>
         </div>
 
-        <h2 style="margin-top: 1.25rem;">TABLE OF CONTENTS</h2>
-
-        <!-- Spoke categories listed (TOC) -->
-        <div class="toc-list" id="toc-list">
-          <!-- Populated dynamically by app.js -->
+        <!-- The Big Four — headline needles -->
+        <div class="big-four" id="big-four">
+          <div class="big-four-title">THE BIG FOUR</div>
+          <div class="big-four-meters" id="big-four-meters"><!-- rendered --></div>
         </div>
 
-        <!-- Inside-Cover Truth Anchor (relocated below the index) -->
-        <div class="inside-cover-anchor slim" id="truth-anchor-card">
-          <div class="anchor-title-lbl">FOUNDATIONAL ANCHOR:</div>
-          <div class="quote-body">
-            <blockquote id="truth-quote">
-              DELIGHT IN THE LORD, AND HE WILL GIVE YOU THE DESIRES OF YOUR HEART.
-            </blockquote>
-          </div>
-          <div class="quote-cycle-footer">
-            <button class="cycle-btn" id="next-quote">CYCLE ANCHOR</button>
-          </div>
-        </div>
+        <!-- Section legend -->
+        <div class="section-legend" id="section-legend"><!-- rendered --></div>
       </section>
 
-      <!-- RIGHT PAGE: THE RULED PAPER LEDGER -->
-      <section class="right-page-paper">
+      <!-- RIGHT: the sections + the open record -->
+      <section class="desk-body">
 
-        <div class="ledger-header-rule">
-          <span>FIELD RECORDS LEDGER</span>
-          <span id="active-spoke-num">RECORD: 00</span>
-        </div>
-        <div class="detail-card-glass" id="detail-panel">
+        <!-- The sections index -->
+        <div class="sections-index" id="sections-index"><!-- rendered --></div>
 
-          <!-- Empty State (slim — auto-hidden when first spoke loads) -->
-          <div class="empty-state" id="panel-empty-state">
-            <div class="ledger-warning-stamp" style="margin-top:3rem;">
-              SELECT A CATEGORY ON THE LEFT TO OPEN ITS RECORD.
+        <!-- The open record (an area, or the Disciples docket) -->
+        <div class="record-panel" id="record-panel">
+          <div class="record-empty" id="record-empty">
+            <div class="ledger-warning-stamp">PICK AN AREA — OR OPEN THE DOCKET.</div>
+          </div>
+
+          <!-- Generic area record -->
+          <div class="record-area hidden" id="record-area">
+            <div class="record-head">
+              <h2 id="area-title">AREA</h2>
+              <p class="text-muted" id="area-subtitle"></p>
+            </div>
+            <div class="recency-line">
+              <span class="recency-dot" id="area-recency-dot"></span>
+              <span id="area-recency-note">—</span>
+            </div>
+            <div class="present-step-card">
+              <label class="present-lbl">PRESENT STEP — the one next move</label>
+              <textarea id="area-present-step" class="present-input" placeholder="What's the next faithful move here?"></textarea>
+            </div>
+            <div class="record-actions">
+              <button class="dispatch-btn" id="area-showup-btn">
+                <i data-lucide="check-circle"></i><span>SHOWED UP HERE</span>
+              </button>
             </div>
           </div>
 
-          <!-- Lined Paper details content -->
-          <div class="detail-content hidden" id="panel-content">
-
-            <!-- Spoke header -->
-            <div class="detail-header">
-              <div class="spoke-indicator-wrap">
-                <span class="spoke-num-stamp" id="spoke-num-badge">01</span>
-                <div>
-                  <h2 id="spoke-title">WALK WITH GOD</h2>
-                  <p id="spoke-subtitle" class="text-muted">Devotional life, abiding, inward work of the Spirit</p>
-                </div>
-              </div>
+          <!-- The Disciples docket -->
+          <div class="record-docket hidden" id="record-docket">
+            <div class="record-head">
+              <h2>THE DISCIPLES DOCKET</h2>
+              <p class="text-muted">Who's due a letter — pointed at multiplication. <span class="rcp-key">R reconciling · C conforming · P perfecting</span></p>
             </div>
-
-            <!-- Compact status strip: quiet last-touched -->
-            <div class="status-strip">
-              <span class="touched-note" id="touched-note">Touched today</span>
+            <ul class="docket-list" id="docket-list"><!-- rendered --></ul>
+            <div class="add-docket-row">
+              <input type="text" id="docket-name-input" class="present-input add-name" placeholder="Add a name to the docket…" maxlength="80" />
+              <button class="dispatch-btn" id="docket-add-btn"><i data-lucide="user-plus"></i><span>ADD</span></button>
             </div>
-
-            <!-- Wheel signal strength (feeds the oscilloscope radar) -->
-            <div class="scope-rating-row">
-              <span class="metric-lbl">WHEEL SIGNAL (1–10)</span>
-              <div class="rating-control">
-                <input type="range" min="1" max="10" step="1" id="rating-slider" class="rating-slider" disabled aria-readonly="true" />
-                <span class="rating-val" id="rating-val">5</span>
-              </div>
-              <span class="rating-auto hidden" id="rating-auto"></span>
-            </div>
-
-            <!-- Shepherding logs -->
-            <div class="extra-feed-section hidden" id="extra-feed-wrap">
-              <!-- Dynamically populated -->
-            </div>
-
-            <!-- ─────────────────────────────────────── -->
-            <!-- FIELD CHECKLIST (backed by Asana)       -->
-            <!-- ─────────────────────────────────────── -->
-            <div class="checklist-card" id="checklist-wrap">
-              <div class="section-label-row">
-                <i data-lucide="list-checks"></i>
-                <span>FIELD CHECKLIST</span>
-                <span class="asana-badge">ASANA</span>
-              </div>
-              <ul class="asana-task-list" id="asana-task-list">
-                <!-- populated live from Asana by app.js -->
-              </ul>
-              <div class="add-item-row">
-                <input type="text" id="asana-task-input" class="asana-input" placeholder="Add a task to Asana…" maxlength="200" />
-                <button type="button" class="add-item-btn" id="asana-submit-btn">
-                  <i data-lucide="plus"></i><span>ADD</span>
-                </button>
-              </div>
-              <div class="asana-feedback hidden" id="asana-feedback"></div>
-            </div>
-
-            <!-- ─────────────────────────────────────── -->
-            <!-- RULED NOTEBOOK JOURNAL                  -->
-            <!-- ─────────────────────────────────────── -->
-            <div class="ruled-journal-card">
-              <div class="journal-header-stamp">
-                <i data-lucide="pen-tool"></i>
-                <span>POUR OUT & ASK (JOURNAL NOTE)</span>
-              </div>
-
-              <textarea class="ruled-textarea" id="journal-input" placeholder="Pour out immediate thoughts, active theological questions, or hurdles here..."></textarea>
-
-              <div class="journal-footer">
-                <p class="journal-hint">Journal to Google Doc or copy as a Claude prompt context block.</p>
-                <div class="journal-action-row">
-                  <button class="doc-append-btn" id="doc-append-btn">
-                    <i data-lucide="file-text"></i>
-                    <span>APPEND TO DOC</span>
-                  </button>
-                  <button class="rubber-stamp-btn" id="feed-to-claude-btn">
-                    <span>FEED TO CLAUDE</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- ─────────────────────────────────────── -->
-            <!-- CLAUDE RESEARCH PASTE-BACK PARSER       -->
-            <!-- ─────────────────────────────────────── -->
-            <div class="claude-paste-section" id="claude-paste-wrap">
-              <div class="section-label-row">
-                <i data-lucide="clipboard-paste"></i>
-                <span>PASTE CLAUDE RESPONSE</span>
-              </div>
-              <p class="section-hint">Paste Claude's reply below. The hub will extract the summary and next step automatically.</p>
-              <textarea class="paste-textarea" id="claude-paste-input" placeholder="### CLAUDE RESEARCH: [TOPIC]&#10;SUMMARY: ...&#10;NEXT STEP: ..."></textarea>
-              <button class="parse-btn" id="claude-parse-btn">
-                <i data-lucide="cpu"></i>
-                <span>PARSE & UPDATE SPOKE</span>
-              </button>
-              <div class="parse-feedback hidden" id="parse-feedback"></div>
-            </div>
-
           </div>
         </div>
       </section>
     </main>
 
-    <!-- Schema sync drawer bottom -->
-    <footer class="hub-settings-bar">
-      <div class="settings-trigger" id="settings-toggle">
-        <i data-lucide="settings"></i>
-        <span>SCHEMA SYSTEM INDEX (LOCAL SYNC & DATA CONTROLS)</span>
-      </div>
-      <div class="settings-drawer hidden" id="settings-drawer">
-        <div class="drawer-header">
-          <h3>SYSTEM INTERFACE</h3>
-          <p>Configure integrations, import/export data, and check sync logs.</p>
-        </div>
-
-        <!-- Integrations Status Grid -->
-        <div class="integrations-grid">
-          <div class="integration-item">
-            <div class="int-name">CLAUDE.AI</div>
-            <div class="int-status green">SYNC ACTIVE</div>
-          </div>
-          <div class="integration-item">
-            <div class="int-name">OTTER.AI</div>
-            <div class="int-status green">SYNC ACTIVE</div>
-          </div>
-          <div class="integration-item">
-            <div class="int-name">GOOGLE DRIVE</div>
-            <div class="int-status green">SYNC ACTIVE</div>
-          </div>
-          <div class="integration-item">
-            <div class="int-name">ASANA TASKS</div>
-            <div class="int-status green">SYNC ACTIVE</div>
-          </div>
-        </div>
-
-        <!-- Apps Script endpoint (journal + Asana proxy) -->
-        <div class="config-section">
-          <h4>APPS SCRIPT ENDPOINT (JOURNAL + ASANA)</h4>
-          <p>Deploy <code>GoogleAppsScript.js</code> as a Web App at script.google.com — it powers
-             both the journal <em>and</em> Asana. Your Asana token lives inside that script
-             (<code>ASANA_PAT</code>), never in the browser. Paste the <code>/exec</code> URL here.</p>
-          <div class="config-row">
-            <label for="gdoc-url-input">APPS SCRIPT WEB APP URL</label>
-            <input type="text" id="gdoc-url-input" placeholder="https://script.google.com/macros/s/.../exec" />
-          </div>
-          <button class="sync-btn btn-primary" id="save-gdoc-config-btn">
-            <i data-lucide="save"></i> SAVE TO BROWSER
-          </button>
-        </div>
-
-        <!-- Asana project -->
-        <div class="config-section">
-          <h4>ASANA PROJECT</h4>
-          <p>The project new tasks land in (and where this category's tasks are read from).
-             It's the long number in a project's URL. Not a secret.</p>
-          <div class="config-row">
-            <label for="asana-project-input">PROJECT GID</label>
-            <input type="text" id="asana-project-input" placeholder="1234567890123456" />
-          </div>
-          <input type="hidden" id="asana-pat-input" />
-          <button class="sync-btn btn-primary" id="save-asana-config-btn">
-            <i data-lucide="save"></i> SAVE TO BROWSER
-          </button>
-        </div>
-
-        <!-- Data actions -->
-        <div class="sync-actions-panel">
-          <div class="sync-action">
-            <h4>EXPORT DATA SCHEMATIC</h4>
-            <p>Save current coordinates to <code>living_hub_data.json</code> local config.</p>
-            <button class="sync-btn" id="export-btn"><i data-lucide="download"></i> SAVE DATA.JSON</button>
-          </div>
-          <div class="sync-action">
-            <h4>IMPORT DATA SCHEMATIC</h4>
-            <p>Paste updated JSON string to reconstruct coordinates and index records.</p>
-            <textarea id="import-json-area" placeholder='{"user": "JONATHAN MARSHALL", ...}'></textarea>
-            <button class="sync-btn btn-primary" id="import-btn"><i data-lucide="upload"></i> OVERWRITE SCHEMA</button>
-          </div>
-        </div>
-      </div>
+    <!-- Footer -->
+    <footer class="desk-footer">
+      <a class="cabinet-link" href="hub.html">
+        <i data-lucide="archive"></i>
+        <span>OPEN THE FILING CABINET (the old Living Hub)</span>
+      </a>
+      <button class="cabinet-link reset-link" id="reset-btn">
+        <i data-lucide="rotate-ccw"></i><span>RESET SEED DATA</span>
+      </button>
     </footer>
   </div>
 
-  <!-- app.js -->
-  <script src="app.js?v=11"></script>
+  <script src="desk.js?v=1"></script>
 </body>
 </html>
