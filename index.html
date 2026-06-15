@@ -1,161 +1,574 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE STEWARD'S DESK — JONATHAN MARSHALL</title>
-  <meta name="description" content="The Steward's Desk — a faithfulness instrument. The Field-O-Scope shows what's running low; the docket points to who's next.">
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field-O-Scope — Living Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=League+Spartan:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kraft:#C4A87C; --kraft-dark:#9C7A4D; --kraft-deep:#6E5631; --cover:#BC9C6E;
+  --paper:#FAF8F2; --paper-line:#D9C9A8; --grid:rgba(156,122,77,.13);
+  --ink:#1A1A1A; --ink-soft:#46443E; --ink-faint:#9C7A4D;
+  --stamp-red:#C2702F; --amber:#D08A3E; --aqua:#7B9BA8; --moss:#8A9A6B; --green:#7F9056;
+  --phosphor:#58ffb0; --phosphor-dim:#2fae78; --scope-amber:#ffcc66; --bakelite:#2a2622; --bakelite-hi:#463f37;
+  --radius:12px; --shadow-card:0 1px 1px rgba(60,42,18,.10); --mono:'Jost',ui-sans-serif,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--mono);color:var(--ink);line-height:1.5;min-height:100vh;letter-spacing:.01em;
+  background:#14151a;
+  background-image:radial-gradient(circle at 32% 18%, #21232b, #0e0f13 72%);
+  padding:clamp(.6rem,2.5vw,2rem); display:flex; justify-content:center;}
+.hub{width:100%; max-width:468px; margin:0 auto;
+  --olive:#4d5238;--olive-dk:#393d2a;--olive-hi:#5b6143;
+  background:
+   radial-gradient(circle at 19px 19px, rgba(0,0,0,.6) 0 2.6px, rgba(255,255,255,.10) 3px 4px, transparent 4.6px),
+   radial-gradient(circle at calc(100% - 19px) 19px, rgba(0,0,0,.6) 0 2.6px, rgba(255,255,255,.10) 3px 4px, transparent 4.6px),
+   radial-gradient(circle at 19px calc(100% - 19px), rgba(0,0,0,.6) 0 2.6px, rgba(255,255,255,.10) 3px 4px, transparent 4.6px),
+   radial-gradient(circle at calc(100% - 19px) calc(100% - 19px), rgba(0,0,0,.6) 0 2.6px, rgba(255,255,255,.10) 3px 4px, transparent 4.6px),
+   linear-gradient(157deg, var(--olive-hi), var(--olive) 55%, var(--olive-dk));
+  border-radius:16px;
+  padding:clamp(1.2rem,3.5vw,2rem);
+  box-shadow:0 0 0 3px #e2e5e8, 0 0 0 6px #9aa0a4, 0 0 0 7px #5f6367, 0 22px 52px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.08);}.spread{display:flex;flex-direction:column;gap:1rem;}.col-left,.col-right{min-width:0;}.col-right{display:flex;flex-direction:column;gap:1rem;}@media(min-width:900px){.hub{max-width:1140px;}.spread{display:grid;grid-template-columns:440px 1fr;gap:1.8rem;align-items:start;}.col-left{position:relative;}.col-left{position:sticky;top:1.1rem;align-self:start;}.col-right .page{margin-top:0;}.brand h1{font-size:2.8rem;}}
+.hidden{display:none!important;}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+.hub-header{margin-bottom:1.1rem;}
+.dataplate{position:relative;background:linear-gradient(160deg,#3f4430,#2f3324);border:1px solid #20231a;border-radius:5px;
+  padding:.7rem 1rem .8rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -2px 6px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.4);
+  background-image:radial-gradient(circle at 9px 9px,rgba(0,0,0,.5) 0 2px,rgba(255,255,255,.08) 2.4px 3.2px,transparent 3.6px),radial-gradient(circle at calc(100% - 9px) 9px,rgba(0,0,0,.5) 0 2px,rgba(255,255,255,.08) 2.4px 3.2px,transparent 3.6px),radial-gradient(circle at 9px calc(100% - 9px),rgba(0,0,0,.5) 0 2px,rgba(255,255,255,.08) 2.4px 3.2px,transparent 3.6px),radial-gradient(circle at calc(100% - 9px) calc(100% - 9px),rgba(0,0,0,.5) 0 2px,rgba(255,255,255,.08) 2.4px 3.2px,transparent 3.6px),linear-gradient(160deg,#3f4430,#2f3324);}
+.dp-row{display:flex;justify-content:space-between;align-items:baseline;}
+.dp-mfr{font-family:var(--sans);font-size:.52rem;font-weight:700;letter-spacing:.24em;color:var(--scope-amber);opacity:.82;}
+.dp-no{font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;color:#b9c0a4;opacity:.7;}
+.dataplate h1{font-family:var(--sans);font-size:clamp(1.7rem,6.5vw,2.4rem);font-weight:700;letter-spacing:.04em;color:#eef0e4;line-height:1;margin:.2rem 0 .25rem;text-shadow:0 1px 0 rgba(0,0,0,.5),0 0 1px rgba(255,255,255,.2);}
+.dp-sub{font-family:var(--sans);font-size:.5rem;font-weight:600;letter-spacing:.18em;color:#aeb59a;opacity:.75;}
+.header-verse{font-size:.7rem;color:#f0e3c6;line-height:1.5;margin-top:.6rem;}
+.header-verse .verse-ref{display:block;font-weight:700;letter-spacing:.18em;color:var(--scope-amber);margin-bottom:.2rem;font-size:.6rem;}
+.header-verse .vk{color:#fff;font-weight:600;}
 
-  <link rel="stylesheet" href="style.css?v=11">
-  <link rel="stylesheet" href="desk.css?v=1">
-  <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="kraft-cover">
-  <div class="desk-container">
+/* ===== SCOPE ===== */
+.scope-unit{background:linear-gradient(160deg,var(--bakelite-hi),var(--bakelite));border:1px solid #15110d;border-radius:8px;
+  padding:.7rem .7rem .6rem;box-shadow:inset 0 2px 8px rgba(0,0,0,.6),0 1px 0 rgba(255,255,255,.10);}
+.scope-stencil-top{font-size:.56rem;font-weight:700;letter-spacing:.22em;color:var(--scope-amber);text-align:center;margin-bottom:.5rem;opacity:.85;text-shadow:0 0 4px rgba(255,204,102,.4);}
+.scope-bezel{background:radial-gradient(circle at 50% 40%,#3a342d,#1c1814 80%);border-radius:50%;padding:12px;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.7),inset 0 -1px 0 rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05);}
+.scope-screen{position:relative;border-radius:50%;overflow:hidden;aspect-ratio:1/1;
+  background:radial-gradient(circle at 50% 45%,#0d4030 0%,#07271d 55%,#041610 100%);
+  box-shadow:inset 0 0 22px rgba(0,0,0,.85),inset 0 0 60px rgba(40,255,160,.06);}
+.scope-screen #wheel{position:relative;display:block;width:100%;height:100%;z-index:2;}
+#grid-rings polygon{fill:none;stroke:var(--phosphor-dim);stroke-width:.6;opacity:.45;}
+#spokes line{stroke:var(--phosphor-dim);stroke-width:.5;opacity:.4;}
+#scope-shape{fill:rgba(88,255,176,.16);stroke:var(--phosphor);stroke-width:2;stroke-linejoin:round;filter:drop-shadow(0 0 3px rgba(88,255,176,.8));transition:all .35s ease;}
+#dots circle{fill:var(--phosphor);filter:drop-shadow(0 0 3px rgba(88,255,176,.9));cursor:pointer;transition:r .15s ease;}
+#dots circle.active{fill:var(--scope-amber);filter:drop-shadow(0 0 5px rgba(255,204,102,1));}
+#labels text{fill:var(--phosphor);font-family:var(--mono);font-weight:600;letter-spacing:.04em;cursor:pointer;opacity:.78;text-shadow:0 0 4px rgba(88,255,176,.7);transition:opacity .15s,fill .15s;}
+#labels text.active{fill:var(--scope-amber);opacity:1;}
+#scope-sweep{stroke:var(--phosphor);stroke-width:1.2;opacity:.5;transform-box:view-box;transform-origin:160px 160px;animation:sweep 4s linear infinite;filter:drop-shadow(0 0 4px rgba(88,255,176,.8));}
+@keyframes sweep{to{transform:rotate(360deg);}}
+.scope-scanlines{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply;animation:flicker 3.5s steps(60) infinite;}
+@keyframes flicker{0%,100%{opacity:.55;}48%{opacity:.62;}50%{opacity:.48;}}
+.scope-glass{position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.16),transparent 38%),radial-gradient(circle at 50% 50%,transparent 60%,rgba(0,0,0,.45) 100%);}
+.scope-controls{display:flex;align-items:center;justify-content:space-between;margin-top:.55rem;padding:0 .15rem;}
+.scope-readout{display:flex;flex-direction:column;line-height:1.05;}
+.scope-readout-lbl{font-size:.5rem;font-weight:700;letter-spacing:.16em;color:var(--scope-amber);opacity:.8;}
+.scope-readout-val{font-size:1.35rem;font-weight:700;color:var(--phosphor);text-shadow:0 0 6px rgba(88,255,176,.7);font-variant-numeric:tabular-nums;}
+.scope-dials{display:flex;align-items:center;gap:8px;}
+.scope-knob{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#5a5149,#211d19);box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 1px 2px rgba(0,0,0,.6);border:1px solid #15110d;}
+.scope-knob::after{content:"";display:block;width:2px;height:7px;margin:1px auto;background:var(--scope-amber);opacity:.6;border-radius:1px;}
+.scope-lamp{width:9px;height:9px;border-radius:50%;background:var(--phosphor);box-shadow:0 0 7px var(--phosphor);animation:flicker 2.2s ease-in-out infinite;}
 
-    <!-- ─────────── THE MORNING WIRE (masthead) ─────────── -->
-    <header class="desk-masthead">
-      <div class="masthead-top">
-        <div class="brand">
-          <div class="memo-badge">THE MORNING WIRE</div>
-          <h1>THE STEWARD'S DESK</h1>
-        </div>
-        <p class="masthead-verse">
-          <span class="verse-ref" id="verse-ref">1 CORINTHIANS 4:2</span>
-          <span id="verse-text">Moreover it is required in stewards, that a man be found <span class="vk">faithful</span>.</span>
-        </p>
-      </div>
+/* ===== TOC ===== */
+.page{background:var(--paper);border:1px solid #2c2f22;border-radius:var(--radius);box-shadow:inset 0 2px 5px rgba(0,0,0,.30),0 1px 0 rgba(255,255,255,.18);padding:1.05rem 1.1rem 1.25rem;margin-top:1.1rem;text-align:left;}.page.idxpage{background:linear-gradient(160deg,var(--bakelite-hi),var(--bakelite));border:1px solid #15110d;box-shadow:inset 0 2px 10px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.08);}.idx-stencil{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.22em;color:var(--scope-amber);text-align:center;margin-bottom:.75rem;opacity:.88;text-shadow:0 0 4px rgba(255,204,102,.4);}.sidecard{margin-top:.85rem;background:var(--paper);border:1px solid var(--kraft-dark);border-radius:6px;padding:.65rem .8rem;box-shadow:0 6px 15px rgba(38,25,9,.30),inset 0 1px 0 rgba(255,255,255,.55);}.dispatch{margin-top:.95rem;background:#fbf6e9;border:1px solid #2c2f22;border-radius:3px;padding:.7rem .9rem .85rem;box-shadow:inset 0 2px 5px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.18);background-image:repeating-linear-gradient(90deg,transparent 0 6px,rgba(110,80,40,.015) 6px 7px);}.dispatch .dh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--paper-line);padding-bottom:.38rem;margin-bottom:.5rem;}.dispatch .dt{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--kraft-deep);}.dispatch .dw{font-family:"Special Elite",monospace;font-size:.6rem;color:var(--ink-faint);}.dispatch .re{font-family:'Special Elite',monospace;font-size:.62rem;color:var(--ink-faint);margin-bottom:.4rem;}.dispatch .vt{font-family:'Special Elite',monospace;font-size:.85rem;line-height:1.6;color:var(--ink);}.dispatch .vr{display:block;font-family:'Special Elite',monospace;font-size:.64rem;color:var(--ink-soft);margin-top:.45rem;text-align:right;letter-spacing:.04em;}.legend{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);}.legend .sk{color:var(--kraft-deep);letter-spacing:.16em;}.legend .lg{display:flex;align-items:center;gap:.3rem;}.legend i{width:12px;height:6px;border-radius:1px;display:inline-block;border:1px solid rgba(0,0,0,.15);}
+h2.sec{font-size:.8rem;font-weight:800;letter-spacing:.18em;color:var(--kraft-deep);margin:.1rem 0 .7rem;text-align:left;}
+.toc-list{display:flex;flex-direction:column;gap:.55rem;padding-top:.3rem;}.tab-row{display:flex;gap:.5rem;}.tab-row.off{margin-left:1.9rem;}.toc-item{position:relative;flex:1 1 0;min-width:0;text-align:left;cursor:pointer;font-family:var(--mono);background:#fbf4e2;border:1px solid var(--kraft-dark);border-top:3px solid var(--kraft);border-radius:7px 7px 2px 2px;padding:.42rem .55rem .5rem;box-shadow:0 1px 0 rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.55);transition:transform .1s,background .12s,box-shadow .12s;}.toc-item:hover{background:#fff;transform:translateY(-2px);}.toc-item.active{background:#fffdf6;transform:translateY(-3px);box-shadow:0 5px 11px rgba(60,42,18,.24);}.toc-item .tn{font-size:.52rem;font-weight:800;letter-spacing:.06em;color:var(--kraft-deep);}.toc-item.active .tn{color:var(--stamp-red);}.toc-item .tt{display:block;font-family:'League Spartan','Jost',sans-serif;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.045em;color:var(--ink);line-height:1.05;margin-top:.1rem;}.toc-item.inbox{background:#e7d9bb;border-style:dashed;border-top-color:var(--kraft-deep);}
 
-      <div class="horizon-strip">
-        <span class="horizon-lbl">HORIZON</span>
-        <span class="horizon-text" id="horizon-text">Glorify Jesus Christ by multiplying disciples</span>
-      </div>
+/* ===== PANELS (graph paper ledger) ===== */
+.ledger-rule{display:flex;justify-content:space-between;align-items:baseline;font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--kraft-deep);border-bottom:2px solid var(--kraft-dark);padding-bottom:.4rem;margin:1.4rem 0 .8rem;} .ledger-rule:first-child{margin-top:0;}
+.panel{display:none;background:#fffdf6;border:1px solid var(--paper-line);border-radius:6px;padding:1.1rem 1.15rem 1.3rem;}.recordpage{margin-top:1rem;}.rec-cols{display:flex;flex-direction:column;}.rc{min-width:0;}@media(min-width:900px){.rec-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:start;}.p-head{margin-bottom:.2rem;}}
+.panel.show{display:block;}
+.p-head{display:flex;align-items:center;gap:.7rem;border-bottom:1px dashed var(--paper-line);padding-bottom:.7rem;}
+.spoke-stamp{font-size:.78rem;font-weight:800;color:#fff;background:var(--stamp-red);padding:.25rem .5rem;border-radius:2px;}
+.p-head h3{font-size:1rem;font-weight:700;letter-spacing:.04em;}.horizon{font-size:.72rem;font-style:italic;color:var(--ink-soft);margin-top:.15rem;}.horizon .hz{font-style:normal;font-size:.5rem;font-weight:700;letter-spacing:.14em;color:var(--amber);background:#f6ecd6;padding:.05rem .3rem;border-radius:2px;margin-right:.35rem;vertical-align:middle;}.mini-sig{display:flex;flex-direction:column;align-items:center;flex:none;}.gsvg{width:46px;height:28px;display:block;}.mini-val{font-size:.7rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;margin-top:-2px;}
+.p-head p{font-size:.72rem;color:var(--ink-faint);}
+.lblrow{display:flex;align-items:center;gap:.45rem;font-size:.6rem;font-weight:700;letter-spacing:.16em;color:var(--kraft-deep);margin:1rem 0 .4rem;}.lblrow .hint{font-weight:500;letter-spacing:.03em;text-transform:none;color:var(--ink-faint);font-size:.52rem;margin-left:.1rem;}.focuscard{display:flex;align-items:flex-start;gap:.5rem;border-left:3px solid var(--amber);}.focus-text{flex:1;font-size:.84rem;color:var(--ink);outline:none;border-radius:2px;padding:.05rem .15rem;}.focus-text:focus{background:#fff7e6;box-shadow:0 0 0 1px var(--amber);}.fpen{font-size:.7rem;color:var(--amber);opacity:.6;flex:none;}
+.asana-badge{font-size:.5rem;background:var(--amber);color:#fff;padding:.1rem .35rem;border-radius:2px;letter-spacing:.1em;}
+.card{background:#fffdf6;border:1px solid var(--paper-line);border-radius:3px;padding:.6rem .75rem;box-shadow:var(--shadow-card);}
+.sigrow{display:flex;align-items:center;justify-content:space-between;}
+.sigbars{letter-spacing:-1px;font-weight:700;}
+.touched{font-size:.66rem;font-weight:700;letter-spacing:.08em;}
+.ta{width:100%;resize:none;border:1px solid var(--paper-line);border-radius:3px;background:#fff;font-family:var(--mono);font-size:.82rem;color:var(--ink);padding:.5rem .6rem;min-height:54px;margin-top:.3rem;}
+.btnrow{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem;}
+.btn{font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.08em;border-radius:3px;padding:.45rem .7rem;cursor:pointer;border:1px solid var(--kraft-dark);background:transparent;color:var(--ink-soft);}
+.btn.dark{background:var(--ink);color:var(--paper);border:none;}
+.btn.stamp{background:var(--stamp-red);color:#fff;border:none;}
 
-      <!-- Abide — the source line -->
-      <div class="abide-strip" id="abide-strip">
-        <div class="abide-lead">
-          <span class="abide-lbl">ABIDE</span>
-          <span class="abide-prompt" id="abide-prompt">The one thing — sit with Him before the desk fills.</span>
-        </div>
-        <div class="abide-action">
-          <span class="abide-note" id="abide-note">—</span>
-          <button class="dispatch-btn abide-btn" id="abide-btn">
-            <i data-lucide="sun"></i><span>ABIDED TODAY</span>
-          </button>
-        </div>
-      </div>
-    </header>
+/* inbox subsections */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.4rem;}
+.tile{border:1px solid var(--paper-line);border-radius:3px;padding:.5rem .6rem;background:#fffdf6;}
+.tile .s{font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--ink-faint);}
+.tile .v{font-size:1.05rem;font-weight:700;margin-top:.15rem;}
+.tile .v.hot{color:var(--stamp-red);}
+.tile small{display:block;font-size:.54rem;color:var(--ink-faint);letter-spacing:.04em;font-weight:500;}
+.commit{padding:.6rem .1rem;border-bottom:1px solid var(--paper-line);}
+.commit .q{font-size:.84rem;}
+.commit .src{font-size:.58rem;color:var(--ink-faint);letter-spacing:.06em;margin-top:.1rem;}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.45rem;}
+.chips button{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.04em;border:1px solid var(--kraft-dark);background:transparent;color:var(--ink-soft);border-radius:3px;padding:.3rem .55rem;cursor:pointer;}
+.chips button.mine{border-color:var(--stamp-red);color:var(--stamp-red);}
+.commit.done{opacity:.5;}.commit.done .chips{display:none;}
+.filed{display:none;font-size:.6rem;font-weight:700;color:var(--green);margin-top:.4rem;letter-spacing:.06em;}
+.commit.done .filed{display:block;}
+.anchor{margin-top:1.1rem;background:#efe6cf;border:1px solid var(--paper-line);border-radius:3px;padding:.7rem .85rem;transform:rotate(.3deg);}
+.anchor .al{font-size:.54rem;font-weight:700;letter-spacing:.18em;color:var(--kraft-deep);}
+.anchor blockquote{font-size:.82rem;font-style:italic;color:var(--ink-soft);margin-top:.3rem;}
+:focus-visible{outline:2px solid var(--stamp-red);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){#scope-sweep{animation:none;}.scope-lamp,.scope-scanlines{animation:none;}}
 
-    <!-- ─────────── THE DESK SPREAD ─────────── -->
-    <main class="desk-spread">
+/* ===== SHEPHERDING · PRAYER ROOM (scoped) ===== */
+.prroom{margin-top:.3rem;}
+.prroom .so{background:#fbf6e9;border:1px solid #2c2f22;border-left:3px solid var(--moss);border-radius:3px;padding:.5rem .7rem;margin:.2rem 0 .9rem;font-family:'Special Elite',monospace;font-size:.72rem;line-height:1.55;color:var(--ink-soft);box-shadow:inset 0 1px 0 rgba(255,255,255,.4);}
+.prroom .so .r{display:block;margin-top:.3rem;font-family:'League Spartan',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);}
+.prroom .ptabs{display:flex;gap:.5rem;margin-bottom:.7rem;}
+.prroom .ptab{flex:1;cursor:pointer;font-family:'League Spartan',sans-serif;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:.42rem .5rem;border:1px solid var(--kraft-dark);border-top:3px solid var(--kraft);border-radius:6px 6px 2px 2px;background:#fbf4e2;color:var(--ink-faint);box-shadow:inset 0 -6px 8px -6px rgba(0,0,0,.18);}
+.prroom .ptab .ct{display:block;font-size:.52rem;font-weight:400;letter-spacing:.04em;color:var(--ink-faint);margin-bottom:.05rem;}
+.prroom .ptab.on{background:#fffdf6;color:var(--ink);transform:translateY(-2px);box-shadow:0 4px 9px rgba(60,42,18,.2);}
+.prroom .ptab.on .ct{color:var(--stamp-red);}
+.prroom .stage{position:relative;}
+.prroom .draw{position:absolute;left:5px;right:5px;top:7px;bottom:-5px;border-radius:7px;background:#f3ead2;border:1px solid var(--kraft-dark);z-index:0;}
+.prroom .draw.two{left:9px;right:9px;top:12px;opacity:.6;}
+.prroom .pcard{position:relative;z-index:2;background:var(--paper);border:1px solid var(--kraft-dark);border-top:3px solid var(--band,var(--moss));border-radius:7px;box-shadow:0 6px 15px rgba(38,25,9,.30),inset 0 1px 0 rgba(255,255,255,.55);padding:.85rem .95rem .95rem;overflow:hidden;transition:transform .42s cubic-bezier(.2,.7,.3,1),opacity .42s;}
+.prroom .pcard.leaving{transform:translateY(-24px) rotate(1.5deg);opacity:0;}
+.prroom .pcard.entering{transform:translateY(20px);opacity:0;}
+.prroom .lens{font-family:'League Spartan',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);}
+.prroom .who{font-size:1.4rem;font-weight:700;line-height:1.14;margin:.16rem 0 .04rem;color:var(--ink);}
+.prroom .who .ar{color:var(--kraft-deep);font-weight:400;padding:0 .16em;}
+.prroom .sub{font-style:italic;font-size:.9rem;color:var(--ink-soft);}
+.prroom .meta{display:flex;flex-wrap:wrap;gap:.35rem .45rem;margin-top:.7rem;}
+.prroom .chip{font-size:.62rem;font-weight:600;color:var(--ink-soft);background:#f4ead4;border:1px solid var(--kraft-dark);border-radius:20px;padding:.16rem .55rem;}
+.prroom .chip.rcp{color:#566b3a;border-color:#bcc69e;background:#eef1e3;}
+.prroom .chip.wait{color:var(--ink-faint);background:transparent;}
+.prroom .chip.live{color:#3c6b3a;border-color:#b6c79a;background:#eaf0df;font-weight:700;}
+.prroom .chip.sample{color:var(--ink-faint);border-style:dashed;background:transparent;}
+.prroom .log{margin-top:.7rem;font-family:'Special Elite',monospace;font-size:.72rem;line-height:1.55;color:var(--ink-soft);background:#fbf6e9;border:1px dashed var(--kraft-dark);border-radius:3px;padding:.45rem .6rem;}
+.prroom .log b{display:block;font-family:'League Spartan',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.2rem;}
+.prroom .step{margin-top:.55rem;font-size:.94rem;color:var(--ink);display:flex;gap:.45rem;align-items:flex-start;}
+.prroom .step .pin{color:var(--stamp-red);font-weight:700;flex:none;}
+.prroom .nudge{margin-top:.65rem;font-family:'Special Elite',monospace;font-size:.8rem;line-height:1.4;color:var(--stamp-red);display:flex;gap:.45rem;align-items:center;}
+.prroom .nudge .dot{width:6px;height:6px;border-radius:50%;background:var(--stamp-red);flex:none;}
+.prroom .digin{margin-top:.75rem;}
+.prroom .digin summary{list-style:none;cursor:pointer;font-family:'League Spartan',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:.35rem;}
+.prroom .digin summary::-webkit-details-marker{display:none;}
+.prroom .digin .body{margin-top:.5rem;border-top:1px solid var(--paper-line);padding-top:.55rem;}
+.prroom .digin .row{display:flex;justify-content:space-between;font-size:.7rem;color:var(--ink-soft);padding:.18rem 0;border-bottom:1px dotted var(--paper-line);}
+.prroom .digin .row span:first-child{color:var(--ink-faint);}
+.prroom .door{display:inline-block;margin-top:.55rem;font-family:'League Spartan',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--kraft-dark);border-radius:4px;padding:.3rem .55rem;background:#fbf4e2;}
+.prroom .door:hover{border-color:var(--green);color:var(--green);}
+.prroom .stamp{position:absolute;top:30%;right:7%;transform:rotate(-13deg);font-family:'Special Elite',monospace;color:var(--stamp-red);border:3px double var(--stamp-red);border-radius:6px;padding:.1rem .5rem;font-size:1.05rem;letter-spacing:.1em;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .18s;z-index:5;mix-blend-mode:multiply;}
+.prroom .pcard.praying .stamp{opacity:.85;}
+.prroom .pray{margin-top:1rem;width:100%;cursor:pointer;font-family:'League Spartan',sans-serif;font-size:.84rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#f7f4ea;background:linear-gradient(#7f8c5a,#6b774c);border:1px solid #4f5a36;border-radius:6px;padding:.7rem;box-shadow:0 2px 0 #46512f;}
+.prroom .pray:active{transform:translateY(1px);box-shadow:0 1px 0 #46512f;}
+.prroom .ondeck{margin-top:.9rem;border-top:1px solid var(--paper-line);padding-top:.55rem;display:flex;align-items:baseline;gap:.5rem;}
+.prroom .ondeck .lbl{font-family:'League Spartan',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap;}
+.prroom .ondeck .nx{font-style:italic;font-size:.9rem;color:var(--ink-soft);flex:1;}
+.prroom .ondeck .ct2{font-size:.62rem;color:var(--ink-faint);white-space:nowrap;}
+.prroom .foot{margin-top:.85rem;font-size:.58rem;color:var(--ink-faint);line-height:1.5;}
+.prroom .praydoor{display:flex;flex-direction:column;gap:.12rem;width:100%;text-align:left;cursor:pointer;margin:.3rem 0 1rem;padding:.7rem .85rem;border:1px solid #4f5a36;border-radius:7px;background:linear-gradient(#7f8c5a,#6b774c);box-shadow:0 2px 0 #46512f;color:#f7f4ea;}
+.prroom .praydoor:active{transform:translateY(1px);box-shadow:0 1px 0 #46512f;}
+.prroom .pd-k{font-family:'League Spartan',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.prroom .pd-s{font-size:.72rem;opacity:.92;}
+.prroom .feed{background:var(--paper);border:1px solid var(--kraft-dark);border-left:3px solid var(--moss);border-radius:6px;padding:.6rem .75rem .65rem;margin-bottom:.7rem;box-shadow:0 2px 6px rgba(38,25,9,.12);}
+.prroom .feedhead{display:flex;align-items:center;gap:.5rem;}
+.prroom .fname{font-family:'League Spartan',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);}
+.prroom .fsrc{font-family:'League Spartan',sans-serif;font-size:.54rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--paper-line);border-radius:20px;padding:.1rem .45rem;}
+.prroom .feedstep{margin-top:.45rem;font-size:.95rem;color:var(--ink);display:flex;gap:.45rem;align-items:flex-start;}
+.prroom .feedstep .pin{color:var(--stamp-red);font-weight:700;flex:none;}
+.prroom .feedmeta{margin-top:.3rem;font-size:.7rem;color:var(--ink-faint);}
+.prroom .back{display:inline-block;margin-bottom:.7rem;font-family:'League Spartan',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green);text-decoration:none;}
+.prroom .chip.ai{color:var(--kraft-deep);border-color:var(--kraft-dark);background:#f3ead2;font-weight:700;letter-spacing:.02em;}
+.prroom .aisum{margin-top:.5rem;background:#fbf6e9;border:1px dashed var(--kraft-dark);border-radius:4px;padding:.5rem .6rem .55rem;}
+.prroom .aih{font-family:'League Spartan',sans-serif;font-size:.54rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.15rem;}
+.prroom .aisum p{font-size:.78rem;line-height:1.5;color:var(--ink-soft);margin:.35rem 0 0;}
 
-      <!-- LEFT: the Field-O-Scope + Big Four -->
-      <section class="scope-column">
-        <div class="scope-unit">
-          <div class="scope-stencil-top">FIELD-O-SCOPE · WHAT'S RUNNING LOW</div>
-          <div class="scope-bezel">
-            <div class="scope-screen">
-              <svg id="wheel" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Running-low radar">
-                <title>Field-O-Scope — recency across the areas of life</title>
-                <g id="grid-rings"></g>
-                <g id="spokes"></g>
-                <line id="scope-sweep" x1="160" y1="160" x2="160" y2="52"></line>
-                <polygon id="scope-shape"></polygon>
-                <g id="dots"></g>
-                <g id="labels"></g>
-              </svg>
-              <div class="scope-scanlines" aria-hidden="true"></div>
-              <div class="scope-glass" aria-hidden="true"></div>
-            </div>
-          </div>
-          <div class="scope-controls">
-            <div class="scope-readout">
-              <span class="scope-readout-lbl">RUNNING LOWEST</span>
-              <span class="scope-readout-val" id="lowest-area">—</span>
-            </div>
-            <div class="scope-dials" aria-hidden="true">
-              <span class="scope-knob"></span>
-              <span class="scope-knob"></span>
-              <span class="scope-lamp"></span>
-            </div>
-          </div>
-        </div>
+</style></head>
+<body>
+<div class="hub">
+  <header class="hub-header">
+    <div class="dataplate">
+      <div class="dp-row"><span class="dp-mfr">FIELD NOTES ARCHIVE</span><span class="dp-no">MODEL FOS-11 · SER. 0007</span></div>
+      <h1>LIVING HUB</h1>
+      <div class="dp-sub">PERSONAL INSTRUMENT PANEL · U.S. PROPERTY</div>
+    </div>
+  </header>
 
-        <!-- The Big Four — headline needles -->
-        <div class="big-four" id="big-four">
-          <div class="big-four-title">THE BIG FOUR</div>
-          <div class="big-four-meters" id="big-four-meters"><!-- rendered --></div>
-        </div>
-
-        <!-- Section legend -->
-        <div class="section-legend" id="section-legend"><!-- rendered --></div>
-      </section>
-
-      <!-- RIGHT: the sections + the open record -->
-      <section class="desk-body">
-
-        <!-- The sections index -->
-        <div class="sections-index" id="sections-index"><!-- rendered --></div>
-
-        <!-- The open record (an area, or the Disciples docket) -->
-        <div class="record-panel" id="record-panel">
-          <div class="record-empty" id="record-empty">
-            <div class="ledger-warning-stamp">PICK AN AREA — OR OPEN THE DOCKET.</div>
-          </div>
-
-          <!-- Generic area record -->
-          <div class="record-area hidden" id="record-area">
-            <div class="record-head">
-              <h2 id="area-title">AREA</h2>
-              <p class="text-muted" id="area-subtitle"></p>
-            </div>
-            <div class="recency-line">
-              <span class="recency-dot" id="area-recency-dot"></span>
-              <span id="area-recency-note">—</span>
-            </div>
-            <div class="present-step-card">
-              <label class="present-lbl">PRESENT STEP — the one next move</label>
-              <textarea id="area-present-step" class="present-input" placeholder="What's the next faithful move here?"></textarea>
-            </div>
-            <div class="record-actions">
-              <button class="dispatch-btn" id="area-showup-btn">
-                <i data-lucide="check-circle"></i><span>SHOWED UP HERE</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- The Disciples docket -->
-          <div class="record-docket hidden" id="record-docket">
-            <div class="record-head">
-              <h2>THE DISCIPLES DOCKET</h2>
-              <p class="text-muted">Who's due a letter — pointed at multiplication. <span class="rcp-key">R reconciling · C conforming · P perfecting</span></p>
-            </div>
-            <ul class="docket-list" id="docket-list"><!-- rendered --></ul>
-            <div class="add-docket-row">
-              <input type="text" id="docket-name-input" class="present-input add-name" placeholder="Add a name to the docket…" maxlength="80" />
-              <button class="dispatch-btn" id="docket-add-btn"><i data-lucide="user-plus"></i><span>ADD</span></button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="desk-footer">
-      <a class="cabinet-link" href="hub.html">
-        <i data-lucide="archive"></i>
-        <span>OPEN THE FILING CABINET (the old Living Hub)</span>
-      </a>
-      <button class="cabinet-link reset-link" id="reset-btn">
-        <i data-lucide="rotate-ccw"></i><span>RESET SEED DATA</span>
-      </button>
-    </footer>
+  <div class="spread">
+  <div class="col-left">
+  <div class="scope-unit">
+    <div class="scope-stencil-top">FIELD-O-SCOPE · WHEEL OF LIFE</div>
+    <div class="scope-bezel"><div class="scope-screen">
+      <svg id="wheel" viewBox="0 0 320 320" role="img" aria-label="Wheel of life radar">
+        <g id="grid-rings"></g><g id="spokes"></g>
+        <line id="scope-sweep" x1="160" y1="160" x2="160" y2="52"></line>
+        <polygon id="scope-shape"></polygon><g id="dots"></g><g id="labels"></g>
+      </svg>
+      <div class="scope-scanlines"></div><div class="scope-glass"></div>
+    </div></div>
+    <div class="scope-controls">
+      <div class="scope-readout"><span class="scope-readout-lbl">OVERALL BALANCE</span><span class="scope-readout-val" id="avg">—</span></div>
+      <div class="scope-dials"><span class="scope-knob"></span><span class="scope-knob"></span><span class="scope-lamp"></span></div>
+    </div>
   </div>
+  </div>
+  <div class="col-right">
+  <div class="page idxpage">
+  <div class="idx-stencil">CARD INDEX</div>
+  <div class="toc-list" id="toc"></div>
+  </div>
+  <div class="dispatch" id="dispatch"></div>
+  </div>
+  </div>
+  <div class="page recordpage">
+  <div class="ledger-rule"><span>FIELD RECORDS LEDGER</span><span id="recno">RECORD: 00</span></div>
+  <div class="panel" id="panel"></div>
+  </div>
+</div>
 
-  <script src="desk.js?v=1"></script>
-</body>
-</html>
+<script>
+var S=[
+ {n:"Walk with God",band:"personal",d:"Know Him, not just study Him",v:7,open:["Back into Psalms, morning by morning","Fast one day this week"],focus:"Pray through one psalm a day this month"},
+ {n:"Health & Fitness",band:"personal",d:"A body fit to finish the race",v:3,open:["Week 2 of the daily walk","Book the bloodwork"],focus:"Walk after dinner, 4 nights a week"},
+ {n:"Reading & Mind",band:"personal",d:"A mind stocked to feed others",v:5,focus:"Finish the two half-read books first"},
+ {n:"Finances",band:"personal",d:"Free to give, owing no man",v:6,focus:"Lock the woodshop 26-paycheck plan"},
+ {n:"Hobbies & Craft",band:"personal",d:"Rest that restores, made by my hands",v:3,open:["Clear the bench","Order saw blades"],focus:"Clear the bench and cut one board"},
+ {n:"Friends",band:"personal",d:"A few iron-sharpening friends",v:3,focus:"Reconnect with Doug — set a lunch"},
+ {n:"Maintenance",band:"personal",d:"Quarters and motor pool kept in good order",v:5,open:["Replace the furnace filter","Oil change — the van"],focus:"Knock out the furnace filter this week"},
+ {n:"Jess",band:"family",d:"A marriage that preaches the gospel",v:6,focus:"A real evening out, just us, this week"},
+ {n:"Family",band:"family",d:"Children and grands who walk in truth",v:7,focus:"Call Dad about the Japan photos"},
+ {n:"Preaching & Study",band:"church",d:"Feed the flock the whole counsel of God",v:8,open:["Son of Man — message 3 outline","Pull commentaries for Sunday"],focus:"Land Son of Man, message 3"},
+ {n:"Shepherding",band:"church",d:"Every member cared for, conformed to Christ",v:7,open:["Prime Timers purpose doc","Follow up with Jon Roque"],focus:"Draft the Training Path outline"}
+];
+var C=[
+ {t:"Talk to Jess about the ladies' event budget",s:"5/19 staff meeting"},
+ {t:"Announce the church-card reimbursement policy",s:"Ron Rains // lunch"},
+ {t:"Put together the Amazon restructure write-up",s:"Ron Rains // lunch"},
+ {t:"Record salvation testimonies on video before baptism",s:"5/19 staff meeting"}
+];
+var NS="http://www.w3.org/2000/svg",cx=160,cy=160,R=108,N=S.length;
+function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+function ang(i){return(-90+i*(360/N))*Math.PI/180;}
+function pt(i,r){return[cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))];}
+function poly(r){return S.map(function(s,i){var p=pt(i,r);return p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" ");}
+
+var w=document.getElementById("wheel"),gr=document.getElementById("grid-rings"),sp=document.getElementById("spokes"),
+    sh=document.getElementById("scope-shape"),dt=document.getElementById("dots"),lb=document.getElementById("labels");
+for(var g=1;g<=5;g++) gr.appendChild(el("polygon",{points:poly(R*g/5)}));
+S.forEach(function(s,i){var e=pt(i,R);sp.appendChild(el("line",{x1:cx,y1:cy,x2:e[0],y2:e[1]}));});
+sh.setAttribute("points",S.map(function(s,i){var p=pt(i,R*s.v/10);return p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" "));
+S.forEach(function(s,i){
+  var p=pt(i,R*s.v/10),c=el("circle",{cx:p[0],cy:p[1],r:s.v<=3?5:3.4,"data-i":i});dt.appendChild(c);
+  var lp=pt(i,R+15),t=el("text",{x:lp[0],y:lp[1],"font-size":"8.5","text-anchor":"middle","dominant-baseline":"middle","data-i":i});
+  var sn=s.n.split(" ")[0];if(s.n==="Maintenance")sn="MAINT";t.textContent=(sn.length>9?sn.slice(0,8):sn).toUpperCase();lb.appendChild(t);
+});
+document.getElementById("avg").textContent=(S.reduce(function(a,s){return a+s.v;},0)/N).toFixed(1);
+
+var toc=document.getElementById("toc"),panel=document.getElementById("panel"),recno=document.getElementById("recno");
+function bars(v){return "\u2588".repeat(v)+"\u2591".repeat(10-v);}
+
+// card-index tabs: 2-3 per row, offset rows
+var items=[{inbox:true}].concat(S.map(function(s,i){return {s:s,i:i};}));
+function bandc(b){return b==='family'?'var(--aqua)':b==='church'?'var(--moss)':'var(--kraft)';}
+var per=window.innerWidth<560?2:3, row=null;
+items.forEach(function(it,k){
+  if(k%per===0){row=document.createElement('div');row.className='tab-row'+((Math.floor(k/per))%2?' off':'');toc.appendChild(row);}
+  var b=document.createElement('button');b.className='toc-item'+(it.inbox?' inbox':'');
+  if(it.inbox){b.innerHTML="<span class='tn'>00</span><span class='tt'>INBOX</span>";b.addEventListener('click',openInbox);}
+  else{b.setAttribute('data-i',it.i);b.style.borderTopColor=bandc(it.s.band);
+    b.innerHTML="<span class='tn'>"+('0'+(it.i+1)).slice(-2)+"</span><span class='tt'>"+it.s.n+"</span>";
+    (function(idx){b.addEventListener('click',function(){select(idx);});})(it.i);}
+  row.appendChild(b);
+});
+
+function gauge(v,col){var cxg=23,cyg=22,rg=17;var frac=(v-0.5)/10;var th=Math.PI*(1-frac);var tx=(cxg+rg*Math.cos(th)).toFixed(1),ty=(cyg-rg*Math.sin(th)).toFixed(1);return "<svg viewBox='0 0 46 28' class='gsvg'>"+"<path d='M6 22 A17 17 0 0 1 40 22' fill='none' stroke='var(--paper-line)' stroke-width='2'/>"+"<line x1='"+cxg+"' y1='"+cyg+"' x2='"+tx+"' y2='"+ty+"' stroke='"+col+"' stroke-width='1.6' stroke-linecap='round'/>"+"<circle cx='"+cxg+"' cy='"+cyg+"' r='2' fill='"+col+"'/></svg>";}
+function clearActive(){document.querySelectorAll(".toc-item.active").forEach(function(e){e.classList.remove("active");});
+  dt.querySelectorAll("circle.active").forEach(function(e){e.classList.remove("active");});
+  lb.querySelectorAll("text.active").forEach(function(e){e.classList.remove("active");});}
+
+function select(i){
+  clearActive();var s=S[i];
+  toc.querySelector(".toc-item[data-i='"+i+"']").classList.add("active");
+  dt.querySelector("circle[data-i='"+i+"']").classList.add("active");
+  lb.querySelector("text[data-i='"+i+"']").classList.add("active");
+  recno.textContent="RECORD: "+("0"+(i+1)).slice(-2);
+  var col=s.v<=3?"var(--stamp-red)":(s.v>=6?"var(--green)":"var(--ink-faint)");
+  panel.className="panel show";
+  if(s.n==="Shepherding"){renderShepherding(i,col);panel.scrollIntoView({behavior:"smooth",block:"nearest"});return;}
+  var lf=s.focus, lo=s.open;
+  if(HUB){ var hr=HUB[secName(s.n)]; if(hr&&hr.length){ var od=hr.slice();
+    if(s.n==="Maintenance") od.sort(function(a,b){return (a.due||"9999-99-99")<(b.due||"9999-99-99")?-1:1;});
+    lf=od[0].name+((s.n==="Maintenance"&&od[0].due)?(" \u00b7 due "+od[0].due):"");
+    lo=od.map(function(t){return t.name+((s.n==="Maintenance"&&t.due)?(" \u00b7 "+t.due):"");}); } }
+  panel.innerHTML=
+   "<div class='p-head'><span class='spoke-stamp'>"+("0"+(i+1)).slice(-2)+"</span><div style='flex:1'><h3>"+s.n.toUpperCase()+"</h3><p class='horizon'><span class='hz'>HORIZON</span> "+s.d+"</p></div><div class='mini-sig'>"+gauge(s.v,col)+"<span class='mini-val' style='color:"+col+"'>"+s.v+"</span></div></div>"+
+   "<div class='rec-cols'><div class='rc'><div class='lblrow'>CURRENT FOCUS</div><div class='card focuscard'><span class='focus-text' contenteditable='true' spellcheck='false'>"+(lf||"\u2014 set a focus \u2014")+"</span><span class='fpen'>\u270e</span></div>"+"<div class='lblrow'><span>FIELD CHECKLIST</span><span class='asana-badge'>ASANA</span></div><div class='card' style='font-size:.8rem;color:var(--ink-soft)'>"+(lo&&lo.length?lo.map(function(o){return "<div style='padding:.18rem 0'>\u2610 "+o+"</div>";}).join(""):"<div style='color:var(--ink-faint)'>no open tasks</div>")+"</div>"+
+   "</div><div class='rc'><div class='lblrow'>POUR OUT &amp; ASK</div><textarea class='ta' placeholder='journals to your Doc, or feeds Claude as context'></textarea>"+
+   "<div class='btnrow'><button class='btn dark'>APPEND TO DOC</button><button class='btn stamp'>FEED TO CLAUDE</button><button class='btn'>PARSE REPLY → UPDATE SPOKE</button></div></div></div>";
+  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function openInbox(){
+  clearActive();var ibt=document.querySelector(".toc-item.inbox");if(ibt)ibt.classList.add("active");recno.textContent="RECORD: 00 · INBOX";
+  panel.className="panel show";
+  var tiles="<div class='lblrow'>REMINDERS — TO PROCESS</div><div class='tiles'>"+
+    "<div class='tile'><div class='s'>CLAUDE TRANSCRIPTS</div><div class='v hot'>3<small>landed · tap to process</small></div></div>"+
+    "<div class='tile'><div class='s'>GMAIL</div><div class='v hot'>11<small>unfiled</small></div></div>"+
+    "<div class='tile'><div class='s'>DRIVE 0-INBOX</div><div class='v hot'>6<small>unfiled</small></div></div>"+
+    "<div class='tile'><div class='s'>APPLE NOTES</div><div class='v'>open ↗<small>no api — reminder</small></div></div></div>";
+  var commits="<div class='lblrow'>OTTER — WHAT YOU COMMITTED TO</div><div id='clist'></div>";
+  panel.innerHTML="<div class='p-head'><span class='spoke-stamp' style='background:var(--kraft-deep)'>00</span><div><h3>INBOX</h3><p>Lands here for processing · you decide</p></div></div>"+tiles+commits;
+  var cl=panel.querySelector("#clist");
+  C.forEach(function(c){
+    var row=document.createElement("div");row.className="commit";
+    row.innerHTML="<div class='q'>"+c.t+"</div><div class='src'>"+c.s+"</div>"+
+      "<div class='chips'><button class='mine'>MINE TO DO</button><button>→ ROUTE</button><button>A QUESTION</button><button>DROP</button></div>"+
+      "<div class='filed'></div>";
+    var f=row.querySelector(".filed");
+    row.querySelectorAll(".chips button").forEach(function(b){b.addEventListener("click",function(){row.classList.add("done");f.textContent="FILED · "+b.textContent.replace("→ ","");});});
+    cl.appendChild(row);
+  });
+  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+dt.addEventListener("click",function(e){var i=e.target.getAttribute("data-i");if(i!==null)select(+i);});
+lb.addEventListener("click",function(e){var i=e.target.getAttribute("data-i");if(i!==null)select(+i);});
+
+// weekly dispatch — rotating verse
+var VERSES=[
+ {t:"Delight thyself also in the LORD: and he shall give thee the desires of thine heart.",r:"PSALM 37:4"},
+ {t:"Be still, and know that I am God.",r:"PSALM 46:10"},
+ {t:"My grace is sufficient for thee: for my strength is made perfect in weakness.",r:"2 CORINTHIANS 12:9"},
+ {t:"Casting all your care upon him; for he careth for you.",r:"1 PETER 5:7"},
+ {t:"Abide in me, and I in you... for without me ye can do nothing.",r:"JOHN 15:4-5"},
+ {t:"They are new every morning: great is thy faithfulness.",r:"LAMENTATIONS 3:23"}
+];
+(function(){var now=new Date();var wk=Math.floor((now-new Date(now.getFullYear(),0,1))/6048e5)+1;
+ var v=VERSES[(wk-1)%VERSES.length];var d=document.getElementById("dispatch");if(d)d.innerHTML=
+ "<div class='dh'><span class='dt'>WEEKLY DISPATCH</span><span class='dw'>WK "+wk+" \u00b7 "+now.getFullYear()+"</span></div>"+
+ "<div class='re'>RE: a word for the week</div>"+
+ "<div class='vt'>\u201c"+v.t+"\u201d</div><span class='vr'>\u2014 "+v.r+"</span>";})();
+
+
+/* ===== SHEPHERDING · PRAYER ROTATION ===== */
+var prLens='flock', prBusy=false, shI=10, shCol="var(--green)", flockLive=null;
+function prFind(a,f){for(var i=0;i<a.length;i++){if(f(a[i]))return a[i];}}
+var davidPath={
+  url:"https://app.asana.com/1/790990846454282/project/1214106756006246",
+  person:{discipler:"Pastor Jon", disciple:"David Doering"},
+  phases:[
+    {name:"D1 \u00b7 Refresher", completed:false, subtasks:[
+      {name:"L01 \u00b7 Salvation",completed:false},{name:"L02 \u00b7 Eternal Security",completed:false},
+      {name:"L03 \u00b7 The Ordinances",completed:false},{name:"L04 \u00b7 The Holy Spirit",completed:false},
+      {name:"L05 \u00b7 The Word of God",completed:false},{name:"L06 \u00b7 Prayer",completed:false},
+      {name:"L07 \u00b7 The Local Church",completed:false},{name:"L08 \u00b7 Other Christians",completed:false},
+      {name:"L09 \u00b7 The Family",completed:false},{name:"L10 \u00b7 Dealing with Sin",completed:false},
+      {name:"L11 \u00b7 Liberty in Christ",completed:false},{name:"L12 \u00b7 The Will of God",completed:false},
+      {name:"L13 \u00b7 Giving",completed:false},{name:"L14 \u00b7 Money and Possessions",completed:false},
+      {name:"L15 \u00b7 My Job and Employer",completed:false},{name:"L16 \u00b7 The Lost World",completed:false},
+      {name:"L17 \u00b7 The Judgment Seat of Christ",completed:false},{name:"L18 \u00b7 Next Steps (Reproduce)",completed:false}
+    ]},
+    {name:"Ministry Training Path", completed:false, subtasks:[]},
+    {name:"Finish Line \u00b7 Placement", completed:false, subtasks:[]}
+  ],
+  meetingLog:[
+    {name:"2026-06-13 \u2014 Back from Bible institute; beginning a D1 refresher",
+     notes:"Back in town after a 3-year Bible institute (left D1 about halfway before going). Strong Bible knowledge.\nNext step: begin the D1 refresher \u2014 Lesson 1 (Salvation)."}
+  ]
+};
+function prMapPath(path){
+  var active=prFind(path.phases,function(p){return !p.completed && p.subtasks.some(function(s){return !s.completed;});})
+          || prFind(path.phases,function(p){return !p.completed;}) || path.phases[0];
+  var phase=active.name;
+  var entries=path.meetingLog.slice().sort(function(a,b){return a.name<b.name?1:-1;});
+  var latest=entries[0]||null;
+  var log=latest?latest.name:"\u2014";
+  var step, m=latest && /next step:\s*(.+)/i.exec(latest.notes||"");
+  if(m){step=m[1].trim();step=step.charAt(0).toUpperCase()+step.slice(1);}
+  else{var ns=prFind(active.subtasks,function(s){return !s.completed;});step=ns?ns.name:"\u2014";}
+  var open=active.subtasks.filter(function(s){return !s.completed;}).length;
+  return {discipler:path.person.discipler,disciple:path.person.disciple,phase:phase,log:log,step:step,openSteps:open,wk:8,live:true,url:path.url};
+}
+var PR={
+  flock:[
+    {who:"The Falks",sub:"Rex & Diane",rcp:"Reconciling",att:"1 of last 4",wk:14,members:["Rex Falk","Diane Falk"],note:"Diane's mother in hospice."},
+    {who:"The Peaces",sub:"Mark & Carol",rcp:"Conforming",att:"2 of last 4",wk:11,members:["Mark Peace","Carol Peace","+2 children"],note:"Off the radar since spring."},
+    {who:"The Doerings",sub:"David & Kara",rcp:"Conforming",att:"4 of last 4",wk:9,members:["David Doering","Kara Doering"],note:"David in training (see Disciples)."},
+    {who:"The Vandergrifts",sub:"Shane & Jenny",rcp:"Conforming",att:"3 of last 4",wk:8,members:["Shane Vandergrift","Jenny Vandergrift","+3 children"],note:""},
+    {who:"The Tantanellas",sub:"John & Sue",rcp:"Conforming",att:"3 of last 4",wk:6,members:["John Tantanella","Sue Tantanella"],note:""},
+    {who:"The Hoffmans",sub:"Brent & Jen",rcp:"Perfecting",att:"4 of last 4",wk:5,members:["Brent Hoffman","Jen Hoffman"],note:"Retirement transition underway."},
+    {who:"The Rainses",sub:"Ron & Linda",rcp:"Perfecting",att:"4 of last 4",wk:2,members:["Ron Rains","Linda Rains"],note:""},
+    {who:"The Cheedies",sub:"Caleb & Anna",rcp:"Perfecting",att:"4 of last 4",wk:1,members:["Caleb Cheedie","Anna Cheedie"],note:"Caleb discipling Tyler."}
+  ],
+  pairs:[
+    {discipler:"Jon Roque",disciple:"Kevin Alther",phase:"Conforming",wk:7,log:"Memory work \u2014 Psalm 1; home devotions started.",step:"Check in on home devotions."},
+    {discipler:"Caleb Cheedie",disciple:"Tyler Brandt",phase:"Conforming",wk:4,log:"Walked through assurance of salvation.",step:"Assign Romans 6; talk through it."},
+    prMapPath(davidPath),
+    {discipler:"Ron Rains",disciple:"Marcus Hill",phase:"Reconciling",wk:2,log:"First sit-down; heard his salvation testimony.",step:"Set a standing weekly time."},
+    {discipler:"Pastor Jon",disciple:"Matt Reigle",phase:"Free phase nearing",wk:1,log:"Bridge research \u2014 operating engineer, winters off.",step:"Review his Week-1 'friend' word study."}
+  ]
+};
+var PRN={flock:12,pairs:3}, PRBAND={flock:'var(--moss)',pairs:'var(--amber)'};
+function prQueue(){return PR[prLens].slice().sort(function(a,b){return b.wk-a.wk;});}
+function prWait(it){ return it.prayed?'Lifted just now':(it.wk>0?('Last lifted '+it.wk+' wk ago'):'Not yet lifted'); }
+function prEsc(s){return (s||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function prCardHTML(it){
+  if(prLens==='flock'){
+    var nudge=it.wk>=PRN.flock?"<div class='nudge'><span class='dot'></span>It's been a while \u2014 worth a visit?</div>":'';
+    var rows=it.members.map(function(m){return "<div class='row'><span>"+prEsc(m)+"</span><span>Breeze \u25b8</span></div>";}).join('');
+    var note=it.note?"<div class='log'><b>Note</b>"+prEsc(it.note)+"</div>":'';
+    var rcpChip=it.rcp?"<span class='chip rcp'>"+prEsc(it.rcp)+"</span>":"";
+    var attChip=it.att?"<span class='chip'>Present "+prEsc(it.att)+"</span>":"";
+    var srcChip=it.live?"<span class='chip live'>\u25cf LIVE \u00b7 Breeze</span>":"";
+    return "<span class='stamp'>Lifted</span><div class='lens'>Flock \u00b7 household</div><div class='who'>"+prEsc(it.who)+"</div><div class='sub'>"+prEsc(it.sub)+"</div>"+
+      "<div class='meta'>"+rcpChip+attChip+"<span class='chip wait'>"+prWait(it)+"</span>"+srcChip+"</div>"+note+nudge+
+      "<details class='digin'><summary>\u25b8 Dig in</summary><div class='body'>"+rows+"<a class='door' href='#' onclick='return false'>Open in Breeze \u2197</a></div></details>";
+  } else {
+    var nudge=it.wk>=PRN.pairs?"<div class='nudge'><span class='dot'></span>Quiet "+it.wk+" week"+(it.wk>1?'s':'')+" \u2014 worth a text?</div>":'';
+    var badge=it.live?"<span class='chip live'>\u25cf LIVE \u00b7 Asana</span>":"<span class='chip sample'>sample</span>";
+    var open=it.openSteps!=null?it.openSteps:1;
+    var href=it.url?it.url:'#'; var la=it.url?"target='_blank' rel='noopener'":"onclick='return false'";
+    return "<span class='stamp'>Lifted</span><div class='lens'>Disciple-making \u00b7 pair</div><div class='who'>"+prEsc(it.discipler)+"<span class='ar'>\u2192</span>"+prEsc(it.disciple)+"</div>"+
+      "<div class='meta'><span class='chip rcp'>"+prEsc(it.phase)+"</span><span class='chip wait'>"+prWait(it)+"</span>"+badge+"</div>"+
+      "<div class='log'><b>Last meeting</b>"+prEsc(it.log)+"</div>"+
+      "<div class='step'><span class='pin'>\u271a</span><span>"+prEsc(it.step)+"</span></div>"+nudge+
+      "<details class='digin'><summary>\u25b8 Dig in</summary><div class='body'><div class='row'><span>Phase</span><span>"+prEsc(it.phase)+"</span></div><div class='row'><span>Open steps</span><span>"+open+"</span></div><a class='door' href='"+href+"' "+la+">Open full path \u2197</a></div></details>";
+  }
+}
+function prRender(anim){
+  var q=prQueue(), it=q[0], card=document.getElementById('pr-card'); if(!card)return;
+  card.style.setProperty('--band',PRBAND[prLens]);
+  card.innerHTML=prCardHTML(it);
+  if(anim){card.classList.add('entering');requestAnimationFrame(function(){requestAnimationFrame(function(){card.classList.remove('entering');});});}
+  var nx=q[1];
+  document.getElementById('pr-next').textContent=nx?(prLens==='flock'?nx.who:nx.disciple):"\u2014";
+  document.getElementById('pr-count').textContent=q.length+' in rotation';
+  document.getElementById('ct-flock').textContent=PR.flock.length+' FAMILIES';
+  document.getElementById('ct-pairs').textContent=PR.pairs.length+' PAIRS';
+}
+function prSetLens(l){
+  if(l===prLens)return; prLens=l;
+  document.getElementById('pt-flock').classList.toggle('on',l==='flock');
+  document.getElementById('pt-pairs').classList.toggle('on',l==='pairs');
+  prRender(true);
+}
+function prPrayed(){
+  if(prBusy)return; var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var it=prQueue()[0]; it.wk=0; it.prayed=true;
+  var arr=PR[prLens], ix=arr.indexOf(it); if(ix>-1){ arr.splice(ix,1); arr.push(it); } // to the back of the line
+  var card=document.getElementById('pr-card');
+  if(reduce){prRender(false);return;}
+  prBusy=true; card.classList.add('praying');
+  setTimeout(function(){card.classList.add('leaving');setTimeout(function(){card.classList.remove('praying','leaving');prRender(true);prBusy=false;},420);},360);
+}
+var PROXY_URL='https://script.google.com/macros/s/AKfycbzC7cdnJZtJbSZTDsxxD1V7-j7SmRlhr5bigIL56QRFh5Ji3-TPyRKNLBZEwlydQJ4Klg/exec';
+// Token is read from the page URL (after #t=), so it is NEVER stored in the public code.
+// Your private phone bookmark looks like:  https://YOU.github.io/living-hub/#t=YOUR-TOKEN
+var PROXY_TOKEN=decodeURIComponent((location.hash.match(/[#&]t=([^&]*)/)||[])[1]||'');
+var HUB=null;
+function secName(n){ return n==='Friends' ? 'FRIENDSHIPS' : n.toUpperCase(); }
+function fetchHub(){
+  try{
+    var cb='hubCb_'+Date.now(), s=document.createElement('script');
+    window[cb]=function(map){
+      try{
+        if(map && typeof map==='object' && !Array.isArray(map)){
+          HUB=map;
+          var act=toc.querySelector(".toc-item.active[data-i]");
+          if(act && !(document.activeElement && panel.contains(document.activeElement))) select(+act.getAttribute('data-i'));
+        }
+      }catch(e){}
+      try{ delete window[cb]; }catch(e){}
+      if(s.parentNode) s.parentNode.removeChild(s);
+    };
+    s.src=PROXY_URL+'?action=livinghub&token='+encodeURIComponent(PROXY_TOKEN)+'&callback='+cb;
+    s.onerror=function(){ try{delete window[cb];}catch(e){} if(s.parentNode)s.parentNode.removeChild(s); }; // blocked -> static stays
+    (document.head||document.body).appendChild(s);
+  }catch(e){ /* any failure -> static spokes stay */ }
+}
+function prFetchFlock(){
+  try{
+    var cb='prFlockCb_'+Date.now(), s=document.createElement('script');
+    window[cb]=function(rows){
+      try{
+        if(Array.isArray(rows)&&rows.length){
+          rows.forEach(function(r){ if(r.wk==null)r.wk=0; delete r.rcp; r.live=true; }); // RCP isn't in Breeze; hub owns it
+          PR.flock=rows; flockLive=rows;                       // swap sample -> live households
+          if(document.getElementById('pr-card') && prLens==='flock') prRender(false);
+          else if(document.querySelector('.praydoor')) renderShepherding(shI,shCol);
+        }
+      }catch(e){}
+      try{ delete window[cb]; }catch(e){}
+      if(s.parentNode) s.parentNode.removeChild(s);
+    };
+    s.src=PROXY_URL+'?action=flock&token='+encodeURIComponent(PROXY_TOKEN)+'&callback='+cb;
+    s.onerror=function(){ try{delete window[cb];}catch(e){} if(s.parentNode)s.parentNode.removeChild(s); }; // blocked -> sample stays
+    (document.head||document.body).appendChild(s);
+  }catch(e){ /* any failure -> sample stays */ }
+}
+function strategyHTML(){
+  return "<div class='feed'>"+
+    "<div class='feedhead'><span class='fname'>Strategy</span><span class='fsrc'>Staff Meeting</span><span class='chip ai' style='margin-left:auto'>\u2726 Asana AI</span></div>"+
+    "<div class='aisum'><div class='aih'>Summary \u00b7 pulled Jun 14</div>"+
+      "<p>Three action items still open from Tuesday (6/12), all on Caleb: turn the Endeavor date into an evangelism class, calendarize a July discipleship promotion, and lock dates for the Sync Meeting (deacons + connection-group leaders).</p>"+
+      "<p>Three must-win battles in flight \u2014 Teen Ministry Lift (Jon Roque), Member Care Restructure (Ron, tech due Jul 11), Hospitality Refresh (Ron, Sep 30). Ron is carrying all three of his big 2026 commitments at once.</p>"+
+      "<p>Next meeting's anchors: Mission &amp; Framework review, Evangelism Accountability, and a Bible Conference update.</p>"+
+    "</div>"+
+    "<div class='feedstep'><span class='pin'>\u25b8</span><span>Set a 1:1 with Ron \u2014 Hospitality + Member Care + Missions is a heavy load.</span></div>"+
+    "<a class='door' href='https://app.asana.com/0/1212781757891081' target='_blank' rel='noopener'>Open in Asana \u2197</a>"+
+  "</div>";
+}
+function feedHTML(name,src,step,meta,live,door,href){
+  var badge=live?"<span class='chip live' style='margin-left:auto'>\u25cf LIVE</span>":"<span class='chip sample' style='margin-left:auto'>sample</span>";
+  var la=href?("href='"+href+"' target='_blank' rel='noopener'"):"href='#' onclick='return false'";
+  return "<div class='feed'>"+
+    "<div class='feedhead'><span class='fname'>"+name+"</span><span class='fsrc'>"+src+"</span>"+badge+"</div>"+
+    "<div class='feedstep'><span class='pin'>\u25b8</span><span>"+step+"</span></div>"+
+    "<div class='feedmeta'>"+meta+"</div>"+
+    "<a class='door' "+la+">"+door+"</a>"+
+  "</div>";
+}
+function renderShepherding(i,col){
+  shI=i; shCol=col;
+  var num=("0"+(i+1)).slice(-2);
+  panel.innerHTML=
+    "<div class='p-head'><span class='spoke-stamp'>"+num+"</span><div style='flex:1'><h3>SHEPHERDING</h3><p class='horizon'><span class='hz'>HORIZON</span> Every member cared for, conformed to Christ</p></div></div>"+
+    "<div class='prroom'>"+
+      "<button class='praydoor' onclick='prOpenRotation()'><span class='pd-k'>Pray</span><span class='pd-s'>Carry the flock &amp; the pairs, one at a time \u203a</span></button>"+
+      strategyHTML()+
+      feedHTML("Disciple-making","Discipleship Tracking","David Doering \u2014 begin the D1 refresher (Lesson 1)","4 active pairs \u00b7 plus David's path \u00b7 the road to 1,000",true,"Open in Asana \u2197","https://app.asana.com/0/1143788311291317")+
+      (flockLive
+        ? feedHTML("The Flock","Breeze",flockLive.length+" households pulled \u2014 pray through them via the Pray door","Live from Breeze \u00b7 set RCP stages in the hub",true,"Open in Breeze \u2197")
+        : feedHTML("The Flock","Breeze","The Falks \u2014 quiet 14 weeks, worth a visit","8 households \u00b7 ordered by RCP stage",false,"Breeze \u2014 not connected yet"))+
+      "<div class='foot'>One present step per feed \u2014 dig in for the rest, pray when you mean to. Strategy and Disciple-making read live from Asana; the Flock waits on Breeze, which isn't a connector yet.</div>"+
+    "</div>";
+}
+function prOpenRotation(lens){
+  prLens=lens||'flock'; prBusy=false;
+  var num=("0"+(shI+1)).slice(-2);
+  panel.innerHTML=
+    "<div class='p-head'><span class='spoke-stamp'>"+num+"</span><div style='flex:1'><h3>SHEPHERDING \u00b7 PRAYER</h3><p class='horizon'><span class='hz'>HORIZON</span> Carry one before the Throne, then the next</p></div></div>"+
+    "<div class='prroom'>"+
+      "<a class='back' href='#' onclick='renderShepherding(shI,shCol);return false'>\u2039 Back to Shepherding</a>"+
+      "<div class='so'>\u201cGod forbid that I should sin against the LORD in ceasing to pray for you.\u201d<span class='r'>1 Samuel 12:23 \u00b7 carry one, then the next</span></div>"+
+      "<div class='ptabs'>"+
+        "<button class='ptab"+(prLens==='flock'?' on':'')+"' id='pt-flock' onclick=\"prSetLens('flock')\"><span class='ct' id='ct-flock'></span>Flock</button>"+
+        "<button class='ptab"+(prLens==='pairs'?' on':'')+"' id='pt-pairs' onclick=\"prSetLens('pairs')\"><span class='ct' id='ct-pairs'></span>Disciples</button>"+
+      "</div>"+
+      "<div class='stage'><div class='draw two'></div><div class='draw'></div><div class='pcard' id='pr-card'></div></div>"+
+      "<button class='pray' onclick='prPrayed()'>Lift in prayer \u2713</button>"+
+      "<div class='ondeck'><span class='lbl'>Next up</span><span class='nx' id='pr-next'></span><span class='ct2' id='pr-count'></span></div>"+
+      "<div class='foot'>Ordered by who has waited longest. Lifting in prayer sends them to the back \u2014 no streak, no tally, no score. David Doering reads live from Asana; the rest is sample.</div>"+
+    "</div>";
+  prRender(false);
+}
+
+fetchHub();
+prFetchFlock();
+select(0);
+</script>
+</body></html>
