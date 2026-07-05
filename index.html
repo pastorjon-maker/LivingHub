@@ -3,6 +3,12 @@
 <title>Field-O-Scope — Living Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=League+Spartan:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#43442f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Living Hub">
+<link rel="apple-touch-icon" href="icon-180.png">
 <style>
 :root{
   --kraft:#C4A87C; --kraft-dark:#9C7A4D; --kraft-deep:#6E5631; --cover:#BC9C6E;
@@ -422,12 +428,25 @@ h2.sec{font-size:.8rem;font-weight:800;letter-spacing:.18em;color:var(--kraft-de
 #war-room button.wr-chip:hover{background:#54563a}
 #war-room button.wr-chip.exit:hover{background:rgba(205,187,134,.12)}
 #war-room .wr-capmsg{font-family:'Special Elite',monospace;font-size:.5rem;color:var(--wr-phosd);margin-top:.3rem;min-height:.62rem}
+
+/* in-app token bar */
+#tokbar{display:none}
+#tokbar.show{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;background:#2a2622;
+  border-bottom:2px solid #D08A3E;color:#e7dcbf;font-family:'League Spartan',system-ui,sans-serif;
+  font-size:.8rem;padding:.6rem .8rem;position:sticky;top:0;z-index:9999}
+#tokbar .tb-msg{flex:1 1 auto;min-width:150px}
+#tokbar #tb-input{flex:1 1 170px;min-width:110px;background:#1d1a17;border:1px solid #6f6a4a;
+  color:#f1ead7;border-radius:4px;padding:.4rem .5rem;font-size:.8rem;outline:none}
+#tokbar #tb-go{flex:none;background:#D08A3E;color:#2a1c0c;border:0;border-radius:4px;font-weight:800;
+  letter-spacing:.04em;padding:.42rem .85rem;cursor:pointer;font-family:inherit}
+#tokbar #tb-go:hover{background:#e0a050}
 </style></head>
 <body>
+<div id='tokbar'><span class='tb-msg'>Sample data — paste your access token to go live:</span><input id='tb-input' type='text' autocapitalize='off' autocorrect='off' spellcheck='false' placeholder='access token'><button id='tb-go' onclick='tbSave()'>Go live</button></div>
 <div class="hub">
   <header class="hub-header">
     <div class="dataplate">
-      <div class="dp-row"><span class="dp-mfr">FIELD NOTES ARCHIVE</span><span class="dp-no">MODEL FOS-11 · SER. 0053</span></div>
+      <div class="dp-row"><span class="dp-mfr">FIELD NOTES ARCHIVE</span><span class="dp-no">MODEL FOS-11 · SER. 0056</span></div>
       <h1>LIVING HUB</h1>
       <div class="dp-sub">PERSONAL INSTRUMENT PANEL · U.S. PROPERTY</div>
     </div>
@@ -537,7 +556,7 @@ function select(i){
   var lf=s.focus, lo=(s.open||[]).map(function(o){return {label:o,gid:''};});
   if(HUB){ var hr=HUB[secName(s.n)]||[];
     if(hr.length){ var od=hr.slice();
-      if(s.n==="Maintenance"){ var _t=new Date(), _today=_t.getFullYear()+"-"+("0"+(_t.getMonth()+1)).slice(-2)+"-"+("0"+_t.getDate()).slice(-2); od=od.filter(function(t){return !t.due||t.due<=_today;}); od.sort(function(a,b){return (a.due||"9999-99-99")<(b.due||"9999-99-99")?-1:1;}); }
+      if(s.n==="Maintenance"){ var _hd=new Date(); _hd.setDate(_hd.getDate()+90); var _hz=_hd.getFullYear()+"-"+("0"+(_hd.getMonth()+1)).slice(-2)+"-"+("0"+_hd.getDate()).slice(-2); od=od.filter(function(t){return !t.due||t.due<=_hz;}); od.sort(function(a,b){return (a.due||"9999-99-99")<(b.due||"9999-99-99")?-1:1;}); }
       if(od.length){ lf=od[0].name+((s.n==="Maintenance"&&od[0].due)?(" \u00b7 due "+od[0].due):""); lo=od.map(function(t){return {label:t.name+((s.n==="Maintenance"&&t.due)?(" \u00b7 "+t.due):""), gid:t.gid||''};}); } else { lf=''; lo=[]; }
     } else { lf=''; lo=[]; } }
   var sn=scopeName(s.n);
@@ -602,7 +621,8 @@ function openInbox(){
 function pullEmail(a){
   if(a)a.textContent='pulling\u2026';
   var cb='gpCb_'+Date.now(), s=document.createElement('script');
-  window[cb]=function(d){ if(d&&d.ok){ fetchChatInbox(); fetchInboxCount(); } else { if(a)a.textContent=(d&&d.error)?'gmail not authorized':'pull email'; } try{delete window[cb];}catch(e){} if(s.parentNode)s.parentNode.removeChild(s); };
+  window[cb]=function(d){ if(d&&d.ok){ fetchChatInbox(); fetchInboxCount();
+wrTokenBar(); } else { if(a)a.textContent=(d&&d.error)?'gmail not authorized':'pull email'; } try{delete window[cb];}catch(e){} if(s.parentNode)s.parentNode.removeChild(s); };
   s.onerror=function(){ if(a)a.textContent='pull email'; try{delete window[cb];}catch(e){} if(s.parentNode)s.parentNode.removeChild(s); };
   s.src=PROXY_URL+'?action=gmailpull&token='+encodeURIComponent(PROXY_TOKEN)+'&callback='+cb;
   (document.head||document.body).appendChild(s);
@@ -875,7 +895,16 @@ function prPrayed(){
 var PROXY_URL='https://script.google.com/macros/s/AKfycbzC7cdnJZtJbSZTDsxxD1V7-j7SmRlhr5bigIL56QRFh5Ji3-TPyRKNLBZEwlydQJ4Klg/exec';
 // Token is read from the page URL (after #t=), so it is NEVER stored in the public code.
 // Your private phone bookmark looks like:  https://YOU.github.io/living-hub/#t=YOUR-TOKEN
-var PROXY_TOKEN=decodeURIComponent((location.hash.match(/[#&]t=([^&]*)/)||[])[1]||'');
+var PROXY_TOKEN=(function(){
+  try{
+    var m=(location.hash.match(/[#&]t=([^&]*)/)||[])[1];
+    if(m){ var t=decodeURIComponent(m);
+      try{ localStorage.setItem('hub.token', t); }catch(e){}
+      try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+      return t; }
+    return localStorage.getItem('hub.token')||'';
+  }catch(e){ return decodeURIComponent((location.hash.match(/[#&]t=([^&]*)/)||[])[1]||''); }
+})();
 var HUB=null;
 function secName(n){ return n==='Friends' ? 'FRIENDSHIPS' : (n==='Shepherding' ? 'THE WORK' : n.toUpperCase()); }
 function removeFromHub(gid){
@@ -1304,6 +1333,15 @@ function fetchDisciples(){
   }catch(e){}
 }
 
+function tbSave(){
+  var el=document.getElementById('tb-input'); var v=el?((el.value||'').trim()):'';
+  if(!v) return;
+  try{ localStorage.setItem('hub.token', v); }catch(e){}
+  location.reload();
+}
+function wrTokenBar(){
+  try{ if(!PROXY_TOKEN){ var b=document.getElementById('tokbar'); if(b) b.classList.add('show'); } }catch(e){}
+}
 fetchHub();
 fetchScope();
 fetchInboxCount();
